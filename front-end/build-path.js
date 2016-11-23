@@ -3,7 +3,7 @@ module.exports = buildPath;
     var rawPaths = {
         vendors: {
             js: [
-            	'jquery/dist/jquery.js',
+            	'jquery/dist/jquery.js', 
             	'angular/angular.js',
             	'angular-animate/angular-animate.js',
             	'angular-touch/angular-touch.js',

@@ -1,0 +1,10 @@
+Django
+
+# 3-rd party
+python-social-auth
+Jinja2
+django-jinja
+
+# neo4j
+py2neo==2.*
+neomodel

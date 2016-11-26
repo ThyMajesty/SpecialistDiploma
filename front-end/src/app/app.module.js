@@ -16,3 +16,4 @@ export const AppModule = angular.module('erd', [
     ])
     .component('app', AppComponent)
     .name;
+    

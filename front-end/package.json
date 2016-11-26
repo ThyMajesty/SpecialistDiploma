@@ -7,7 +7,10 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "webpack-dev-server --progress --colors --inline --hot --config config/webpack.dev.js",
         "build-dev": "set NODE_ENV=dev && webpack",
-        "build-static": "set NODE_ENV=static && webpack"
+        "build-static": "set NODE_ENV=static && webpack",
+        "build-static-watch": "set NODE_ENV=static && webpack --watch",
+        "bsw": "set NODE_ENV=static && webpack --watch",
+        "prod": "set NODE_ENV=prod && webpack"
     },
     "babel": {
         "presets": [

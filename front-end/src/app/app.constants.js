@@ -1,3 +1,3 @@
-const API = 'http://localhost:80/';
+const API = 'http://localhost:8080/';
 
 export { API }

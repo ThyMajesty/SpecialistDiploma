@@ -1,3 +1,3 @@
-export function AppController($uibModal) {
-    console.log($uibModal);
+export function AppController($uibModal, $cookies) {
+    //console.log($cookies.getAll());
 }

@@ -1,3 +1,5 @@
-export function HeaderController($uibModal) {
-    console.log('header loaded');
+export function HeaderController(UserInfoService) {
+
+    this.userInfo = UserInfoService.getUserInfo();
+    console.log('header loaded, user info:', UserInfoService.getUserInfo());
 }

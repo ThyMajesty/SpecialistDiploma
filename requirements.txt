@@ -4,6 +4,7 @@ django-jinja
 django-debug-toolbar
 django-subdomains
 django-tastypie
+django-extensions
 
 # Python
 python-social-auth

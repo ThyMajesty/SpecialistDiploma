@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'django_extensions',
     'debug_toolbar',
     'social.apps.django_app.default',
     # 'django_jinja.contrib._pipeline',
@@ -46,8 +47,8 @@ INSTALLED_APPS = [
     'django_jinja.contrib._subdomains',
     'django_jinja.contrib._humanize',
 
-    'easy_thumbnails',
     'subdomains',
+    'easy_thumbnails',
     'tastypie',
 
     'apps.adapters',
@@ -55,12 +56,13 @@ INSTALLED_APPS = [
     'apps.index',
 ]
 
+
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    #'subdomains.middleware.SubdomainURLRoutingMiddleware', # before CommonMiddleware 
+    'apps.adapters.subdomain.SubdomainURLRoutingMiddleware', # before CommonMiddleware 
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

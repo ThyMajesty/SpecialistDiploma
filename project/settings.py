@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'tastypie',
     'jwt_auth',
+    'corsheaders',
 
     'apps.adapters',
     'apps.core',
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'apps.adapters.subdomain.SubdomainURLRoutingMiddleware', # before CommonMiddleware 
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -87,6 +89,23 @@ ALLOWED_HOSTS = [
     '127.0.0.1', 
     '[::1]',
 ]
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8080',
+    '127.0.0.1:8080'
+)
+
+CORS_ALLOW_HEADERS = (
+    'Access-Control-Allow-Origin',
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
 
 CONTEXT_PROCESSORS = [
     'django.template.context_processors.debug',
@@ -244,26 +263,54 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '126035424988-d6554vq6oa5nftp4tjsui4cecrqernk1.a
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'TwB9CjQijPPDEcsrca3juo6v'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = []
 
+SOCIAL_AUTH_PIPELINE = (
+    # Get the information we can about the user and return it in a simple format to create the user instance later. On some cases the details are
+    # already part of the auth response from the provider, but sometimes this could hit a provider API.
+    'social.pipeline.social_auth.social_details',
+    # Get the social uid from whichever service we're authing thru. The uid is the unique identifier of the given user in the provider.
+    'social.pipeline.social_auth.social_uid',
+    # Verifies that the current auth process is valid within the current project, this is were emails and domains whitelists are applied (if defined).
+    'social.pipeline.social_auth.auth_allowed',
+    # Checks if the current social-account is already associated in the site.
+    'social.pipeline.social_auth.social_user',
+    # Make up a username for this person, appends a random string at the end if there's any collision.
+    'social.pipeline.user.get_username',
+    # Send a validation email to the user to verify its email address. Disabled by default.
+    # 'social.pipeline.mail.mail_validation',
+    # Associates the current social details with another user account with a similar email address. Disabled by default.
+    'social.pipeline.social_auth.associate_by_email',
+    # Create a user account if we haven't found one yet.
+    'social.pipeline.user.create_user',
+    # Create the record that associated the social account with this user.
+    'social.pipeline.social_auth.associate_user',
+    # Populate the extra_data field in the social record with the values specified by settings (and the default ones like access_token, etc).
+    'social.pipeline.social_auth.load_extra_data',
+    # Update the user record with any changed info from the auth service.
+    'social.pipeline.user.user_details',
+    # Updates neo4j records
+    'core.pipeline.update_user_neo4j_record'
+)
 # DEBUG_TOOLBAR
 
-INTERNAL_IPS = ['127.0.0.1',]
+if DEBUG:
+    INTERNAL_IPS = ['127.0.0.1',]
 
-DEBUG_TOOLBAR_PANELS = [
-    'debug_toolbar.panels.versions.VersionsPanel',
-    'debug_toolbar.panels.timer.TimerPanel',
-    'debug_toolbar.panels.settings.SettingsPanel',
-    'debug_toolbar.panels.headers.HeadersPanel',
-    'debug_toolbar.panels.request.RequestPanel',
-    'debug_toolbar.panels.sql.SQLPanel',
-    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-    'apps.adapters.debug.TemplatesPanel', # http://stackoverflow.com/questions/38569760/django-debug-toolbar-template-object-has-no-attribute-engine
-    'debug_toolbar.panels.cache.CachePanel',
-    'debug_toolbar.panels.signals.SignalsPanel',
-    'debug_toolbar.panels.logging.LoggingPanel',
-    'debug_toolbar.panels.redirects.RedirectsPanel',
-]
+    DEBUG_TOOLBAR_PANELS = [
+        'debug_toolbar.panels.versions.VersionsPanel',
+        'debug_toolbar.panels.timer.TimerPanel',
+        'debug_toolbar.panels.settings.SettingsPanel',
+        'debug_toolbar.panels.headers.HeadersPanel',
+        'debug_toolbar.panels.request.RequestPanel',
+        'debug_toolbar.panels.sql.SQLPanel',
+        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+        'apps.adapters.debug.TemplatesPanel', # http://stackoverflow.com/questions/38569760/django-debug-toolbar-template-object-has-no-attribute-engine
+        'debug_toolbar.panels.cache.CachePanel',
+        'debug_toolbar.panels.signals.SignalsPanel',
+        'debug_toolbar.panels.logging.LoggingPanel',
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+    ]
 
-# Tastypie
+# TASTYPIE
 
 API_LIMIT_PER_PAGE = 50
 TASTYPIE_FULL_DEBUG = DEBUG

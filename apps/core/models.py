@@ -73,6 +73,8 @@ class Pack(Value2ObjMixin, StructuredNode):
 class Person(Value2ObjMixin, StructuredNode):
     pk = StringProperty(unique_index=True, default=uuid4)
 
+    user_id = StringProperty(unique_index=True, required=True)
+
     value = JSONProperty(unique_index=False, required=False)
 
     connections = RelationshipTo('Connection', REL_LIKE, model=RelationModel)

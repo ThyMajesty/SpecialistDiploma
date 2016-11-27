@@ -31,6 +31,8 @@ export function AppConfig($stateProvider, $urlRouterProvider, API, $localStorage
                 $localStorage.jwtToken = 'lol';
                 if ($localStorage.jwtToken) {
                     config.headers.Authorization = $localStorage.jwtToken;
+                    config.headers['Access-Control-Allow-Origin'] = '*';
+                    //config.headers['Content-Type'] = 'application/json';
                 }
                 // /console.log('request config:', config);
                 return config;

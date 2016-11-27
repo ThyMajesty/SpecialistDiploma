@@ -5,11 +5,11 @@ django-debug-toolbar
 django-subdomains
 django-tastypie
 django-extensions
+django-jwt-auth
 
 # Python
 python-social-auth
 python-jose
-curl -X POST -H "Content-Type: application/json" -d '{"username":"admin","password":"abc123"}' http://localhost:8000/api-token-auth/
 
 # 3-rd party
 Jinja2

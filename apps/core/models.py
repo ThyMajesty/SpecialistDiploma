@@ -1,7 +1,7 @@
 #http://neomodel.readthedocs.io/en/latest/getting_started.html
 from uuid import uuid4
 
-from neomodel import StructuredNode, StructuredRel
+from neomodel import StructuredNode, StructuredRel, One, ZeroOrMore
 from neomodel import StringProperty, IntegerProperty, JSONProperty
 from neomodel import RelationshipTo, RelationshipFrom, Relationship
 
@@ -23,10 +23,7 @@ class Value2ObjMixin(object):
         self.value = obj2json(value)
         
 
-
-class Connection(Value2ObjMixin, StructuredRel):
-    #pk = StringProperty(unique_index=True, default=uuid4)
-
+class RelationModel(StructuredRel):
     value = JSONProperty(unique_index=False, required=False)
 
 
@@ -36,7 +33,17 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
 
     value = JSONProperty(unique_index=False, required=False)
 
-    instances = RelationshipTo('Instance', REL_FROM)
+    instances = RelationshipTo('Instance', REL_FROM, model=RelationModel)
+
+
+
+class Connection(Value2ObjMixin, StructuredNode):
+    pk = StringProperty(unique_index=True, default=uuid4)
+    
+    value = JSONProperty(unique_index=False, required=False)
+
+    rel_from = Relationship('Instance', REL_CONNECTED, cardinality=One)
+    rel_to = Relationship('Instance', REL_CONNECTED, cardinality=One)
 
 
 
@@ -45,13 +52,12 @@ class Instance(Value2ObjMixin, StructuredNode):
 
     value = JSONProperty(unique_index=False, required=False)
 
-    knowlage_db = RelationshipFrom('KnowlageDB', REL_FROM)
+    knowlage_db = RelationshipFrom('KnowlageDB', REL_FROM, model=RelationModel)
 
-    nodes = Relationship('Instance', REL_CONNECTED, model=Connection)
+    connections = Relationship('Connection', REL_CONNECTED, cardinality=ZeroOrMore)
 
-    def connectons(self):
-        results, columns = self.cypher("START a=node({self}) MATCH a-[r]-() RETURN r")
-        return [self.inflate(row[0]) for row in results]
+    def instances(self, *args, **kwargs):
+        return [conn.rel_to for conn in connections.all()]
 
 
 
@@ -60,7 +66,7 @@ class Pack(Value2ObjMixin, StructuredNode):
 
     value = JSONProperty(unique_index=False, required=False)
     
-    owner = RelationshipFrom('Person', REL_OWN)
+    owner = RelationshipFrom('Person', REL_OWN, model=RelationModel)
 
 
 
@@ -69,8 +75,8 @@ class Person(Value2ObjMixin, StructuredNode):
 
     value = JSONProperty(unique_index=False, required=False)
 
-    connections = RelationshipTo('Connection', REL_LIKE)
+    connections = RelationshipTo('Connection', REL_LIKE, model=RelationModel)
     
-    nodes = RelationshipTo('Connection', REL_LIKE)
+    nodes = RelationshipTo('Connection', REL_LIKE, model=RelationModel)
 
-    packs = RelationshipFrom('Pack', REL_OWN)
+    packs = RelationshipFrom('Pack', REL_OWN, model=RelationModel)

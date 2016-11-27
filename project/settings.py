@@ -262,3 +262,10 @@ DEBUG_TOOLBAR_PANELS = [
     'debug_toolbar.panels.logging.LoggingPanel',
     'debug_toolbar.panels.redirects.RedirectsPanel',
 ]
+
+# Tastypie
+
+API_LIMIT_PER_PAGE = 50
+TASTYPIE_FULL_DEBUG = DEBUG
+TASTYPIE_DEFAULT_FORMATS = ['json',]
+TASTYPIE_ABSTRACT_APIKEY = True

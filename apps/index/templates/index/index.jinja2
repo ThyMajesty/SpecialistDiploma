@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Index</title>
+</head>
+<body>
+body
+<br/>
+ 'backends': {{backends}}
+<br/>
+ 'google-oauth2': <a href="{{ url('social:begin', backend="google-oauth2") }}">{{backends['backends'].0}}</a>
+<br/>
+ 'csrf_token': {{csrf_token}}
+<br/>
+ 'messages': {{messages}}
+     {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                {{message.level}}:{{ message.tags }}<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+<br/>
+ 'request': u'{{request}}',
+<br/>
+ 'user': {{user}}
+
+<br/>
+<img src='{{ static("img/img.jpeg") }}' alt='Oooops'/>
+
+</body>
+</html>

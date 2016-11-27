@@ -1,9 +1,16 @@
+# Django
 Django
+django-jinja
+django-debug-toolbar
+django-subdomains
+
+# Python
+python-social-auth
 
 # 3-rd party
-python-social-auth
 Jinja2
-django-jinja
+easy_thumbnails
+humanize
 
 # neo4j
 py2neo==2.*

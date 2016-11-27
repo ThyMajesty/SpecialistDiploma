@@ -1,0 +1,29 @@
+[
+    {
+        "model": "sites.site",
+        "pk": 1,
+        "fields": {
+            "domain": "localhost",
+            "name": "localhost"
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            //rootpass
+            "password": "pbkdf2_sha256$30000$aWbwmQL4h7VU$JhzpAm90cRopX1bB7Nvd96X7EUhVnNjx3VaGsWe4iOo=",
+            "last_login": null,
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2016-11-27T00:11:23.908Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]

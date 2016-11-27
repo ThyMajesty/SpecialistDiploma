@@ -37,21 +37,29 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
+    'debug_toolbar',
     'social.apps.django_app.default',
-
-    'django_jinja.contrib._pipeline',
+    # 'django_jinja.contrib._pipeline',
     'django_jinja.contrib._easy_thumbnails',
     'django_jinja.contrib._subdomains',
     'django_jinja.contrib._humanize',
 
+    'easy_thumbnails',
+    'subdomains',
+
+    'apps.adapters',
     'apps.core',
     'apps.index',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    #'subdomains.middleware.SubdomainURLRoutingMiddleware', # before CommonMiddleware 
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -59,22 +67,42 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SITE_ID = 1
+
 ROOT_URLCONF = 'project.urls'
+
+SUBDOMAIN_URLCONFS = {
+    None: 'project.urls',  # no subdomain, e.g. ``example.com``
+    'api': 'project.api_urls',      # e.g. ``api.example.com``
+    'admin': 'project.admin_urls',      # e.g. ``admin.example.com``
+}
+
+ALLOWED_HOSTS = [
+    'localhost', 
+    '.localhost', 
+    '127.0.0.1', 
+    '[::1]',
+]
+
+CONTEXT_PROCESSORS = [
+    'django.template.context_processors.debug',
+    'django.template.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
+]
+
 TEMPLATES = [
     {
         "BACKEND": "django_jinja.backend.Jinja2",
         "APP_DIRS": True,
         "OPTIONS": {
-            # Match the template names ending in .html but not the ones in the admin folder.
-            "match_extension": ".html",
+            "match_extension": ".jinja2", # Match the template names ending in .jinja2 but not the ones in the admin folder.
             "match_regex": r"^(?!admin/).*",
             "app_dirname": "templates",
-
-            # Can be set to "jinja2.Undefined" or any other subclass.
-            "undefined": None,
-
+            "undefined": None, # Can be set to "jinja2.Undefined" or any other subclass.
             "newstyle_gettext": True,
-
             "extensions": [
                 "jinja2.ext.do",
                 "jinja2.ext.loopcontrols",
@@ -88,14 +116,7 @@ TEMPLATES = [
                 "django_jinja.builtins.extensions.StaticFilesExtension",
                 "django_jinja.builtins.extensions.DjangoFiltersExtension",
             ],
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',
-            ],
+            "context_processors": CONTEXT_PROCESSORS,
             "bytecode_cache": {
                 "name": "default",
                 "backend": "django_jinja.cache.BytecodeCache",
@@ -104,6 +125,14 @@ TEMPLATES = [
             "autoescape": True,
             "auto_reload": DEBUG,
             "translation_engine": "django.utils.translation",
+        }
+    },
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": CONTEXT_PROCESSORS,
         }
     },
 ]
@@ -123,6 +152,7 @@ DATABASES = {
 
 DATABASE_URL = 'http://neo4j:qwerty@localhost:7474/db/data/'
 os.environ['NEO4J_REST_URL'] = DATABASE_URL
+
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -161,13 +191,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
-# python-social-auth
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# PYTHON-SOCIAL-AUTH
 # https://python-social-auth.readthedocs.io/en/latest/configuration/django.html
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GoogleOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -198,5 +234,25 @@ SOCIAL_AUTH_INACTIVE_USER_URL = '/inactive-user/'
 # If you want to use the full email address as the username, define this setting.
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 
-SOCIAL_AUTH_GOOGLE_KEY = '126035424988-d6554vq6oa5nftp4tjsui4cecrqernk1.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_SECRET = 'TwB9CjQijPPDEcsrca3juo6v'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '126035424988-d6554vq6oa5nftp4tjsui4cecrqernk1.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'TwB9CjQijPPDEcsrca3juo6v'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = []
+
+# DEBUG_TOOLBAR
+
+INTERNAL_IPS = ['127.0.0.1',]
+
+DEBUG_TOOLBAR_PANELS = [
+    'debug_toolbar.panels.versions.VersionsPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
+    'debug_toolbar.panels.settings.SettingsPanel',
+    'debug_toolbar.panels.headers.HeadersPanel',
+    'debug_toolbar.panels.request.RequestPanel',
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    'apps.adapters.debug.TemplatesPanel', # http://stackoverflow.com/questions/38569760/django-debug-toolbar-template-object-has-no-attribute-engine
+    'debug_toolbar.panels.cache.CachePanel',
+    'debug_toolbar.panels.signals.SignalsPanel',
+    'debug_toolbar.panels.logging.LoggingPanel',
+    'debug_toolbar.panels.redirects.RedirectsPanel',
+]

@@ -19,11 +19,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-
-    url(r'', include('apps.index.urls')),
-
-    url(r'', include('social.apps.django_app.urls', namespace='social'))
+    url(r'', include('core.index.urls')),
 ]
 
 if settings.DEBUG:
@@ -31,6 +27,3 @@ if settings.DEBUG:
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]
-
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

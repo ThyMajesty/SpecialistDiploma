@@ -1,6 +1,8 @@
 import { AppComponent } from './app.component';
 import { AppConfig } from './app.config';
+import { API } from './app.constants';
 
+import { AuthModule } from './auth/auth.module';
 import { HeaderModule } from './header/header.module';
 import { HomeModule } from './home/home.module';
 import { UserInfoModule } from './user-info/user-info.module';
@@ -10,13 +12,16 @@ export const AppModule = angular.module('erd', [
         'ui.router',
         'ui.bootstrap',
         'ui.select',
-        'ngCookies',
+        'ngStorage',
+        'ngResource',
 
+        AuthModule,
         HomeModule,
         HeaderModule,
         UserInfoModule,
-        UserPageModule
+        UserPageModule,
     ])
     .config(AppConfig)
+    .constant('API', API)
     .component('app', AppComponent)
     .name;

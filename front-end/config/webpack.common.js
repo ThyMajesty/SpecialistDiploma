@@ -64,7 +64,7 @@ module.exports = {
             jquery: 'jquery'
         }),
         new HtmlWebpackPlugin({
-            title: 'Webpack Starter Angular - kitconcept',
+            title: 'ERD',
             template: 'src/index.html',
             minify: {
                 collapseWhitespace: true,

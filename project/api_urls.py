@@ -19,7 +19,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'', include('core.index.urls')),
+    url(r'', include('apps.core.index.urls')),
 ]
 
 if settings.DEBUG:

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     'easy_thumbnails',
     'subdomains',
+    'tastypie',
 
     'apps.adapters',
     'apps.core',
@@ -149,6 +150,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+FIXTURE_DIRS = ['fixtures']
 
 DATABASE_URL = 'http://neo4j:qwerty@localhost:7474/db/data/'
 os.environ['NEO4J_REST_URL'] = DATABASE_URL

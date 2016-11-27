@@ -1,5 +1,5 @@
 from tastypie import fields
-from tastypie.authorization import Authorization
+from tastypie.authorization import DjangoAuthorization
 from tastypie.resources import Resource
 
 from .models import Connection, KnowlageDB, Instance, Pack, Person
@@ -59,7 +59,7 @@ class KnowlageDBResource(NeoResourceMixin, Resource):
     class Meta:
         resource_name = 'db'
         object_class = KnowlageDB
-        authorization = Authorization()
+        authorization = DjangoAuthorization()
 
 
 
@@ -68,7 +68,7 @@ class InstanceResource(NeoResourceMixin, Resource):
     class Meta:
         resource_name = 'instance'
         object_class = Instance
-        authorization = Authorization()
+        authorization = DjangoAuthorization()
 
 
 
@@ -77,7 +77,7 @@ class PackResource(NeoResourceMixin, Resource):
     class Meta:
         resource_name = 'pack'
         object_class = Pack
-        authorization = Authorization()
+        authorization = DjangoAuthorization()
 
 
 
@@ -86,7 +86,7 @@ class PersonResource(NeoResourceMixin, Resource):
     class Meta:
         resource_name = 'person'
         object_class = Person
-        authorization = Authorization()
+        authorization = DjangoAuthorization()
 
 
 
@@ -95,7 +95,7 @@ class ConnectionResource(NeoResourceMixin, Resource):
     class Meta:
         resource_name = 'connection'
         object_class = Connection
-        authorization = Authorization()
+        authorization = DjangoAuthorization()
 
 
 

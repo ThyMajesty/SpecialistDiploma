@@ -228,6 +228,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://python-social-auth.readthedocs.io/en/latest/configuration/django.html
 
 AUTHENTICATION_BACKENDS = (
+    'apps.adapters.jwt_mv.JWTAuthenticationMiddleware',
     'social.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -320,3 +321,5 @@ API_LIMIT_PER_PAGE = 50
 TASTYPIE_FULL_DEBUG = DEBUG
 TASTYPIE_DEFAULT_FORMATS = ['json',]
 TASTYPIE_ABSTRACT_APIKEY = True
+
+JWT_AUTH_HEADER_PREFIX = 'JWT'

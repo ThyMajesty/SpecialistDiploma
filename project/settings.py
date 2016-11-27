@@ -256,6 +256,10 @@ SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/account-disconnected-redirect-url/'
 # Inactive users can be redirected to this URL when trying to authenticate.
 SOCIAL_AUTH_INACTIVE_USER_URL = '/inactive-user/'
 
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = SOCIAL_AUTH_LOGIN_ERROR_URL = SOCIAL_AUTH_LOGIN_URL = '/oauth_callback/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/oauth_callback/'
+SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = SOCIAL_AUTH_INACTIVE_USER_URL = '/oauth_callback/'
+
 # If you want to use the full email address as the username, define this setting.
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 
@@ -288,7 +292,7 @@ SOCIAL_AUTH_PIPELINE = (
     # Update the user record with any changed info from the auth service.
     'social.pipeline.user.user_details',
     # Updates neo4j records
-    'core.pipeline.update_user_neo4j_record'
+    'apps.core.pipeline.update_user_neo4j_record',
 )
 # DEBUG_TOOLBAR
 

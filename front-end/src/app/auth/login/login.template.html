@@ -1,0 +1,34 @@
+<form id="login-form" role="form">
+    <div class="form-group">
+        <label for="username" class="control-label">Username</label>
+        <input
+            type="text"
+            class="form-control"
+            name="username"
+            id="username"
+            placeholder="Username or Email"
+            ng-model="$ctrl.userData.username">
+    </div>
+    <div class="form-group">
+        <a class="forgot-password pull-right" href="">Forgot password?</a>
+        <label for="password" class="control-label">Password</label>
+        <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            placeholder="Password"
+            ng-model="$ctrl.userData.password">
+    </div>
+    <div class="checkbox pull-right">
+        <label>
+            <input type="checkbox" ng-model="$ctrl.userData.rememberMe">Remember Me
+        </label>
+    </div>
+    <button
+        ng-click="$ctrl.submit()" 
+        type="submit" 
+        class="btn btn btn-primary">
+        Log In
+    </button>
+</form>

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'subdomains',
     'easy_thumbnails',
     'tastypie',
+    'jwt_auth',
 
     'apps.adapters',
     'apps.core',

@@ -18,11 +18,14 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 
+from jwt_auth.views import obtain_jwt_token
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'', include('apps.index.urls')),
     url(r'^api/', include('apps.core.urls')),
+    url(r'^api/token-auth/', obtain_jwt_token),
 
     url(r'', include('social.apps.django_app.urls', namespace='social'))
 ]

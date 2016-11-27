@@ -1,6 +1,7 @@
-export function AuthApi($http, API) {
+export function AuthApi($http, AUTH, API, $localStorage) {
     return {
-        login
+        login,
+        postDb
     }
 
     function login(userData) {
@@ -10,8 +11,19 @@ export function AuthApi($http, API) {
         //userData = JSON.stringify(userData);
         return $http({
             method: 'POST',
-            url: API + 'api/token-auth/',
+            url: AUTH,
             data: JSON.stringify(userData)
+        }).then((response) => {
+            $localStorage.token = response.data.token;
+            return response;
+        });
+    }
+
+    function postDb(data) {
+        return $http({
+            method: 'POST',
+            url: API +'/db/',
+            data: JSON.stringify(data)
         }).then((response) => {
             console.log(response);
             return response;

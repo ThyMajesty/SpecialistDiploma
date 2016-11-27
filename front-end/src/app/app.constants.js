@@ -1,3 +1,4 @@
-const API = 'http://localhost:8080/';
+const AUTH = 'http://localhost:80/api/token-auth/';
+const API = 'http://api.localhost:80/v1/';
 
-export { API }
+export { API, AUTH }

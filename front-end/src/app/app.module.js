@@ -1,6 +1,6 @@
 import { AppComponent } from './app.component';
 import { AppConfig } from './app.config';
-import { API } from './app.constants';
+import { API, AUTH } from './app.constants';
 
 import { AuthModule } from './auth/auth.module';
 import { HeaderModule } from './header/header.module';
@@ -23,5 +23,6 @@ export const AppModule = angular.module('erd', [
     ])
     .config(AppConfig)
     .constant('API', API)
+    .constant('AUTH', AUTH)
     .component('app', AppComponent)
     .name;

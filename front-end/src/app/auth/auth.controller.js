@@ -8,6 +8,9 @@ export function AuthController(AuthApi) {
 
         AuthApi.login(this.userData).then((response) => {
             console.log(response);
+            AuthApi.postDb({}).then((tmp) => {
+                console.log(tmp);
+            })
         });
     }
 

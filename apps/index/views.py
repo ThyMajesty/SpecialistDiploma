@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
 
 def index(request):
@@ -9,3 +9,6 @@ def index(request):
     messages.warning(request, 'Your account expires in three days.')
     messages.error(request, 'Document deleted.')
     return render(request, 'index/index.jinja2')
+
+def oauth_callback(request):
+    return redirect(request.META.get('HTTP_REFERER', 'http://localhost:80/'))

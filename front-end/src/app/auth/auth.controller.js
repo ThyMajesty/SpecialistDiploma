@@ -1,18 +1,7 @@
-export function AuthController(AuthApi) {
-    this.userData = {};
+export function AuthController(GOODLE_OAUTH) {
+    let vm = this;
 
-    this.submit = () => {
-        if(!this.userData.username || !this.userData.password) {
-            return;
-        }
-
-        AuthApi.login(this.userData).then((response) => {
-            console.log(response);
-            AuthApi.postDb({}).then((tmp) => {
-                console.log(tmp);
-            })
-        });
-    }
-
-    console.log('AuthController', AuthApi);
+    Object.assign(vm, {
+        GOODLE_OAUTH
+    });
 }

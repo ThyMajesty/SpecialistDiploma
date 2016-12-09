@@ -2,7 +2,7 @@ const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
 
 module.exports = webpackMerge(commonConfig, {
-    /*devServer: {
+    devServer: {
         proxy: {
             '/authorize': {
                 target: 'http://localhost:80/api/token-auth/',
@@ -14,5 +14,5 @@ module.exports = webpackMerge(commonConfig, {
             },
             
         }
-    }*/
+    }
 });

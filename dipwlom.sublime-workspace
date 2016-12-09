@@ -1,0 +1,571 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"re",
+				"render"
+			],
+			[
+				"sou",
+				"source_address"
+			],
+			[
+				"pr",
+				"print"
+			],
+			[
+				"dum",
+				"dumps\tfunction"
+			],
+			[
+				"is",
+				"isinstance\tfunction"
+			],
+			[
+				"__",
+				"__class__\tclass"
+			],
+			[
+				"se",
+				"self"
+			],
+			[
+				"ob",
+				"obj_value"
+			],
+			[
+				"obj",
+				"obj_value\tstatement"
+			],
+			[
+				"set",
+				"setattr\tfunction"
+			],
+			[
+				"get",
+				"getattr\tfunction"
+			],
+			[
+				"pa",
+				"parent"
+			],
+			[
+				"M",
+				"MyModel\tclass"
+			],
+			[
+				"in",
+				"instance\tparam"
+			],
+			[
+				"def",
+				"default\tparam"
+			],
+			[
+				"fi",
+				"Field"
+			],
+			[
+				"fie",
+				"field_list\tparam"
+			],
+			[
+				"fiel",
+				"field_name\tforstmt"
+			],
+			[
+				"ch",
+				"cache\tstatement"
+			],
+			[
+				"y",
+				"yield\tkeyword"
+			],
+			[
+				"Ma",
+				"MangaSeriaOverview\tclass"
+			],
+			[
+				"ste",
+				"settings\tmodule"
+			],
+			[
+				"ur",
+				"urls"
+			],
+			[
+				"co",
+				"color\tstatement"
+			],
+			[
+				"choi",
+				"choice\tstatement"
+			],
+			[
+				"bg",
+				"bg_h\tstatement"
+			],
+			[
+				"ra",
+				"rand_position\tfunction"
+			],
+			[
+				"ran",
+				"rand_point\tfunction"
+			],
+			[
+				"ima",
+				"images_src\tstatement"
+			],
+			[
+				"im",
+				"images_src\tstatement"
+			],
+			[
+				"lis",
+				"listdir\tfunction"
+			],
+			[
+				"f",
+				"from"
+			],
+			[
+				"her",
+				"hero1"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Anaconda Python Builder",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Anaconda Python Builder",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 241.0,
+		"last_filter": "insta",
+		"selected_items":
+		[
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 549.0
+	},
+	"console":
+	{
+		"height": 162.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/POD666/src/dipwlom"
+	],
+	"file_history":
+	[
+		"/C/Python27/Lib/site-packages/py2neo/neo4j.py",
+		"/C/Python27/Lib/site-packages/py2neo/packages/httpstream/http.py",
+		"/C/Python27/Lib/site-packages/py2neo/packages/httpstream/packages/urimagic/util.py",
+		"/C/Python27/Lib/site-packages/py2neo/core.py",
+		"/C/Python27/Lib/site-packages/py2neo/env.py",
+		"/C/Users/POD666/src/dipvlom/apps/__init__.py",
+		"/C/Users/POD666/Downloads/066be40fsd0000204000000073701.dat",
+		"/C/Windows/System32/drivers/etc/hosts",
+		"/C/Users/POD666/Desktop/qwert.txt",
+		"/C/Users/POD666/Desktop/qwe.txt",
+		"/C/Users/POD666/src/test.py",
+		"/C/Users/POD666/src/ert.py",
+		"/C/Users/POD666/src/code/lab_3/sftp-config.json",
+		"/C/Users/POD666/src/code/lab_3/jacobi.c",
+		"/C/Users/POD666/src/code/lab_2/input.txt",
+		"/C/Users/POD666/src/code/lab_1/main.c",
+		"/C/Users/POD666/src/code/lab_2/integrate.c",
+		"/C/Users/POD666/src/code/lab_1/sftp-config.json",
+		"/C/Users/POD666/src/code/lab_2/sftp-config.json",
+		"/C/Users/POD666/src/code/lab_1/in.txt",
+		"/C/Users/POD666/Documents/art-interior.bp1",
+		"/C/Users/POD666/Documents/Visual Studio 2015/Projects/WindowsFormsApplication1/WindowsFormsApplication1/Form1.cs",
+		"/C/Users/POD666/Documents/Visual Studio 2015/Projects/WindowsFormsApplication2/WindowsFormsApplication2/Form1.cs",
+		"/C/Users/POD666/src/pavl/MPIS_Priadko_lab2/build/classes/META-INF/persistence.xml",
+		"/C/Users/POD666/src/pavl/MPIS_Priadko_lab2/src/META-INF/persistence.xml",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/urls.py",
+		"/C/Python27/lib/site-packages/django/views/generic/edit.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/forms.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/models.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/views.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/manga_viewer/urls.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/manga_viewer/settings.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/manga_list.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/mangapage_list.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/mangapage_form.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/mangapage_confirm_delete.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/mangaseria_confirm_delete.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/genre_form.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/mangaauthor_list.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/mangaseria_list.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/manga_confirm_delete.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/manga_form.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/mangaauthor_form.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/mangaseria_form.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/manga_viewer/settings_local.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/genre_confirm_delete.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/core/views.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/templates/manga/genre_list.html",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/admin.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/core/urls.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/constants.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/core/__init__.py",
+		"/C/Users/POD666/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/POD666/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/manage.py",
+		"/C/Users/POD666/AppData/Roaming/Sublime Text 3/Packages/Anaconda/Anaconda.sublime-settings",
+		"/C/Users/POD666/AppData/Roaming/Sublime Text 3/Packages/User/Anaconda.sublime-settings",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/manga/__init__.py",
+		"/C/Users/POD666/src/pavl/manga_viewer/manga_viewer/apps/__init__.py",
+		"/C/Users/POD666/src/Android6/Android6/Android6.vcxproj.filters",
+		"/C/Users/POD666/Desktop/OpenGL/HelloOpenGLES20/src/com/example/android/opengl/MyGLSurfaceView.java",
+		"/C/Users/POD666/src/Android6/Android6/Android6.vcxproj.user",
+		"/C/Users/POD666/Desktop/OpenGL/HelloOpenGLES10/src/com/example/android/opengl/MyGLSurfaceView.java",
+		"/C/NVPACK/Samples/GameWorks_Samples/samples/build/vs2010android/BlendedAA.sln",
+		"/C/NVPACK/Samples/GameWorks_Samples/samples/build/vs2010android/BlendedAA.VC.opendb",
+		"/C/NVPACK/Samples/GameWorks_Samples/samples/build/vs2010android/BlendedAA.vcxproj",
+		"/C/NVPACK/Samples/GameWorks_Samples/samples/build/vs2010android/BlendedAA.vcxproj.filters",
+		"/C/NVPACK/Samples/GameWorks_Samples/samples/build/vs2010android/BlendedAA.vcxproj.user",
+		"/C/Users/POD666/Desktop/HFA_UA/HFA.exe",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1994",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1993",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1992",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1991",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1990",
+		"/C/Users/POD666/Desktop/HFA_UA/wtitles.bin",
+		"/C/Users/POD666/Desktop/HFA_UA/windps.cfg",
+		"/C/Users/POD666/Desktop/HFA_UA/tmscl.bin",
+		"/C/Users/POD666/Desktop/HFA_UA/tmplist.ind",
+		"/C/Users/POD666/Desktop/HFA_UA/mainlist.ind",
+		"/C/Users/POD666/Desktop/HFA_UA/mainlist.grp",
+		"/C/Users/POD666/Desktop/HFA_UA/Front.bmp",
+		"/C/Users/POD666/Desktop/HFA_UA/clist.bin",
+		"/C/Users/POD666/Desktop/HFA_UA/cid.bin",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.rid",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.par",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2014",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.map",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.ind",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2013",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2012",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2010",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2011",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2009",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2008",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2007",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2006",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2004",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2005",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2002",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2003",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2001",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.2000",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1999",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1998",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1997",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1996",
+		"/C/Users/POD666/Desktop/HFA_UA/10000.1995",
+		"/C/Users/POD666/Downloads/db/multicolor.py",
+		"/C/Program Files/Bignox/BigNoxVM/fs/nox",
+		"/C/Users/POD666/.BigNox/BigNoxVM.xml",
+		"/C/Users/POD666/src/aok/aok/fabfile.py",
+		"/C/Users/POD666/src/mpi_lab_1/sftp-config.json",
+		"/C/Users/POD666/Documents/RGB 2/New folder/code/lab_series/out.txt",
+		"/C/Users/POD666/Documents/RGB 2/New folder/code/lab_series/in.txt",
+		"/C/Users/POD666/Documents/RGB 2/New folder/code/lab_series/ex.c",
+		"/C/Users/POD666/src/odnd/app/hero/hero.js",
+		"/C/Users/POD666/src/odnd/app/view1/view1.js",
+		"/C/Users/POD666/src/odnd/app/app.js",
+		"/C/Users/POD666/src/odnd/bower.json",
+		"/C/Users/POD666/src/odnd/app/index.html",
+		"/C/Users/POD666/src/odnd/app/hero/views/heroes_list.html",
+		"/C/Users/POD666/src/odnd/api/heroes/1",
+		"/C/Users/POD666/src/odnd/api/heroes/2",
+		"/C/Users/POD666/Documents/RGB/AI/my/Ant-Colony/main.py",
+		"/C/Users/POD666/Documents/RGB/AI/my/lab2.pro",
+		"/C/Users/POD666/Documents/RGB/AI/Ant-Colony-TSP-Solver/main.py",
+		"/C/Users/POD666/Documents/RGB/AI/Ant-Colony-TSP-Solver/ant.py",
+		"/C/Users/POD666/Documents/RGB/AI/Ant-Colony-TSP-Solver/distance.txt"
+	],
+	"find":
+	{
+		"height": 28.0
+	},
+	"find_in_files":
+	{
+		"height": 117.0,
+		"where_history":
+		[
+			"C:\\Users\\POD666\\src\\pavl\\MPIS_Priadko_lab2",
+			"C:\\Users\\POD666\\src\\",
+			"C:\\Users\\POD666\\src\\pavl",
+			"<open folders>,<current file>",
+			"<open folders>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"StructuredR",
+			"pri",
+			"connection_classes",
+			"HTTPSConnection",
+			"Graph",
+			"NEO4J_URI",
+			"Request(",
+			"Request",
+			"NEO4J_SERVER_PORT",
+			"ololo",
+			"FieldManager",
+			"”",
+			"musicbox",
+			"priadko",
+			"\t",
+			"manife",
+			"HelloOpenGLES10",
+			"..\\..\\..\\Desktop\\OpenGL\\",
+			"..\\..\\..\\Desktop\\OpenGL",
+			"\"HelloOpenGLES10",
+			"..\\..\\..\\Desktop\\OpenGL\\",
+			"view1",
+			"car",
+			"engine",
+			"wheels",
+			"cpu",
+			"body",
+			"car_id",
+			"volume",
+			"engine_id",
+			"size",
+			"wheels_id",
+			"doors",
+			"generation",
+			"color",
+			"body_id",
+			"get_lucky",
+			"bank_account",
+			"offer_work",
+			"meet_people",
+			"public_event",
+			"live_near_house",
+			"cool_wear",
+			"   ",
+			" \n",
+			"\n\n",
+			"\n",
+			"Movement);",
+			"Movement)ж",
+			"Enemy);",
+			"Collectable);",
+			"Entity);",
+			"regime"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"obj_value",
+			"CommonFieldFabric",
+			"\"",
+			"    ",
+			"..\\HelloOpenGLES10",
+			"",
+			"Tegra-Android",
+			"\"..\\HelloOpenGLES10",
+			"",
+			"hero",
+			"pc",
+			"ram",
+			"cpu",
+			"motherboard",
+			"pc_id",
+			"capacity",
+			"ram_id",
+			"performance",
+			"cpu_id",
+			"name",
+			"form_factor",
+			"generation",
+			"motherboard_id",
+			"guard_house",
+			"serve_if_asked",
+			"homely",
+			"owner_cares",
+			"belongs",
+			"live_in_yard",
+			"live_near_house",
+			" ",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 389.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 130.0
+	},
+	"pinned_build_system": "",
+	"project": "dipwlom.sublime-project",
+	"replace":
+	{
+		"height": 52.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 307.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

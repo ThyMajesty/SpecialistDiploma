@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$xa7y-njl%pgn8tk4+32s#-eku!m(*dxiaw(n92%o3f91g0%d0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not False
 
 ALLOWED_HOSTS = []
 
@@ -42,13 +42,12 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'social.apps.django_app.default',
-    # 'django_jinja.contrib._pipeline',
-    'django_jinja.contrib._easy_thumbnails',
+    # 'django_jinja.contrib._easy_thumbnails',
     'django_jinja.contrib._subdomains',
     'django_jinja.contrib._humanize',
 
     'subdomains',
-    'easy_thumbnails',
+    #'easy_thumbnails',
     'tastypie',
     'jwt_auth',
     'corsheaders',
@@ -56,6 +55,8 @@ INSTALLED_APPS = [
     'apps.adapters',
     'apps.core',
     'apps.index',
+    'apps.utils',
+    'apps.xapi',
 ]
 
 
@@ -216,9 +217,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_URL = '/media/'
 
@@ -289,7 +288,7 @@ SOCIAL_AUTH_PIPELINE = (
     # Update the user record with any changed info from the auth service.
     'social.pipeline.user.user_details',
     # Updates neo4j records
-    'core.pipeline.update_user_neo4j_record'
+    'apps.core.pipeline.update_user_neo4j_record'
 )
 # DEBUG_TOOLBAR
 

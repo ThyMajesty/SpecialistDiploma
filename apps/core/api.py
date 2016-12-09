@@ -1,3 +1,5 @@
+from neomodel import RelationshipManager
+
 from tastypie import fields
 from tastypie.authorization import DjangoAuthorization
 from tastypie.resources import Resource
@@ -13,7 +15,10 @@ class NeoResourceMixin():
     def detail_uri_kwargs(self, bundle_or_obj):
         kwargs = {}
 
-        kwargs['pk'] = bundle_or_obj.pk
+        try:
+            kwargs['pk'] = bundle_or_obj.pk
+        except:
+            kwargs['pk'] = bundle_or_obj.obj.pk
 
         return kwargs
 
@@ -52,7 +57,18 @@ class NeoResourceMixin():
     def rollback(self, bundles):
         pass
 
+    def dehydrate(self, bundle):
+        obj = bundle.obj
+        for key in obj.defined_properties().keys():
+            value = getattr(obj, key)
+            if isinstance(value, RelationshipManager):
+                bundle.data[key] = value.all()
+            elif key == 'value':
+                bundle.data[key] = json.dumps(value)
+            else:
+                bundle.data[key] = value
 
+        return bundle
 
 class KnowlageDBResource(NeoResourceMixin, Resource):
     model_class = KnowlageDB

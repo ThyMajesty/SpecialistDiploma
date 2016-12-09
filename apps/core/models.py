@@ -79,6 +79,4 @@ class Person(Value2ObjMixin, StructuredNode):
 
     connections = RelationshipTo('Connection', REL_LIKE, model=RelationModel)
     
-    nodes = RelationshipTo('Connection', REL_LIKE, model=RelationModel)
-
     packs = RelationshipFrom('Pack', REL_OWN, model=RelationModel)

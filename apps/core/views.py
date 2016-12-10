@@ -8,8 +8,11 @@ from .models import Person
 
 def me(request):
     person = Person.nodes.get(user_id=request.user.pk)
+    if request.POST:
+        person.value = request.POST
+        person.save()
     return JsonResponse(person.value)
-    
+
 
 def create_viewset_for_model(model):
     name = model.__name__

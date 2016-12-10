@@ -2,7 +2,7 @@ from rest_framework import routers
 from django.conf.urls import url, include
 
 from .models import KnowlageDB, Instance, Pack, Person, Connection
-from .views import create_viewset_for_model
+from .views import create_viewset_for_model, me
 
 router = routers.DefaultRouter()
 for model in [KnowlageDB, Instance, Pack, Person, Connection]:
@@ -12,5 +12,6 @@ for model in [KnowlageDB, Instance, Pack, Person, Connection]:
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^', include(router.urls)),
+    url(r'^me/', me),
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

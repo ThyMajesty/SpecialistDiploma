@@ -9,7 +9,7 @@ def decorate(func):
         properties = self.defined_properties(rels=False, aliases=False).items()
         for key, val in properties:
             raw_value = getattr(self, key)
-            if raw_value:
+            if raw_value and isinstance(raw_value, unicode):
                 setattr(self, key, val.inflate(raw_value))
         return func_result
     return wraps(func)(wrapper)

@@ -1,10 +1,13 @@
-from rest_framework.views import APIView
-from django.http import Http404
-from rest_framework.views import APIView
+from django.http import Http404, JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.serializers import Serializer
+from .models import Person
+
+def me(request):
+    person = Person.nodes.get(user_id=request.user.pk)
+    return JsonResponse(person.value)
 
 def create_viewset_for_model(model):
     name = model.__name__
@@ -20,6 +23,7 @@ def create_viewset_for_model(model):
 
         def create(self, request):
             data = request.data
+            map(unicode, data.values())
             obj = self.neo_model(**data)
             try:
                 obj.save()

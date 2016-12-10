@@ -1,18 +1,26 @@
-export function LoginController(AuthApi, $localStorage) {
-    let vm = this;
-    const { username, password } = $localStorage;
-    
-    Object.assign(vm, {
-        userData: { username, password },
-        submit
-    });
+export class LoginController {
+    constructor(AuthApi, $localStorage) { 
+        this.AuthApi = AuthApi;
+        this.$storage = $localStorage;
+        this.errorMessage = '';
+        this.input = {
+            username: null,
+            password: null,
+            rememberMe: true
+        }
+    }
 
-    function submit() {
-        if (!vm.userData.username || !vm.userData.password) {
+    submit() {
+        this.loginForm.$setSubmitted();
+        this.errorMessage = '';
+        if (!this.input.username || !this.input.password) {
             return;
         }
-        AuthApi.login(vm.userData).then((response) => {
+
+        this.AuthApi.login(this.input).then((response) => {
             console.log(response);
+        }, (error) => {
+            this.errorMessage = 'Specified login or password is not correct'
         });
     }
 }

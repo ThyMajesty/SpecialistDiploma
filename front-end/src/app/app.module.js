@@ -1,12 +1,11 @@
 import { AppComponent } from './app.component';
 import { AppConfig } from './app.config';
-import { API, AUTH, GOODLE_OAUTH } from './app.constants';
+import { API } from './app.constants';
+
+import { CommonModule } from './common/common.module';
 
 import { AuthModule } from './auth/auth.module';
-import { HeaderModule } from './header/header.module';
-import { HomeModule } from './home/home.module';
-import { UserInfoModule } from './user-info/user-info.module';
-import { UserPageModule } from './user-page/user-page.module';
+import { IndexModule } from './index/index.module';
 
 export const AppModule = angular.module('erd', [
         'ui.router',
@@ -14,17 +13,13 @@ export const AppModule = angular.module('erd', [
         'ui.bootstrap.tpls',
         'ui.select',
         'ngStorage',
-        'ngResource',
 
+        CommonModule,
+        
         AuthModule,
-        HomeModule,
-        HeaderModule,
-        UserInfoModule,
-        UserPageModule,
+        IndexModule
     ])
     .config(AppConfig)
     .constant('API', API)
-    .constant('AUTH', AUTH)
-    .constant('GOODLE_OAUTH', GOODLE_OAUTH)
     .component('app', AppComponent)
     .name;

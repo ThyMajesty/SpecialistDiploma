@@ -1,3 +1,4 @@
-export function AppController(API, $localStorage) {
-    //console.log(API, $localStorage);
+export class AppController {
+    constructor() {
+    }
 }

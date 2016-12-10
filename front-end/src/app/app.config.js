@@ -1,8 +1,7 @@
-export function AppConfig($stateProvider, $urlRouterProvider, API, $localStorageProvider, $httpProvider, $resourceProvider) {
-    //console.log(API, $localStorageProvider, $resourceProvider);
+export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider) {
 
     $urlRouterProvider
-        .otherwise('/home');
+        .otherwise('/');
 
     $stateProvider
         .state('app', {
@@ -13,12 +12,20 @@ export function AppConfig($stateProvider, $urlRouterProvider, API, $localStorage
             url: '/auth',
             template: '<auth></auth>'
         })
-        .state('app.home', {
-            url: '/home',
-            template: '<home user-info="$resolve.userInfo"></home>',
+        .state('app.index', {
+            abstract: true,
+            template: '<index></index>',
+        })
+        .state('app.index.home', {
+            url: '/',
+            template: '<home></home>',
+        })
+        .state('app.index.user', {
+            url: '/user/:userId',
+            template: '<user-page user-info="$resolve.userInfo"></user-page>',
             resolve: {
-                userInfo: function(UserInfoService) {
-                    return UserInfoService.getUserInfo();
+                userInfo: function() {
+                    return {};
                 }
             }
         });
@@ -28,10 +35,9 @@ export function AppConfig($stateProvider, $urlRouterProvider, API, $localStorage
         return {
             'request': function(config) {
                 config.headers = config.headers || {};
-                if ($localStorage.token) {
-                    config.headers.Authorization = $localStorage.token;
-                    //config.headers['Access-Control-Allow-Origin'] = '*';
-                    //config.headers['Content-Type'] = 'application/json';
+                let token = $localStorage.token;
+                if (token) {
+                    config.headers.Authorization = token;
                 }
                 return config;
             },

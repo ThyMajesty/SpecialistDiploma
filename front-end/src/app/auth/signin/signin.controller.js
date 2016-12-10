@@ -1,16 +1,15 @@
-export function SignInController(AuthApi) {
-    let vm = this;
+export class SignInController {
+    constructor(AuthApi) {
+        this.AuthApi = AuthApi;
+        this.input = {};
+    }
 
-    Object.assign(vm, {
-        userData: {},
-        submit
-    });
-
-    function submit() {
-        if (!vm.userData.username || !vm.userData.password) {
+    submit() {
+        this.singInForm.$setSubmitted();
+        if (!this.input.username || !this.input.password) {
             return;
         }
-        AuthApi.signin(vm.userData).then((response) => {
+        this.AuthApi.signin(this.input).then((response) => {
             console.log(response);
         });
     }

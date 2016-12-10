@@ -1,5 +1,8 @@
-const AUTH = 'http://localhost:80/api/token-auth/';
-const API = 'http://api.localhost:80/v1/';
-const GOODLE_OAUTH = 'http://localhost/login/google-oauth2/';
+const API = {
+    API: 'http://api.localhost:8000/v1/',
+    AUTH: 'http://localhost:8000/api/token-auth/',
+    GOOGLE_OAUTH: 'http://localhost:8000/login/google-oauth2/',
+    USER: 'http://localhost:8000/api/v1/person/e2cdacd2-81af-44cb-a6b4-02f748fad23d/'
+};
 
-export { API, AUTH, GOODLE_OAUTH }
+export { API }

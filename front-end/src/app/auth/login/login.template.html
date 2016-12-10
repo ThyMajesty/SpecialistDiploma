@@ -1,5 +1,5 @@
-<form id="login-form" role="form">
-    <div class="form-group">
+<form id="$ctrl.loginForm" name="$ctrl.loginForm" role="form" novalidate>
+    <div class="form-group" form-group-validation>
         <label for="username" class="control-label">Username</label>
         <input
             type="text"
@@ -7,9 +7,10 @@
             name="username"
             id="username"
             placeholder="Username or Email"
-            ng-model="$ctrl.userData.username">
+            ng-model="$ctrl.input.username"
+            ng-required="true">
     </div>
-    <div class="form-group">
+    <div class="form-group" form-group-validation>
         <a class="forgot-password pull-right" href="">Forgot password?</a>
         <label for="password" class="control-label">Password</label>
         <input
@@ -18,11 +19,13 @@
             name="password"
             id="password"
             placeholder="Password"
-            ng-model="$ctrl.userData.password">
+            ng-model="$ctrl.input.password"
+            ng-required="true">
     </div>
+    <p class="text-danger" ng-if="$ctrl.errorMessage" ng-bind="$ctrl.errorMessage"></p>
     <div class="checkbox pull-right">
-        <label>
-            <input type="checkbox" ng-model="$ctrl.userData.rememberMe">Remember Me
+        <label for="remember-me">
+            <input id="remember-me" name="remember-me" type="checkbox" ng-model="$ctrl.input.rememberMe">Remember Me
         </label>
     </div>
     <button

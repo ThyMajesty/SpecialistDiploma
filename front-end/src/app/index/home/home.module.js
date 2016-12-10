@@ -1,5 +1,5 @@
 import { HomeComponent } from './home.component';
 
-export const HomeModule = angular.module('erd.home', [])
+export const HomeModule = angular.module('erd.index.home', [])
     .component('home', HomeComponent)
     .name;

@@ -1,9 +1,12 @@
 #http://neomodel.readthedocs.io/en/latest/getting_started.html
 from uuid import uuid4
+import json
 
+from apps.adapters.neomodel_properties_fix import *
 from neomodel import StructuredNode, StructuredRel, One, ZeroOrMore
 from neomodel import StringProperty, IntegerProperty, JSONProperty
 from neomodel import RelationshipTo, RelationshipFrom, Relationship
+from neomodel import RelationshipManager
 
 from .utils import json2obj, obj2json
 
@@ -21,6 +24,16 @@ class Value2ObjMixin(object):
     @value_obj.setter
     def value_obj(self, value):
         self.value = obj2json(value)
+
+    def to_json(self):
+        data = {}
+        for key in self.defined_properties().keys():
+            value = getattr(self, key)
+            if isinstance(value, RelationshipManager):
+                data[key] = map(lambda obj: obj.pk, value.all())
+            else:
+                data[key] = value
+        return data
         
 
 class RelationModel(StructuredRel):

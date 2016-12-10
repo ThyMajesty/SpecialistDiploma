@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'subdomains',
     #'easy_thumbnails',
     'tastypie',
+    'rest_framework',
     'jwt_auth',
     'corsheaders',
 
@@ -318,3 +319,10 @@ TASTYPIE_DEFAULT_FORMATS = ['json',]
 TASTYPIE_ABSTRACT_APIKEY = True
 
 JWT_AUTH_HEADER_PREFIX = 'JWT'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+    'PAGE_SIZE': 10
+}

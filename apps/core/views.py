@@ -3,11 +3,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.serializers import Serializer
+from rest_framework import serializers  
 from .models import Person
 
 def me(request):
     person = Person.nodes.get(user_id=request.user.pk)
     return JsonResponse(person.value)
+    
 
 def create_viewset_for_model(model):
     name = model.__name__
@@ -58,7 +60,7 @@ def create_viewset_for_model(model):
                 raise Http404
 
         def get_serializer_class(self):
-            return Serializer
+            return type('Serializer', (Serializer,), {'pk':serializers.CharField()})
 
     view_set = type(name + 'ViewSet', (BaseViewSet,), { 'neo_model':model, 'queryset':model.nodes.all() })
     return view_set

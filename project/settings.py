@@ -320,6 +320,12 @@ TASTYPIE_ABSTRACT_APIKEY = True
 
 JWT_AUTH_HEADER_PREFIX = 'JWT'
 
+
 REST_FRAMEWORK = {
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
+    'DEFAULT_CONTENT_NEGOTIATION_CLASS': 'apps.adapters.negotiation.IgnoreClientContentNegotiation',
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    )
 }

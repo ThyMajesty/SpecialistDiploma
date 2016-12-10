@@ -13,6 +13,8 @@ export const AppModule = angular.module('erd', [
         'ui.bootstrap.tpls',
         'ui.select',
         'ngStorage',
+        'angular-loading-bar',
+        'ngAnimate',
 
         CommonModule,
         

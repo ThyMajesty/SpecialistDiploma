@@ -6,7 +6,7 @@
         <div class="col-lg-8 col-xs-8 col-sm-8 col-md-8">
             <form name="$ctrl.userForm" class="form-horizontal">
                 <fieldset>
-                    <div class="form-group">
+                    <div class="form-group" form-group-validation>
                         <label for="givenName" class="col-lg-2 control-label">Name</label>
                         <div class="col-lg-10">
                             <input 
@@ -15,11 +15,12 @@
                                 placeholder="Name"
                                 class="form-control"
                                 id="givenName"
-                                ng-model="$ctrl.input.name.givenName"
+                                ng-model="$ctrl.input.value.name.givenName"
+                                ng-required="true"
                                 >
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" form-group-validation>
                         <label for="familyName" class="col-lg-2 control-label">Last Name</label>
                         <div class="col-lg-10">
                             <input 
@@ -28,20 +29,14 @@
                                 placeholder="Last Name"
                                 class="form-control" 
                                 id="familyName" 
-                                ng-model="$ctrl.input.name.familyName" 
+                                ng-model="$ctrl.input.value.name.familyName" 
+                                ng-required="true"
                                 >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="textArea" class="col-lg-2 control-label">Textarea</label>
-                        <div class="col-lg-10">
-                            <textarea class="form-control" rows="3" id="textArea"></textarea>
-                            <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="submit" class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save Changes</button>
                         </div>
                     </div>
                 </fieldset>

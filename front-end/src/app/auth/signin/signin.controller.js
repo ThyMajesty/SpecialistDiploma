@@ -10,7 +10,7 @@ export class SignInController {
             return;
         }
         this.AuthApi.signin(this.input).then((response) => {
-            console.log(response);
+            //console.log(response);
         });
     }
 }

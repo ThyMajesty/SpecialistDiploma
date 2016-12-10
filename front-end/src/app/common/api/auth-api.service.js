@@ -16,7 +16,7 @@ export class AuthApi {
                 if (input.rememberMe) {
                     this.$storage.user = { username, password };
                 }
-                console.log(this.$state.go('app.home'));
+                //console.log(this.$state.go('app.home'));
                 return response;
             });
     }

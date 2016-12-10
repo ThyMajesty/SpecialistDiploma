@@ -1,4 +1,4 @@
-export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider) {
+export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider) {
 
     $urlRouterProvider
         .otherwise('/');
@@ -30,6 +30,8 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider) {
             }
         });
 
+    cfpLoadingBarProvider.includeSpinner = true;
+    cfpLoadingBarProvider.includeBar = true;
 
     $httpProvider.interceptors.push(function($q, $location, $localStorage) {
         return {

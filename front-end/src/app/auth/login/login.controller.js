@@ -18,7 +18,7 @@ export class LoginController {
         }
 
         this.AuthApi.login(this.input).then((response) => {
-            console.log(response);
+            //console.log(response);
         }, (error) => {
             this.errorMessage = 'Specified login or password is not correct'
         });

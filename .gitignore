@@ -4,3 +4,4 @@ build/
 static/
 *.pyc
 npm-debug.log
+test.py

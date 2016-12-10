@@ -30,7 +30,7 @@ class Value2ObjMixin(object):
         for key in self.defined_properties().keys():
             value = getattr(self, key)
             if isinstance(value, RelationshipManager):
-                data[key] = map(lambda obj: obj.pk, value.all())
+                data[key] = map(lambda obj: {obj.pk:obj.value}, value.all())
             else:
                 data[key] = value
         return data

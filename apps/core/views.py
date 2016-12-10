@@ -23,7 +23,7 @@ def create_viewset_for_model(model):
 
         def list(self, request):
             objs_list = self.neo_model.nodes.all()
-            objs_list_json = map(lambda obj: obj.pk, objs_list)
+            objs_list_json = map(lambda obj: {obj.pk: obj.value}, objs_list)
             return Response(objs_list_json)
 
         def create(self, request):

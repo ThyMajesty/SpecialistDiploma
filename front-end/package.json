@@ -37,8 +37,10 @@
     "babel-runtime": "^6.18.0",
     "bootstrap": "^3.3.7",
     "bootswatch": "^3.3.7",
+    "d3": "^3.5.17",
     "jquery": "^3.1.1",
     "ngstorage": "^0.3.11",
+    "rx": "^4.1.0",
     "ui-select": "^0.19.6"
   },
   "devDependencies": {

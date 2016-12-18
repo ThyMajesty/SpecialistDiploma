@@ -16,9 +16,9 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
             abstract: true,
             template: '<index></index>',
         })
-        .state('app.index.home', {
+        .state('app.index.dashboard', {
             url: '/',
-            template: '<home></home>',
+            template: '<dashboard></dashboard>',
         })
         .state('app.index.user', {
             url: '/user/:userId',

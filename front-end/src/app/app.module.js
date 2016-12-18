@@ -15,7 +15,7 @@ export const AppModule = angular.module('erd', [
         'ngStorage',
         'angular-loading-bar',
         'ngAnimate',
-
+        
         CommonModule,
         
         AuthModule,

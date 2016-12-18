@@ -1,0 +1,13 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="$ctrl.cancel()" aria-hidden="true">×</button>
+        <h4 class="modal-title">Remove</h4>
+    </div>
+    <div class="modal-body">
+        Do you realy want to delete {{$ctrl.entity.name}}?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="$ctrl.cancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.confirm()">Confirm</button>
+    </div>
+</div>

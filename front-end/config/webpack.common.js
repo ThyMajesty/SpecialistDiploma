@@ -63,6 +63,12 @@ module.exports = {
             $: 'jquery',
             jquery: 'jquery'
         }),
+        new webpack.ProvidePlugin({
+            d3: 'd3'
+        }),
+        new webpack.ProvidePlugin({
+            rx: 'rx'
+        }),
         new HtmlWebpackPlugin({
             title: 'ERD',
             template: 'src/index.html',

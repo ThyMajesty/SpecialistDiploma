@@ -6,9 +6,13 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.serializers import Serializer
 from rest_framework import serializers  
 from .models import Person
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 def me(request):
-    person = Person.nodes.get(user_id=request.user.pk)
+    jwt_authentication = JSONWebTokenAuthentication()
+    if jwt_authentication.get_jwt_value(request):
+        user, jwt = jwt_authentication.authenticate(request)
+    person = Person.nodes.get(user_id=user.pk)
     if request.POST:
         person.value = request.POST
         person.save()

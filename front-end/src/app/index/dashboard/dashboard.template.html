@@ -1,12 +1,29 @@
-<div class="row">
-    <div class="page-header" id="banner">
-        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
-            <div class="page-header">
-                <h1 id="navbar">Dashboard</h1>
-            </div>
-            <div class="col-lg-8 col-xs-8 col-sm-8 col-md-8">
-                <mind-map-editor mind-map="root"></mind-map-editor>
+<div class="row dashboard">
+    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+        <div class="page-header">
+            <h1 id="navbar">Dashboard</h1>
+        </div>
+        <div class="col-lg-8 col-xs-8 col-sm-8 col-md-8">
+            <mind-map-editor ng-if mind-map="root"></mind-map-editor>
+            <div class="list-group bases">
+                <a href="" class="base list-group-item" ng-click="expand[base.id] = !expand[base.id]" ng-repeat="base in $ctrl.data.bases">
+                    <h4 class="base-head list-group-item-heading">{{base.name}}
+                        <div class="base-head-controls">
+                            <button class="btn " ng-click="$event.stopPropagation()" ui-sref="app.index.edit({ baseId: base.id})">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </h4>
+                    <div class="animate-show base-body" ng-show="expand[base.id]">
+                        <p class="description list-group-item-text">{{base.description}}</p>
+                    </div>
+                </a>
+                <a href="" class="base list-group-item">
+                    <h4 class="base-head list-group-item-heading">Add New Base
+                        <span class="base-head-controls glyphicon glyphicon-plus"></span>
+                    </h4>
+                </a>
             </div>
         </div>
-    </div>    
+    </div>
 </div>

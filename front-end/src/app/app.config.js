@@ -20,6 +20,20 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
             url: '/',
             template: '<dashboard></dashboard>',
         })
+        .state('app.index.edit', {
+            url: '/edit/:baseId',
+            template: '<edit-base base="$resolve.base"></dashboard>',
+            resolve: {
+                base: function($stateParams) {
+                    console.log($stateParams);
+                    return {
+                        id: $stateParams.baseId,
+                        name: 'baseName',
+                        description: 'base description'
+                    };
+                }
+            }
+        })
         .state('app.index.user', {
             url: '/user/:userId',
             template: '<user-page user-info="$resolve.userInfo"></user-page>',

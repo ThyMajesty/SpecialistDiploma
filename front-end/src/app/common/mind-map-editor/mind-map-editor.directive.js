@@ -6,7 +6,7 @@ export function MindMapEditorDirective(addEditEntityModal) {
     return {
         restrict: 'E',
         scope: {
-            mindMapName: '=name'
+            base: '='
         },
         template: template,
         link
@@ -21,7 +21,11 @@ export function MindMapEditorDirective(addEditEntityModal) {
             remove: addEditEntityModal({type: 'remove'}).open
         }
 
-        scope.treeData = mindMapEditor.setTreeData({name: 'Default Root'});
+        const tree = {
+            name: scope.base.name
+        }
+
+        scope.treeData = mindMapEditor.setTreeData(tree);
 
         function changedTreeData(treeData) {
             scope.treeData = treeData;

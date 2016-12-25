@@ -5,7 +5,7 @@ django-debug-toolbar
 django-subdomains
 django-tastypie
 django-extensions
-django-jwt-auth
+djangorestframework-jwt
 django-cors-headers
 djangorestframework
 

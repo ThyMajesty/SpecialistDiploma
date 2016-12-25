@@ -66,7 +66,6 @@ MIDDLEWARE = [
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'index.widdleware.JWTAuthenticationMiddleware',
     'apps.adapters.subdomain.SubdomainURLRoutingMiddleware', # before CommonMiddleware 
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -229,7 +228,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://python-social-auth.readthedocs.io/en/latest/configuration/django.html
 
 AUTHENTICATION_BACKENDS = (
-    'apps.adapters.jwt_mv.JWTAuthenticationMiddleware',
     'social.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -328,5 +326,10 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-    )
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
 }

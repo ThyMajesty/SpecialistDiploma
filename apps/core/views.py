@@ -17,11 +17,14 @@ def me(request):
         person = Person.nodes.get(user_id=user.pk)
     except:
         person = Person(user_id=user.pk).save()
-
+        person.value = {
+            'user': user.username
+        }
+        person.save()
     if request.POST:
         person.value = request.POST
         person.save()
-    return JsonResponse(person.value)
+    return JsonResponse(person.to_json())
 
 
 def create_viewset_for_model(model):

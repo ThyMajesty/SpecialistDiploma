@@ -57,7 +57,7 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
                 config.headers = config.headers || {};
                 let token = $localStorage.token;
                 if (token) {
-                    config.headers.Authorization = token;
+                    config.headers.Authorization = 'jwt ' + token;
                 }
                 return config;
             },

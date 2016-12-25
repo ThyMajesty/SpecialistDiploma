@@ -55,8 +55,8 @@ class Connection(Value2ObjMixin, StructuredNode):
     
     value = JSONProperty(unique_index=False, required=False)
 
-    rel_from = Relationship('Instance', REL_CONNECTED, cardinality=One)
-    rel_to = Relationship('Instance', REL_CONNECTED, cardinality=One)
+    rel_from = Relationship('Instance', REL_CONNECTED)
+    rel_to = Relationship('Instance', REL_CONNECTED)
 
 
 

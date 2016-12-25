@@ -1,3 +1,4 @@
+import json
 from django.http import Http404, JsonResponse
 from rest_framework.response import Response
 from rest_framework import status
@@ -23,13 +24,11 @@ def create_viewset_for_model(model):
 
         def list(self, request):
             objs_list = self.neo_model.nodes.all()
-            objs_list_json = map(lambda obj: {obj.pk: obj.value}, objs_list)
+            objs_list_json = map(lambda obj: obj.to_json(), objs_list)
             return Response(objs_list_json)
 
         def create(self, request):
-            data = request.data
-            map(unicode, data.values())
-            obj = self.neo_model(**data)
+            obj = self.neo_model(**request.data)
             try:
                 obj.save()
             except Exception as e:
@@ -43,10 +42,16 @@ def create_viewset_for_model(model):
         def update(self, request, pk=None):
             obj = self.get_object(pk)
             try:
-                obj_json = self.model_serializer(obj, data=request.data)
+                data = json.loads(request.data.keys()[0])
+                for key, value in data.items():
+                    if key == 'value':
+                        setattr(obj, key, value)
+                    else:
+                        setattr(obj, key, value)
+                obj.save()
             except Exception as e:
                 return Response(unicode(e), status=status.HTTP_400_BAD_REQUEST)
-            return Response(obj_json)
+            return Response(obj.to_json())
 
         def partial_update(self, request, pk=None):
             pass

@@ -17,6 +17,7 @@ python-jose
 Jinja2
 easy_thumbnails
 humanize
+unirest
 
 # neo4j
 py2neo==2.*

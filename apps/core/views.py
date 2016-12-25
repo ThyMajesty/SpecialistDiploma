@@ -7,7 +7,10 @@ from rest_framework.serializers import Serializer
 from rest_framework import serializers  
 from .models import Person
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from django.views.decorators.csrf import csrf_exempt
 
+
+@csrf_exempt
 def me(request):
     jwt_authentication = JSONWebTokenAuthentication()
     jwt_value = jwt_authentication.get_jwt_value(request)

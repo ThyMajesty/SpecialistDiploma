@@ -18,7 +18,7 @@ def me(request):
     except:
         person = Person(user_id=user.pk).save()
         person.value = {
-            'user': user.username
+            'name': user.username
         }
         person.save()
     if request.POST:

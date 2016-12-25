@@ -17,7 +17,7 @@ def me(request):
         person = Person.nodes.get(user_id=user.pk)
     except:
         person = Person(user_id=user.pk).save()
-        
+
     if request.POST:
         person.value = request.POST
         person.save()
@@ -37,7 +37,6 @@ def create_viewset_for_model(model):
             return Response(objs_list_json)
 
         def create(self, request):
-
             obj = self.neo_model(**request.data)
             try:
                 obj.save()
@@ -54,8 +53,10 @@ def create_viewset_for_model(model):
             try:
                 data = json.loads(request.data.keys()[0])
                 for key, value in data.items():
-                    if key == 'value':
-                        setattr(obj, key, value)
+                    rel = getattr(obj, key)
+                    if isinstance(rel, RelationshipManager):
+                        for v in value:
+                            rel.connect(rel.target_class.get_object(v))
                     else:
                         setattr(obj, key, value)
                 obj.save()

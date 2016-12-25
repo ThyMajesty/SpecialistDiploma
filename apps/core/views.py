@@ -8,14 +8,18 @@ from rest_framework import serializers
 from .models import Person
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 
 
 @csrf_exempt
 def me(request):
+    user = None
     jwt_authentication = JSONWebTokenAuthentication()
     jwt_value = jwt_authentication.get_jwt_value(request)
     if jwt_value:
         user, jwt = jwt_authentication.authenticate(request)
+    if not user:
+        user = User.objects.get(pk=2)
     try:
         person = Person.nodes.get(user_id=user.pk)
     except:
@@ -25,15 +29,18 @@ def me(request):
         }
         person.save()
     if request.POST:
-        data = request.POST
-        for key, value in data.items():
-            rel = getattr(person, key)
-            if isinstance(rel, RelationshipManager):
-                for v in value:
-                    rel.connect(rel.target_class.get_object(v))
-            else:
-                setattr(person, key, value)
-        person.save()
+        try:
+            data = request.POST
+            for key, value in data.items():
+                rel = getattr(person, key)
+                if isinstance(rel, RelationshipManager):
+                    for v in value:
+                        rel.connect(rel.target_class.get_object(v))
+                else:
+                    setattr(person, key, value)
+            person.save()
+        except Exception as e:
+            print e.message
     return JsonResponse(person.to_json())
 
 

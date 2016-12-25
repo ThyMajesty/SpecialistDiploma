@@ -9,6 +9,7 @@ from .models import Person
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from neomodel import RelationshipManager
 
 
 @csrf_exempt
@@ -28,10 +29,14 @@ def me(request):
             'name': user.username
         }
         person.save()
-    if request.POST:
+
+    print request.body
+    print request.method
+    if request.method == 'POST':
         try:
-            data = request.POST
+            data = json.loads(request.body)
             for key, value in data.items():
+                print key, value
                 rel = getattr(person, key)
                 if isinstance(rel, RelationshipManager):
                     for v in value:
@@ -39,6 +44,7 @@ def me(request):
                 else:
                     setattr(person, key, value)
             person.save()
+            print 'saved'
         except Exception as e:
             print e.message
     return JsonResponse(person.to_json())

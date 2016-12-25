@@ -28,7 +28,7 @@ def create_viewset_for_model(model):
             return Response(objs_list_json)
 
         def create(self, request):
-            #data = json.loads(request.data.keys()[0])
+
             obj = self.neo_model(**request.data)
             try:
                 obj.save()
@@ -43,10 +43,16 @@ def create_viewset_for_model(model):
         def update(self, request, pk=None):
             obj = self.get_object(pk)
             try:
-                obj_json = self.model_serializer(obj, data=request.data)
+                data = json.loads(request.data.keys()[0])
+                for key, value in data.items():
+                    if key == 'value':
+                        setattr(obj, key, value)
+                    else:
+                        setattr(obj, key, value)
+                obj.save()
             except Exception as e:
                 return Response(unicode(e), status=status.HTTP_400_BAD_REQUEST)
-            return Response(obj_json)
+            return Response(obj.to_json())
 
         def partial_update(self, request, pk=None):
             pass

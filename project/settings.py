@@ -66,6 +66,7 @@ MIDDLEWARE = [
 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'index.widdleware.JWTAuthenticationMiddleware',
     'apps.adapters.subdomain.SubdomainURLRoutingMiddleware', # before CommonMiddleware 
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',

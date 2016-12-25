@@ -10,9 +10,14 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 def me(request):
     jwt_authentication = JSONWebTokenAuthentication()
-    if jwt_authentication.get_jwt_value(request):
+    jwt_value = jwt_authentication.get_jwt_value(request)
+    if jwt_value:
         user, jwt = jwt_authentication.authenticate(request)
-    person = Person.nodes.get(user_id=user.pk)
+    try:
+        person = Person.nodes.get(user_id=user.pk)
+    except:
+        person = Person(user_id=user.pk).save()
+        
     if request.POST:
         person.value = request.POST
         person.save()

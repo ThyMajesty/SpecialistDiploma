@@ -22,7 +22,14 @@ def me(request):
         }
         person.save()
     if request.POST:
-        person.value = request.POST
+        data = request.POST
+        for key, value in data.items():
+            rel = getattr(person, key)
+            if isinstance(rel, RelationshipManager):
+                for v in value:
+                    rel.connect(rel.target_class.get_object(v))
+            else:
+                setattr(person, key, value)
         person.save()
     return JsonResponse(person.to_json())
 
@@ -54,7 +61,7 @@ def create_viewset_for_model(model):
         def update(self, request, pk=None):
             obj = self.get_object(pk)
             try:
-                data = json.loads(request.data.keys()[0])
+                data = request.data
                 for key, value in data.items():
                     rel = getattr(obj, key)
                     if isinstance(rel, RelationshipManager):

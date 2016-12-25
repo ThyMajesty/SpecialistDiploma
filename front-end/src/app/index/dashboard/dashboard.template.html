@@ -6,19 +6,19 @@
         <div class="col-lg-8 col-xs-8 col-sm-8 col-md-8">
             <mind-map-editor ng-if mind-map="root"></mind-map-editor>
             <div class="list-group bases">
-                <a href="" class="base list-group-item" ng-click="expand[base.id] = !expand[base.id]" ng-repeat="base in $ctrl.data.bases">
-                    <h4 class="base-head list-group-item-heading">{{base.name}}
+                <a href="" class="base list-group-item" ng-click="expand[base.pk] = !expand[base.pk]" ng-repeat="base in $ctrl.data.bases">
+                    <h4 class="base-head list-group-item-heading">{{base.value.name}}
                         <div class="base-head-controls">
-                            <button class="btn " ng-click="$event.stopPropagation()" ui-sref="app.index.edit({ baseId: base.id})">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            <button  type="button" class="btn btn-default" ng-click="$event.stopPropagation()" ui-sref="app.index.edit({ baseId: base.pk})">
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </button>
                         </div>
                     </h4>
-                    <div class="animate-show base-body" ng-show="expand[base.id]">
-                        <p class="description list-group-item-text">{{base.description}}</p>
+                    <div class="animate-show base-body" ng-show="expand[base.pk]">
+                        <p class="description list-group-item-text">{{base.value.description}}</p>
                     </div>
                 </a>
-                <a href="" class="base list-group-item">
+                <a href="" class="base list-group-item"  ui-sref="app.index.create">
                     <h4 class="base-head list-group-item-heading">Add New Base
                         <span class="base-head-controls glyphicon glyphicon-plus"></span>
                     </h4>

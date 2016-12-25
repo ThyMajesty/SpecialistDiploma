@@ -7,7 +7,7 @@ export function FormGroupValidationDirective() {
     };
 
     function link(scope, element, attrs, formCtrl) {
-        const subject = element.find('input')[0].name;
+        const subject = (element.find('input')[0] || element.find('textarea')[0]).name;
         let removeWatch = scope.$watch(function() {
             return [
                 formCtrl.$submitted,

@@ -21,8 +21,10 @@ export function MindMapEditorDirective(addEditEntityModal) {
             remove: addEditEntityModal({type: 'remove'}).open
         }
 
+        console.log(scope.base)
+
         const tree = {
-            name: scope.base.name
+            name: scope.base.tree
         }
 
         scope.treeData = mindMapEditor.setTreeData(tree);

@@ -22,15 +22,19 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
         })
         .state('app.index.edit', {
             url: '/edit/:baseId',
-            template: '<edit-base base="$resolve.base"></dashboard>',
+            template: '<edit-base base="$resolve.base"></edit-base>',
+            resolve: {
+                base: function($stateParams, BaseApi) {
+                    return BaseApi.getBase($stateParams.baseId).then((response) => {return response.data})
+                }
+            }
+        })
+        .state('app.index.create', {
+            url: '/create',
+            template: '<edit-base base="$resolve.base"></edit-base>',
             resolve: {
                 base: function($stateParams) {
-                    console.log($stateParams);
-                    return {
-                        id: $stateParams.baseId,
-                        name: 'baseName',
-                        description: 'base description'
-                    };
+                    return {};
                 }
             }
         })

@@ -1,13 +1,12 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a ui-sref="app.index.home" class="navbar-brand">ERD</a>
+            <a ui-sref="app.index.dashboard" class="navbar-brand">ERD</a>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav navbar-right">
                 <li class="user-menu">
                     <a ui-sref="app.index.user($ctrl.$storage.userId)">
-                        <img ng-if class="user-avatar" src="//pp.vk.me/c624829/v624829831/3c3a8/O0c-Ln_yl14.jpg" />
                         <span class="user-name">
                             <span class="first" ng-bind="::$ctrl.$storage.username"></span>
                         </span>

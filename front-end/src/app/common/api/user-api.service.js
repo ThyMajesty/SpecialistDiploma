@@ -8,7 +8,7 @@ export class UserApi {
     }
 
     getUser(userId = '9d3f1dc8-9107-4c31-9c55-863756768740') {
-        return this.$http.get(this.API.USER + userId + '/?format=json')
+        return this.$http.get(this.API.USER /*+ userId + '/?format=json'*/)
             .then((response) => {
                 //console.log(response);
                 return response.data;
@@ -16,7 +16,7 @@ export class UserApi {
     }
 
     setUser(userId = '9d3f1dc8-9107-4c31-9c55-863756768740', data) {
-        return this.$http.post(this.API.USER + userId /*+ '/?format=json'*/, data)
+        return this.$http.post(this.API.USER /*+ userId *//*+ '/?format=json'*/, data)
             .then((response) => {
                 //console.log(response);
                 return response.data;

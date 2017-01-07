@@ -55,11 +55,8 @@ def test_db(request):
         db = TestDB()
         db.uuid = kdb.pk
         data['id'] = kdb.pk
-    elif request.method == 'PUT':
-        pk = data.get('id')
-        db = TestDB.objects.get(uuid=pk)
-    db.json_data = json.dumps(data)
-    db.save()
+        db.json_data = json.dumps(data)
+        db.save()
     return JsonResponse(data)
 
 
@@ -71,6 +68,9 @@ def get_test_db(request, uuid):
                 'name': 'name',
                 'description': 'descr',
             })
+        db.save()
+    if request.method == 'PUT':
+        db.json_data = request.body
         db.save()
 
     data = json.loads(db.json_data)

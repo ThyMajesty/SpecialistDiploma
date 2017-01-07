@@ -76,7 +76,13 @@ def block_api_calls(msg=''):
     file.close()
 
 
-def check_api_calls_block():
+def check_api_calls_block(response=None):
+    if response:
+        limit = int(response.headers['X-RateLimit-Queries-Remaining'])
+        if limit < 500:
+            block_api_calls()
+        else:
+            print 'api limit', limit
     return os.path.exists('block_api!')
 
 
@@ -99,19 +105,17 @@ def get_api_result(word, api_num=None, uri_num=None):
             cache = ApiCallCache.objects.get(api_name=api_name, query=word)
         except:
             return None
-        return json.loads(cache.result)
+        return json.loads(cache.result or '{}')
 
     cache, created = ApiCallCache.objects.get_or_create(api_name=api_name, query=word)
 
     if created:
         api = api_list[api_num]
         response = api_call(word, api_num, uri_num)
-        limit = int(response.headers['X-RateLimit-Queries-Remaining'])
-        if limit < 500:
-            block_api_calls(msg=lnk + '\t' + word)
-        else:
-            print 'api limit', limit
+        check_api_calls_block(response)
         data_dict = response.body
+        if not data_dict:
+            return None
         for exclude in api['exclude']:
             if exclude in data_dict:
                 data_dict.pop(exclude)
@@ -120,7 +124,7 @@ def get_api_result(word, api_num=None, uri_num=None):
         cache.result = json.dumps(data_dict)
         cache.save()
     else:
-        data_dict = json.loads(cache.result)
+        data_dict = json.loads(cache.result or '{}')
     return data_dict
 
 

@@ -29,9 +29,6 @@ def me(request):
             'name': user.username
         }
         person.save()
-
-    print request.body
-    print request.method
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -44,7 +41,6 @@ def me(request):
                 else:
                     setattr(person, key, value)
             person.save()
-            print 'saved'
         except Exception as e:
             print e.message
     return JsonResponse(person.to_json())

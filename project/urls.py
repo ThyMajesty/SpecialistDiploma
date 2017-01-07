@@ -25,6 +25,7 @@ urlpatterns = [
 
     url(r'', include('apps.index.urls')),
     url(r'^api/', include('apps.core.urls')),
+    url(r'^api/', include('apps.xapi.urls')),
     url(r'^api/token-auth/', obtain_jwt_token),
 
     url(r'', include('social.apps.django_app.urls', namespace='social'))

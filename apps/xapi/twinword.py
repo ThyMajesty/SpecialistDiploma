@@ -1,4 +1,8 @@
 import unirest
+import json
+import os.path
+
+from .models import ApiCallCache
 
 headers = {
     "X-Mashape-Key": "q4Dj0TUkc8mshmLuGaWM2TRjFHqDp16nFQKjsnTiKRvOpTxWJW",
@@ -18,6 +22,9 @@ def transform_relation(data):
 
 api_list = [
     {
+        ### context [u'bee', u'bug', u'insect', u'termite']
+        ### relation [u'pollen', u'firefly', u'earthworm', u'pollination', ...]
+        ### relation-* [u'insect', u'bug', u'butterfly', u'flower', u'honey', u'pollen']
         'base_url': "https://twinword-visual-context-graph.p.mashape.com/",
         'headers': headers,
         'uri_list': ['visualize',],
@@ -25,6 +32,7 @@ api_list = [
         'transform': [transform_relation,],
     },
     {
+        ### associations_array  [u'termite', u'bee', u'insect', u'cockroach', u'butterfly', u'bug', ...]
         'base_url': "https://twinword-word-associations-v1.p.mashape.com/",
         'headers': headers,
         'uri_list': ['associations',],
@@ -32,35 +40,87 @@ api_list = [
         'transform': [],
     },
     {
+        ### 0
+        ###
+        ### 1
+        ### meaning-adjective u''
+        ### meaning-adverb u''
+        ### meaning-noun u''
+        ### meaning-verb u''
+        ### 2->1
+        ### 3
+        ### example [u'Ant is a hard working insect.', u'The larval stages of the insects mimic ants.', ...]
+        ### 4
+        ### relation-associations ---
+        ### relation-broad_terms u'hymenopterous insect, hymenopteron, hymenopteran, hymenopter',
+        ### relation-derived_terms: u''
+        ### relation-evocations: u'social insect',
+        ### relation-narrow_terms: u"wood ant, slave-making ant, slave-maker, slave ant,
+        ### relation-related_terms: u'pismire, emmet',
+        ### relation-synonyms: u'emmet, pismire'
+        ### 5
+        ### theme: [u'flower', u'butterfly', u'pest', u'animal', u'live', u'fly']
+
         'base_url': "https://twinword-word-graph-dictionary.p.mashape.com/",
         'headers': headers,
         'uri_list': ['association', 'definition', 'definition_kr', 'example', 'reference', 'theme'],
-        'exclude': ['author', 'result_msg', 'request', 'email', 'version', 'entry', 'response', 'result_code'],
+        'exclude': ['author', 'result_msg', 'request', 'email', 'version', 'entry', 'response', 'result_code', 'ipa'],
         'transform': [],
     }
 ]
 
 
+def block_api_calls(msg=''):
+    file = open('block_api!', 'w+')
+    file.write(msg)
+    file.close()
+
+
+def check_api_calls_block():
+    return os.path.exists('block_api!')
+
+
+
+def api_call(word, api_num=None, uri_num=None):
+    params = { 'entry': word }
+    api = api_list[api_num]
+    uri = api['uri_list'][uri_num]
+    lnk = api['base_url'] + uri + '/'
+    print lnk, api['headers'], params
+    response = unirest.get(lnk, headers=api['headers'], params=params)
+    return response
+
 
 def get_api_result(word, api_num=None, uri_num=None):
-    params = { 'entry': word}
-    if api_num:
-        api_list_todo = [api_list[api_num],]
-    else:
-        api_list_todo = api_list
-    for api in api_list_todo:
-        if uri_num:
-            uri_list = [api['uri_list'][uri_num],]
-        else:
-            uri_list = api['uri_list']
-        for uri in uri_list:
-            lnk = api['base_url'] + uri + '/'
-            print lnk, api['headers'], params
-            response = unirest.get(lnk, headers=api['headers'], params=params)
-            data_dict = response.body
-            for exclude in api['exclude']:
-                data_dict.pop(exclude)
-            for transform in api['transform']:
-                data_dict = transform(data_dict)
+    api_name = str(api_num) + '-' + str(uri_num)
+    if check_api_calls_block():
+        print 'api calls blocked'
+        try:
+            cache = ApiCallCache.objects.get(api_name=api_name, query=word)
+        except:
+            return None
+        return json.loads(cache.result)
 
-            return data_dict
+    cache, created = ApiCallCache.objects.get_or_create(api_name=api_name, query=word)
+
+    if created:
+        api = api_list[api_num]
+        response = api_call(word, api_num, uri_num)
+        limit = int(response.headers['X-RateLimit-Queries-Remaining'])
+        if limit < 500:
+            block_api_calls(msg=lnk + '\t' + word)
+        else:
+            print 'api limit', limit
+        data_dict = response.body
+        for exclude in api['exclude']:
+            if exclude in data_dict:
+                data_dict.pop(exclude)
+        for transform in api['transform']:
+            data_dict = transform(data_dict)
+        cache.result = json.dumps(data_dict)
+        cache.save()
+    else:
+        data_dict = json.loads(cache.result)
+    return data_dict
+
+

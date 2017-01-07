@@ -50,12 +50,13 @@ def askfor(request, relation, word):
 
 
 def askforlist(request):
-    return JsonResponse({'result': [
-                            'context',
-                            'relation',
-                            'associations',
-                            'meaning',
-                            'example',
-                            'relation2',
-                            'theme'
-                        ]})
+    l = [
+        'context',
+        'relation',
+        'associations',
+        'meaning',
+        'example',
+        'relation2',
+        'theme']
+
+    return JsonResponse({'result': [{ 'name': r, 'description': '' } for r in l] })

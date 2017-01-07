@@ -60,6 +60,7 @@ def test_db(request):
     return JsonResponse(data)
 
 
+@csrf_exempt
 def get_test_db(request, uuid):
     db, created = TestDB.objects.get_or_create(uuid=uuid)
     if created:

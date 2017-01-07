@@ -120,7 +120,12 @@ def get_api_result(word, api_num=None, uri_num=None):
             if exclude in data_dict:
                 data_dict.pop(exclude)
         for transform in api['transform']:
-            data_dict = transform(data_dict)
+            try:
+                data_dict = transform(data_dict)
+            except Exception as e:
+                pass
+        if not data_dict:
+            return None
         cache.result = json.dumps(data_dict)
         cache.save()
     else:

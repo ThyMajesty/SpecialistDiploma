@@ -10,7 +10,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from neomodel import RelationshipManager
-
+from .models import TestDB, KnowlageDB
 
 @csrf_exempt
 def me(request):
@@ -44,6 +44,37 @@ def me(request):
         except Exception as e:
             print e.message
     return JsonResponse(person.to_json())
+
+
+@csrf_exempt
+def test_db(request):
+    data = json.loads(request.body)
+    if request.method == 'POST':
+        kdb = KnowlageDB()
+        kdb.save()
+        db = TestDB()
+        db.uuid = kdb.pk
+        data['id'] = kdb.pk
+    elif request.method == 'PUT':
+        pk = data.get('id')
+        db = TestDB.objects.get(uuid=pk)
+    db.json_data = json.dumps(data)
+    db.save()
+    return JsonResponse(data)
+
+
+def get_test_db(request, uuid):
+    db, created = TestDB.objects.get_or_create(uuid=uuid)
+    if created:
+        db.json_data = json.dumps({
+                'id':uuid,
+                'name': 'name',
+                'description': 'descr',
+            })
+        db.save()
+
+    data = json.loads(db.json_data)
+    return JsonResponse(data)
 
 
 def create_viewset_for_model(model):

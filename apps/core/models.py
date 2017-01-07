@@ -15,6 +15,13 @@ REL_CONNECTED = 'CONNECTED'
 REL_LIKE = 'LIKE'
 REL_OWN = 'OWN'
 
+from django.db import models
+
+
+class TestDB(models.Model):
+    uuid = models.CharField(max_length=200, unique=True)
+    json_data = models.TextField(blank=True)
+
 
 class Value2ObjMixin(object):
     @property

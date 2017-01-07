@@ -65,6 +65,13 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
             "tree": self.instances.all()[0].to_mindmap()
         }
 
+    @staticmethod
+    def my_create(data):
+        db = KnowlageDB(value=data.pop("value"))
+        inst = Instance(value=data.pop("tree").pop("value")).save()
+        db.instances.connect(inst)
+        return db.save()
+
 
 class Connection(Value2ObjMixin, StructuredNode):
     pk = StringProperty(unique_index=True, default=uuid4)

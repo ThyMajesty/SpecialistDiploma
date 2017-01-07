@@ -78,6 +78,15 @@ def get_test_db(request, uuid):
     return JsonResponse(data)
 
 
+def view_mindmap(request):
+    mindmap = request.GET.get('mindmap', None)
+    if mindmap:
+        db = KnowlageDB.nodes.get(pk=mindmap)
+        return db.to_mindmap()
+    else:
+        return None
+
+
 def create_viewset_for_model(model):
     name = model.__name__
 
@@ -96,11 +105,11 @@ def create_viewset_for_model(model):
                 obj.save()
             except Exception as e:
                 return Response(unicode(e), status=status.HTTP_400_BAD_REQUEST)
-            return Response(obj.to_json(), status=status.HTTP_201_CREATED)
+            return Response(view_mindmap(request) or obj.to_json(), status=status.HTTP_201_CREATED)
 
         def retrieve(self, request, pk=None):
             obj = self.get_object(pk)
-            return Response(obj.to_json())
+            return Response(view_mindmap(request) or obj.to_json())
 
         def update(self, request, pk=None):
             obj = self.get_object(pk)
@@ -116,7 +125,7 @@ def create_viewset_for_model(model):
                 obj.save()
             except Exception as e:
                 return Response(unicode(e), status=status.HTTP_400_BAD_REQUEST)
-            return Response(obj.to_json())
+            return Response(view_mindmap(request) or obj.to_json())
 
         def partial_update(self, request, pk=None):
             pass
@@ -124,12 +133,12 @@ def create_viewset_for_model(model):
         def destroy(self, request, pk=None):
             obj = self.get_object(pk)
             obj.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(view_mindmap(request), status=status.HTTP_202_ACCEPTED)
 
         def get_object(self, pk):
             try:
                 return self.neo_model.nodes.get(pk=pk)
-            except obj.DoesNotExist:
+            except self.neo_model.DoesNotExist:
                 raise Http404
 
         def get_serializer_class(self):

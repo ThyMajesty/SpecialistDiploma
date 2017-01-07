@@ -11,7 +11,8 @@ from neomodel import RelationshipManager
 from .utils import json2obj, obj2json
 
 REL_FROM = 'FROM'
-REL_CONNECTED = 'CONNECTED'
+REL_CONNECTED_FROM = 'CONNECTED_FROM'
+REL_CONNECTED_TO = 'CONNECTED_TO'
 REL_LIKE = 'LIKE'
 REL_OWN = 'OWN'
 
@@ -55,6 +56,14 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
 
     instances = RelationshipTo('Instance', REL_FROM, model=RelationModel)
 
+    def to_mindmap(self):
+        return {
+            "id": self.pk,
+            "name": self.value.get('name', None),
+            "description": self.value.get('description', None),
+            "value": self.value,
+            "tree": self.instances.all()[0].to_mindmap()
+        }
 
 
 class Connection(Value2ObjMixin, StructuredNode):
@@ -62,9 +71,22 @@ class Connection(Value2ObjMixin, StructuredNode):
     
     value = JSONProperty(unique_index=False, required=False)
 
-    rel_from = Relationship('Instance', REL_CONNECTED)
-    rel_to = Relationship('Instance', REL_CONNECTED)
+    rel_from = Relationship('Instance', REL_CONNECTED_FROM)
+    rel_to = Relationship('Instance', REL_CONNECTED_TO)
 
+    def to_mindmap(self):
+        inst = self.rel_to.all()[0]
+        return inst.to_mindmap(self)
+
+    def to_mindmap_repr(self):
+        return {
+            "connection": { 
+                'id': self.pk,
+                "name": self.value.get('name', None),
+                "value": self.value,
+            },
+            "subconnection": self.value.get('subconnection', None),
+        }
 
 
 class Instance(Value2ObjMixin, StructuredNode):
@@ -74,11 +96,31 @@ class Instance(Value2ObjMixin, StructuredNode):
 
     knowlage_db = RelationshipFrom('KnowlageDB', REL_FROM, model=RelationModel)
 
-    connections = Relationship('Connection', REL_CONNECTED, cardinality=ZeroOrMore)
+    connections = Relationship('Connection', REL_CONNECTED_FROM, cardinality=ZeroOrMore)
 
     def instances(self, *args, **kwargs):
         return [conn.rel_to for conn in connections.all()]
 
+    def to_mindmap(self, parent=None):
+        print self.value.get('name', None)
+        mindmap = {
+            "id": self.pk,
+            "name": self.value.get('name', None),
+            "description": self.value.get('description', None),
+            "value": self.value,
+        }
+
+        if parent:
+            mindmap.update(parent.to_mindmap_repr())
+        else:
+            mindmap.update({"connection": None, "subconnection": None})
+
+        children = [conn.to_mindmap() for conn in self.connections.all()]
+
+        if children:
+            mindmap['children'] = children
+
+        return mindmap
 
 
 class Pack(Value2ObjMixin, StructuredNode):

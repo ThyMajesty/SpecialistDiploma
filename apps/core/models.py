@@ -88,6 +88,11 @@ class Connection(Value2ObjMixin, StructuredNode):
             "subconnection": self.value.get('subconnection', None),
         }
 
+    def delete(self):
+        for conn in self.rel_to.all():
+            conn.delete()
+        return super(Connection, self).delete()
+
 
 class Instance(Value2ObjMixin, StructuredNode):
     pk = StringProperty(unique_index=True, default=uuid4)
@@ -97,6 +102,24 @@ class Instance(Value2ObjMixin, StructuredNode):
     knowlage_db = RelationshipFrom('KnowlageDB', REL_FROM, model=RelationModel)
 
     connections = Relationship('Connection', REL_CONNECTED_FROM, cardinality=ZeroOrMore)
+
+    @staticmethod
+    def my_create(data):
+        parent = Instance.nodes.get(pk=data.pop("parent_id"))
+        conn = Connection()
+        conn.rel_from.connect(parent)
+        inst = Instance(value=data.pop("value"))
+        inst.save()
+        conn.rel_to.connect(inst)
+        conn.value = data.pop("connection")
+        conn.value["subconnection"] = data.pop("subconnection")
+        conn.save()
+        return inst
+
+    @staticmethod
+    def my_update(self, data):
+        self.value = data["value"]
+        return self
 
     def instances(self, *args, **kwargs):
         return [conn.rel_to for conn in connections.all()]
@@ -121,6 +144,11 @@ class Instance(Value2ObjMixin, StructuredNode):
             mindmap['children'] = children
 
         return mindmap
+
+    def delete(self):
+        for conn in self.connections.all():
+            conn.delete()
+        return super(Instance, self).delete()
 
 
 class Pack(Value2ObjMixin, StructuredNode):

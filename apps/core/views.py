@@ -100,7 +100,10 @@ def create_viewset_for_model(model):
             return Response(objs_list_json)
 
         def create(self, request):
-            obj = self.neo_model(**request.data)
+            if hasattr(self.neo_model, 'my_create'):
+                obj = self.neo_model.my_create(request.data)
+            else:
+                obj = self.neo_model(**request.data)
             try:
                 obj.save()
             except Exception as e:
@@ -114,14 +117,16 @@ def create_viewset_for_model(model):
         def update(self, request, pk=None):
             obj = self.get_object(pk)
             try:
-                data = request.data
-                for key, value in data.items():
-                    rel = getattr(obj, key)
-                    if isinstance(rel, RelationshipManager):
-                        for v in value:
-                            rel.connect(rel.target_class.get_object(v))
-                    else:
-                        setattr(obj, key, value)
+                if hasattr(self.neo_model, 'my_update'):
+                    obj = self.neo_model.my_update(obj, request.data)
+                else:
+                    for key, value in request.data.items():
+                        rel = getattr(obj, key)
+                        if isinstance(rel, RelationshipManager):
+                            for v in value:
+                                rel.connect(rel.target_class.get_object(v))
+                        else:
+                            setattr(obj, key, value)
                 obj.save()
             except Exception as e:
                 return Response(unicode(e), status=status.HTTP_400_BAD_REQUEST)

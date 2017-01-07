@@ -67,7 +67,7 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
 
     @staticmethod
     def my_create(data):
-        db = KnowlageDB(value=data.pop("value"))
+        db = KnowlageDB(value=data.pop("value")).save()
         inst = Instance(value=data.pop("tree").pop("value")).save()
         db.instances.connect(inst)
         return db.save()

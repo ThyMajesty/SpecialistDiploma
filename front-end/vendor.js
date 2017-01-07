@@ -7,5 +7,8 @@ import uiSelect from 'ui-select';
 import ngResource from 'angular-resource';
 import loadingBar from 'angular-animate';
 import ngAnimate from 'angular-loading-bar';
+//import uiRouterComponents from 'ui-router-route-to-components';
+//import angularSanitize from 'angular-sanitize';
+
 import 'rx';
 import "d3";

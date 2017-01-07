@@ -5,7 +5,8 @@ import styles from './edit-base.styles.less';
 export const EditBaseComponent = {
     template,
     controller,
-    bindings: {
+   /* bindings: {
+        baseId: '=',
         base: '='
-    }
+    }*/
 };

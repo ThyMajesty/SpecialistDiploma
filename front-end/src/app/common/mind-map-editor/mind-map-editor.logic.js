@@ -270,7 +270,7 @@ export class MindMapEditorLogic {
             d.children = childList;
         }
         if (this.dataApi && this.dataApi.add) {
-            this.dataApi.add().then((response) => {
+            this.dataApi.add(d).then((response) => {
                 childList.push(Object.assign({
                     "depth": d.depth + 1,
                     "parent": d

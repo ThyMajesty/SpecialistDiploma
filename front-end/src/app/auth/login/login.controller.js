@@ -4,8 +4,8 @@ export class LoginController {
         this.$storage = $localStorage;
         this.errorMessage = '';
         this.input = {
-            username: null,
-            password: null,
+            username: this.$storage.username,
+            password: this.$storage.password,
             rememberMe: true
         }
     }

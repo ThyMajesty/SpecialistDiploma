@@ -1,4 +1,6 @@
-export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider) {
+export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $sceProvider) {
+
+    $sceProvider.enabled(false);
 
     $urlRouterProvider
         .otherwise('/');
@@ -10,42 +12,30 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
         })
         .state('app.auth', {
             url: '/auth',
-            template: '<auth></auth>'
+            component: 'auth'
         })
         .state('app.index', {
             abstract: true,
-            template: '<index></index>',
+            component: 'index',
         })
         .state('app.index.dashboard', {
             url: '/',
-            template: '<dashboard></dashboard>',
+            component: 'dashboard',
         })
         .state('app.index.edit', {
+            params: { base: null, baseId:null },
             url: '/edit/:baseId',
-            template: '<edit-base base="$resolve.base"></edit-base>',
-            resolve: {
-                base: function($stateParams, BaseApi) {
-                    return BaseApi.getBase($stateParams.baseId).then((response) => {return response.data})
-                }
-            }
+            component: 'editBase',
         })
         .state('app.index.create', {
+            reload:false,
+            params: { base: null, baseId:null },
             url: '/create',
-            template: '<edit-base base="$resolve.base"></edit-base>',
-            resolve: {
-                base: function($stateParams) {
-                    return {};
-                }
-            }
+            component: 'editBase',
         })
         .state('app.index.user', {
             url: '/user/:userId',
-            template: '<user-page user-info="$resolve.userInfo"></user-page>',
-            resolve: {
-                userInfo: function() {
-                    return {};
-                }
-            }
+            component: 'userPage',
         });
 
     cfpLoadingBarProvider.includeSpinner = true;
@@ -61,12 +51,21 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
                 }
                 return config;
             },
+
+            'requestError': function(rejection) {
+                return $q.reject(rejection);
+            },
+
+            'response': function(response) {
+                return response;
+            },
+
             'responseError': function(response) {
                 if (response.status === 401 || response.status === 403) {
                     $location.path('/auth');
                 }
-                return $q.reject(response);
-            }
+                return response || $q.when(response);
+            },
         };
     });
 

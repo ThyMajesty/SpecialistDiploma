@@ -32,8 +32,8 @@
     "angular-animate": "^1.6.0",
     "angular-loading-bar": "^0.9.0",
     "angular-resource": "^1.5.9",
+    "angular-sanitize": "^1.6.1",
     "angular-ui-bootstrap": "^2.2.0",
-    "angular-ui-router": "^0.3.2",
     "babel-runtime": "^6.18.0",
     "bootstrap": "^3.3.7",
     "bootswatch": "^3.3.7",
@@ -41,6 +41,8 @@
     "jquery": "^3.1.1",
     "ngstorage": "^0.3.11",
     "rx": "^4.1.0",
+    "angular-ui-router": "^1.0.0-beta.2",
+    "ui-router-route-to-components": "^0.1.0",
     "ui-select": "^0.19.6"
   },
   "devDependencies": {

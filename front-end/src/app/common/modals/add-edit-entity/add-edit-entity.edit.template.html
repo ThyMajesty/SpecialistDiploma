@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div class="modal-content add-edit-entity">
     <div class="modal-header">
         <button type="button" class="close" ng-click="$ctrl.cancel()" aria-hidden="true">×</button>
         <h4 class="modal-title">Edit</h4>
@@ -9,13 +9,13 @@
                 <div class="form-group" form-group-validation>
                     <label for="name" class="col-lg-2 control-label">Name</label>
                     <div class="col-lg-10">
-                        <input type="text" name="name" placeholder="Name" class="form-control" id="name" ng-model="$ctrl.entity.name" ng-required="true">
+                        <input type="text" name="name" placeholder="Name" class="form-control" id="name" ng-model="$ctrl.input.name" ng-required="true">
                     </div>
                 </div>
                 <div class="form-group" form-group-validation>
                     <label for="description" class="col-lg-2 control-label">Description</label>
                     <div class="col-lg-10">
-                        <input type="text" name="description" placeholder="Description" class="form-control" id="description" ng-model="$ctrl.entity.description" ng-required="true">
+                        <input type="text" name="description" placeholder="Description" class="form-control" id="description" ng-model="$ctrl.input.description" ng-required="true">
                     </div>
                 </div>
             </fieldset>
@@ -23,6 +23,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="$ctrl.cancel()">Cancel</button>
-        <button type="button" class="btn btn-primary" ng-click="$ctrl.add()">Confirm</button>
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.add()">Save</button>
     </div>
 </div>

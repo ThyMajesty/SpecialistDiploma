@@ -9,7 +9,6 @@ export class BaseApi {
         return this.$http.get(this.API.knowlagedb)
             .then((response) => {
                 
-                console.log(response);
                 return response;
             });
     }
@@ -17,27 +16,18 @@ export class BaseApi {
     createBase(newBase) {
         return this.$http.post(this.API.knowlagedb, newBase)
             .then((response) => {
-                
-                console.log(response);
-                return response;
+                return response.data;
             });
     }
 
     getBase(pk) {
-        return this.$http.get(this.API.knowlagedb + pk + '/')
-            .then((response) => {
-                
-                console.log(response);
-                return response;
-            });
+        return this.$http.get(this.API.knowlagedb + pk + '/');
     }
 
     editBase(pk, editedBase) {
         return this.$http.put(this.API.knowlagedb + pk, editedBase)
             .then((response) => {
-                
-                console.log(response);
-                return response;
+                return response.data;
             });
     }
 }

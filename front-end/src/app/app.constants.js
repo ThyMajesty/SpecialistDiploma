@@ -7,7 +7,8 @@ const API = {
     instance: 'http://localhost:8000/api/instance/',
     pack: 'http://localhost:8000/api/pack/',
     person: 'http://localhost:8000/api/person/',
-    connection: 'http://localhost:8000/api/connection/'
+    connection: 'http://localhost:8000/api/connection/',
+    generateEntity: 'http://localhost:8000/api/askfor/'
 };
 
 export { API }

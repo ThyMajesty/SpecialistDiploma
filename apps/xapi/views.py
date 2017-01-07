@@ -47,3 +47,15 @@ def askfor(request, relation, word):
     }
 
     return JsonResponse(anwser)
+
+
+def askforlist(request):
+    return JsonResponse({'result': [
+                            'context',
+                            'relation',
+                            'associations',
+                            'meaning',
+                            'example',
+                            'relation2',
+                            'theme'
+                        ]})

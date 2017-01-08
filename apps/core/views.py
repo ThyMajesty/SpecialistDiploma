@@ -128,7 +128,7 @@ def create_viewset_for_model(model):
         def destroy(self, request, pk=None):
             obj = self.get_object(pk)
             obj.delete()
-            return Response(view_mindmap(request) or {}, status=status.HTTP_202_ACCEPTED)
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
         def get_object(self, pk):
             try:

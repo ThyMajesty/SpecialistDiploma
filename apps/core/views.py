@@ -78,7 +78,9 @@ def get_test_db(request, uuid):
     return JsonResponse(data)
 
 
-def view_mindmap(request):
+def view_mindmap(request, obj=None):
+    if obj and obj.__class__ == KnowlageDB:
+        return obj.to_mindmap()
     mindmap = request.GET.get('mindmap', None)
     if mindmap:
         db = KnowlageDB.nodes.get(pk=mindmap)
@@ -108,7 +110,7 @@ def create_viewset_for_model(model):
                 obj.save()
             except Exception as e:
                 return Response(unicode(e), status=status.HTTP_400_BAD_REQUEST)
-            return Response(view_mindmap(request) or obj.to_json(), status=status.HTTP_201_CREATED)
+            return Response(view_mindmap(request, obj) or obj.to_json(), status=status.HTTP_201_CREATED)
 
         def retrieve(self, request, pk=None):
             obj = self.get_object(pk)

@@ -55,7 +55,7 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
     pk = StringProperty(unique_index=True, default=uuid4)
 
     value = JSONProperty(unique_index=False, required=False)
-    history = JSONProperty(required=False)
+    history = JSONProperty(required=False, default={'last':{}})
 
     instances = RelationshipTo('Instance', REL_FROM, model=RelationModel)
 

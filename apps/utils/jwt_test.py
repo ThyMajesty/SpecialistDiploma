@@ -6,7 +6,7 @@ response = requests.post('http://localhost:8000/api/token-auth/', data=json.dump
 token = 'jwt ' + response.json()['token']
 print token
 
-headers = {'Authorzation': token}
+headers = {'Authorization': token}
 response = requests.get('http://localhost:8000/api/me/', headers=headers)
 print 'before',response.text
 

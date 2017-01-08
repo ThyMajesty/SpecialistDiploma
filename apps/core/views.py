@@ -14,21 +14,9 @@ from .models import TestDB, KnowlageDB
 
 @csrf_exempt
 def me(request):
-    user = None
-    jwt_authentication = JSONWebTokenAuthentication()
-    jwt_value = jwt_authentication.get_jwt_value(request)
-    if jwt_value:
-        user, jwt = jwt_authentication.authenticate(request)
-    if not user:
-        user = User.objects.get(pk=2)
-    try:
-        person = Person.nodes.get(user_id=user.pk)
-    except:
-        person = Person(user_id=user.pk).save()
-        person.value = {
-            'name': user.username
-        }
-        person.save()
+    person = request.person
+    if not person:
+        return JsonResponse({'msg': 'not authorized'})
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -140,7 +128,7 @@ def create_viewset_for_model(model):
         def destroy(self, request, pk=None):
             obj = self.get_object(pk)
             obj.delete()
-            return Response(view_mindmap(request), status=status.HTTP_202_ACCEPTED)
+            return Response(view_mindmap(request) or {}, status=status.HTTP_202_ACCEPTED)
 
         def get_object(self, pk):
             try:

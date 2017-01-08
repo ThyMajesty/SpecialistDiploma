@@ -5,3 +5,4 @@ static/
 *.pyc
 npm-debug.log
 test.py
+secret.py

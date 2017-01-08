@@ -1,27 +1,25 @@
 #http://neomodel.readthedocs.io/en/latest/getting_started.html
 from uuid import uuid4
 import json
-
-from apps.adapters.neomodel_properties_fix import *
+from django.db import models
 from neomodel import StructuredNode, StructuredRel, One, ZeroOrMore
 from neomodel import StringProperty, IntegerProperty, JSONProperty
 from neomodel import RelationshipTo, RelationshipFrom, Relationship
 from neomodel import RelationshipManager
-
+from apps.adapters.neomodel_properties_fix import *
 from .utils import json2obj, obj2json
+
+
+class TestDB(models.Model):
+    uuid = models.CharField(max_length=200, unique=True)
+    json_data = models.TextField(blank=True)
+
 
 REL_FROM = 'FROM'
 REL_CONNECTED_FROM = 'CONNECTED_FROM'
 REL_CONNECTED_TO = 'CONNECTED_TO'
 REL_LIKE = 'LIKE'
 REL_OWN = 'OWN'
-
-from django.db import models
-
-
-class TestDB(models.Model):
-    uuid = models.CharField(max_length=200, unique=True)
-    json_data = models.TextField(blank=True)
 
 
 class Value2ObjMixin(object):
@@ -43,10 +41,12 @@ class Value2ObjMixin(object):
                 data[key] = value
         return data
         
+    def __repr__(self):
+        return self.__class__.__name__ + unicode(self.value)
+
 
 class RelationModel(StructuredRel):
     value = JSONProperty(unique_index=False, required=False)
-
 
 
 class KnowlageDB(Value2ObjMixin, StructuredNode):
@@ -95,9 +95,11 @@ class Connection(Value2ObjMixin, StructuredNode):
             "subconnection": self.value.get('subconnection', None),
         }
 
-    def delete(self):
-        for conn in self.rel_to.all():
-            conn.delete()
+    def delete(self, delete_to=True):
+        if delete_to:
+            print 'delete', self.value
+            for inst in self.rel_to.all():
+                inst.delete()
         return super(Connection, self).delete()
 
 
@@ -109,6 +111,7 @@ class Instance(Value2ObjMixin, StructuredNode):
     knowlage_db = RelationshipFrom('KnowlageDB', REL_FROM, model=RelationModel)
 
     connections = Relationship('Connection', REL_CONNECTED_FROM, cardinality=ZeroOrMore)
+    connections_from = Relationship('Connection', REL_CONNECTED_TO, cardinality=ZeroOrMore)
 
     @staticmethod
     def my_create(data):
@@ -151,8 +154,11 @@ class Instance(Value2ObjMixin, StructuredNode):
         return mindmap
 
     def delete(self):
+        print 'delete', self.value
         for conn in self.connections.all():
             conn.delete()
+        for conn in self.connections_from.all():
+            conn.delete(delete_to=False)
         return super(Instance, self).delete()
 
 

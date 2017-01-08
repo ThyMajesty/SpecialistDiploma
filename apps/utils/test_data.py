@@ -1,5 +1,5 @@
 from neomodel import db as neodb
-from .models import *
+from apps.core.models import *
 
 
 def run():

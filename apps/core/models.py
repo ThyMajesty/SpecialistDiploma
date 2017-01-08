@@ -74,8 +74,7 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
         if not mindmap_uid in self.history:
             if 'last' in self.history:
                 previous_mindmap = self.history[self.history['last']]['data']
-                diff = DeepDiff(previous_mindmap, mindmap)
-                msg = json.dumps(diff)
+                msg = DeepDiff(previous_mindmap, mindmap)
             else:
                 msg = 'initial'
             self.history[mindmap_uid] = {

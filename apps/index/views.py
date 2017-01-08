@@ -31,14 +31,14 @@ class FileUploadView(APIView):
     def put(self, request, format=None):
         up_file = request.data['file']
         binary_content = up_file.read()
-        file_hash = sha224(binary_content).hexdigest()
+        extension = mimetypes.guess_extension(request.content_type)
+        file_hash = sha224(binary_content).hexdigest() + extension
         fullpath = os.path.join(settings.MEDIA_ROOT, file_hash)
         if not os.path.exists(fullpath):
             try:
                 os.makedirs(settings.MEDIA_ROOT)
             except OSError as exc: # Guard against race condition
-                if exc.errno != errno.EEXIST:
-                    raise
+                pass
             with open(fullpath, 'wb+') as up_file:
                 up_file.write(binary_content)
                 up_file.close()

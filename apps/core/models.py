@@ -55,10 +55,9 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
     pk = StringProperty(unique_index=True, default=uuid4)
 
     value = JSONProperty(unique_index=False, required=False)
-    history = JSONProperty(required=False, default={'last':{}})
+    history = JSONProperty(required=False, default={})
 
     instances = RelationshipTo('Instance', REL_FROM, model=RelationModel)
-
 
 
     def to_mindmap(self):
@@ -73,7 +72,7 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
         mindmap_uid = sha224(mindmap_json).hexdigest()
         if not mindmap_uid in self.history:
             if 'last' in self.history:
-                previous_mindmap = self.history['last']
+                previous_mindmap = self.history[self.history['last']]
                 diffkeys = [k for k in previous_mindmap if previous_mindmap[k] != mindmap[k]]
                 msg = ''
                 for k in diffkeys:
@@ -84,13 +83,13 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
                 'id': mindmap_uid,
                 'timestamp': time.time(),
                 'changelog': msg,
-                'data': mindmap
+                'data': mindmap.copy()
             }
-            self.history['last'] = mindmap
+            self.history['last'] = mindmap_uid
             self.save()
         history = self.history.copy()
         if 'last' in  history:
-            history.pop('last')
+            history.pop(history.pop('last'))
         mindmap['history'] = history.values()
         return mindmap
 

@@ -1,6 +1,6 @@
 #http://neomodel.readthedocs.io/en/latest/getting_started.html
 import json
-import datetime
+import time
 from uuid import uuid4
 from hashlib import sha224
 from django.db import models
@@ -72,21 +72,26 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
         mindmap_json = json.dumps(mindmap)
         mindmap_uid = sha224(mindmap_json).hexdigest()
         if not mindmap_uid in self.history:
-            previous_mindmap = self.history['last']
-            diffkeys = [k for k in previous_mindmap if previous_mindmap[k] != mindmap[k]]
-            msg = ''
-            for k in diffkeys:
-                msg += ' '.join([k, ':', previous_mindmap[k], '->', mindmap[k]]) + '\n'
+            if 'last' in self.history:
+                previous_mindmap = self.history['last']
+                diffkeys = [k for k in previous_mindmap if previous_mindmap[k] != mindmap[k]]
+                msg = ''
+                for k in diffkeys:
+                    msg += ' '.join([k, ':', previous_mindmap[k], '->', mindmap[k]]) + '\n'
+            else:
+                msg = 'initial'
             self.history[mindmap_uid] = {
                 'id': mindmap_uid,
-                'timestamp': datetime.datetime.now(),
+                'timestamp': time.time(),
                 'changelog': msg,
                 'data': mindmap
             }
             self.history['last'] = mindmap
             self.save()
-        self.history.pop('last')
-        mindmap['history'] = self.history.values()
+        history = self.history.copy()
+        if 'last' in  history:
+            history.pop('last')
+        mindmap['history'] = history.values()
         return mindmap
 
     @staticmethod

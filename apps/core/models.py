@@ -69,26 +69,26 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
             "value": self.value,
             "tree": self.instances.all()[0].to_mindmap()
         }
-        mindmap_json = json.dumps(mindmap)
-        mindmap_uid = sha224(mindmap_json).hexdigest()
-        if not mindmap_uid in self.history:
-            if 'last' in self.history:
-                previous_mindmap = self.history[self.history['last']]['data']
-                msg = dict(DeepDiff(previous_mindmap, mindmap))
-            else:
-                msg = 'initial'
-            self.history[mindmap_uid] = {
-                'id': mindmap_uid,
-                'timestamp': time.time(),
-                'changelog': msg,
-                'data': mindmap.copy()
-            }
-            self.history['last'] = mindmap_uid
-            self.save()
-        history = self.history.copy()
-        if 'last' in  history:
-            history.pop(history.pop('last'))
-        mindmap['history'] = history.values()
+        # mindmap_json = json.dumps(mindmap)
+        # mindmap_uid = sha224(mindmap_json).hexdigest()
+        # if not mindmap_uid in self.history:
+        #     if 'last' in self.history:
+        #         previous_mindmap = self.history[self.history['last']]['data']
+        #         msg = dict(DeepDiff(previous_mindmap, mindmap))
+        #     else:
+        #         msg = 'initial'
+        #     self.history[mindmap_uid] = {
+        #         'id': mindmap_uid,
+        #         'timestamp': time.time(),
+        #         'changelog': msg,
+        #         'data': mindmap.copy()
+        #     }
+        #     self.history['last'] = mindmap_uid
+        #     self.save()
+        # history = self.history.copy()
+        # if 'last' in  history:
+        #     history.pop(history.pop('last'))
+        # mindmap['history'] = history.values()
         return mindmap
 
     @staticmethod

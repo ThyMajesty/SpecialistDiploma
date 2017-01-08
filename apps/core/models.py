@@ -113,13 +113,11 @@ class Instance(Value2ObjMixin, StructuredNode):
     @staticmethod
     def my_create(data):
         parent = Instance.nodes.get(pk=data.pop("parent_id"))
-        conn = Connection()
+        conn = Connection(value=data.pop("connection")).save()
+        conn.value["subconnection"] = data.get("subconnection", None)
         conn.rel_from.connect(parent)
-        inst = Instance(value=data.pop("value"))
-        inst.save()
+        inst = Instance(value=data.pop("value")).save()
         conn.rel_to.connect(inst)
-        conn.value = data.pop("connection")
-        conn.value["subconnection"] = data.pop("subconnection")
         conn.save()
         return inst
 

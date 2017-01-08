@@ -1,11 +1,17 @@
 export class AddEditEntityController {
-    constructor(config, entity, $uibModalInstance, ConnectionApi) {
+    constructor(config, entity, $uibModalInstance, ConnectionApi, InstanceApi) {
         this.$uibModalInstance = $uibModalInstance;
         this.ConnectionApi = ConnectionApi;
+        this.InstanceApi = InstanceApi;
         this.config = config;
         this.entity = entity || {};
-        this.input = this.config.type === 'edit' ? angular.copy(this.entity) : {};
+        this.input = ['edit', 'remove'].indexOf(this.config.type) > -1 ? angular.copy(this.entity) : { value: {} };
         this.fetchData();
+
+        this.inputType = {
+            auto: true,
+            manual: false
+        };
     }
 
     fetchData() {
@@ -15,20 +21,29 @@ export class AddEditEntityController {
     }
 
     selectedConnection($item, $model) {
-        if(!this.entity.name) {
+        if (!this.entity.value.name) {
             return;
         }
-        this.ConnectionApi.getEntityByConnection($item.name + '/' + this.entity.name + '/').then((response) => {
-            this.subConnections = response;
+        this.ConnectionApi.getEntityByConnection($item.name + '/' + this.entity.value.name + '/').then((response) => {
+            console.log(response)
+            if (!response.result) {
+                this.subConnections = [];
+                this.inputType = {
+                    auto: false,
+                    manual: true
+                };
+                return;
+            }
+            this.subConnections = response.result;
         });
     }
 
     selectedSubConnection($item, $model) {
-        if(!$item.name) {
+        if (!$item.name) {
             return;
         }
-        this.input.name = $item.name;
-        this.input.description = $item.description;
+        this.input.value.name = $item.name;
+        this.input.value.description = $item.description;
         console.log(this.input);
     }
 
@@ -38,11 +53,33 @@ export class AddEditEntityController {
         if (this.entityForm.$invalid) {
             return;
         }
-        this.$uibModalInstance.close(this.input);
+        if (this.config.basePk) {
+            if (this.config.type === 'add') {
+                this.input.parent_id = this.entity.id;
+                this.InstanceApi.addInstance(this.config.basePk, this.input).then((response) => {
+                    this.input.id = response.pk;
+                    this.$uibModalInstance.close(this.input);
+                })
+            }
+            if (this.config.type === 'edit') {
+                this.InstanceApi.editInstance(this.config.basePk, this.input).then((response) => {
+                    this.$uibModalInstance.close(this.input);
+                })
+            }
+            if (this.config.type === 'remove') {
+                this.InstanceApi.addInstance(this.config.basePk, this.input).then((response) => {
+                    this.$uibModalInstance.close(this.input);
+                })
+            }
+        }
+
     }
 
     confirm() {
-        this.$uibModalInstance.close('confirm');
+        console.log(this.config, this.input)
+        this.InstanceApi.deleteInstance(this.config.basePk, this.input).then((response) => {
+            this.$uibModalInstance.close(this.input);
+        })
     }
 
     cancel() {
@@ -73,6 +110,11 @@ export class AddEditEntityController {
         $select.selected = undefined;
         $select.search = undefined;
         $select.activate();
+    }
+
+    filesChanged(files) {
+        this.input.value.files = files;
+        console.log('filesChanged', this.input.values, files);
     }
 
 }

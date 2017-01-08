@@ -2,7 +2,7 @@ import template from './mind-map-editor.template.html';
 import styles from './mind-map-editor.styles.less';
 import { MindMapEditorLogic } from './mind-map-editor.logic';
 
-export function MindMapEditorDirective(addEditEntityModal) {
+export function MindMapEditorDirective(addEditEntityModal, BaseApi) {
     return {
         restrict: 'E',
         scope: {
@@ -14,12 +14,13 @@ export function MindMapEditorDirective(addEditEntityModal) {
 
     function link(scope, element, attrs, ctrl) {
 
+
         const mindMapElement = angular.element(element[0].getElementsByClassName("mindMap"))[0];
         const mindMapEditor = new MindMapEditorLogic(mindMapElement); //mindMapElement, treeData, settings
         const dataApi = {
-            add: addEditEntityModal({type: 'add'}).open,
-            edit: addEditEntityModal({type: 'edit'}).open,
-            remove: addEditEntityModal({type: 'remove'}).open
+            add: addEditEntityModal({type: 'add', basePk: scope.base.id}).open,
+            edit: addEditEntityModal({type: 'edit' , basePk: scope.base.id}).open,
+            remove: addEditEntityModal({type: 'remove' , basePk: scope.base.id}).open
         }
 
         if (!scope.base.tree) {
@@ -32,8 +33,12 @@ export function MindMapEditorDirective(addEditEntityModal) {
         scope.treeData = mindMapEditor.setTreeData(scope.base.tree);
 
         function changedTreeData(treeData) {
-            scope.treeData = treeData;
-            console.log(scope.treeData);
+            //console.log(scope.base.tree, scope.treeData, treeData);
+            scope.base.tree = treeData;
+            /*BaseApi.editBase(scope.base.id, scope.base).then((response)=>{
+                //scope.base = angular.copy(response);
+                //console.log(scope.treeData, response);
+            });*/
         } 
 
         mindMapEditor.onChange(changedTreeData);

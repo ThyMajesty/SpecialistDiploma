@@ -12,10 +12,12 @@ export class AddEditBaseController {
             return;
         }
         if (!this.base.tree) {
-            this.base.tree = angular.copy(this.base);
+            this.base.tree = {
+                value: angular.copy(this.base.value)
+            }
         }
         this.BaseApi.createBase(this.base).then((response) => {
-            this.$uibModalInstance.close(this.base || response.data);
+            this.$uibModalInstance.close(response);
         })
         
     }

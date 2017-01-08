@@ -21,7 +21,7 @@ export class EditBaseController {
             }
 
             if (baseId) {
-                this.BaseApi.getBase(this.baseId).then((response) => {
+                this.BaseApi.getBase(baseId).then((response) => {
                     this.base = response.data || this.base;
                 });
             }
@@ -35,8 +35,8 @@ export class EditBaseController {
         if (this.editBaseForm.$invalid) {
             return;
         }
-        if (this.base.pk) {
-            this.BaseApi.editBase(this.base.pk, this.base);
+        if (this.base.id) {
+            this.BaseApi.editBase(this.base.id, this.base);
             return;
         }
         this.BaseApi.createBase(this.base);

@@ -15,7 +15,7 @@ export class ConnectionApi {
     getEntityByConnection(query = '') {
         return this.$http.get(this.API.generateEntity + query)
             .then((response) => {
-                return response.data && response.data.result;
+                return response.data ;
                 //return response;
             });
     }

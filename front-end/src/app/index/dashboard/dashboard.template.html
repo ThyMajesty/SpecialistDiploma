@@ -12,6 +12,9 @@
                             <button  type="button" class="btn btn-default" ng-click="$event.stopPropagation()" ui-sref="app.index.edit({ baseId: base.pk})">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </button>
+                            <button  type="button" class="btn btn-default" ng-click="expand[base.pk] = !expand[base.pk]; $ctrl.deleteBase(base);">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>
                         </div>
                     </h4>
                     <div class="animate-show base-body" ng-show="expand[base.pk]">

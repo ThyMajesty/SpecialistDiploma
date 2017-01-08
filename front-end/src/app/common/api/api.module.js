@@ -1,6 +1,7 @@
 import { AuthApi } from './auth-api.service';
 import { UserApi } from './user-api.service';
 import { BaseApi } from './base-api.service';
+import { InstanceApi } from './instance-api.service';
 import { ConnectionApi } from './connection-api.service';
 
 export const ApiModule = angular.module('erd.common.api', [])
@@ -8,4 +9,5 @@ export const ApiModule = angular.module('erd.common.api', [])
     .service('UserApi', UserApi)
     .service('BaseApi', BaseApi)
     .service('ConnectionApi', ConnectionApi)
+    .service('InstanceApi', InstanceApi)
     .name;

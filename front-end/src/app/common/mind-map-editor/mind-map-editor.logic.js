@@ -39,7 +39,7 @@ export class MindMapEditorLogic {
         this.treeData = treeData || this.treeData;
         this.treeData.x0 = this.height / 2;
         this.treeData.y0 = 0;
-        this.update(this.treeData);
+        this.update(this.treeData, true);
         return this.treeData;
     }
 
@@ -64,7 +64,7 @@ export class MindMapEditorLogic {
         }
     }
 
-    update(source) {
+    update(source, flag) {
         if (!(source != null)) {
             return;
         }
@@ -116,7 +116,7 @@ export class MindMapEditorLogic {
 
         nodeUpdate.select("text")
             .text((d) => {
-                return d.name;
+                return d.value.name;
             })
             .style("fill-opacity", 1);
 
@@ -141,8 +141,14 @@ export class MindMapEditorLogic {
             });
 
         // Enter any new links at the parent's previous position.
-        link.enter().insert("svg:path", "g")
+        
+
+        link.enter()
+            .insert("svg:path", "g")
             .attr("class", "link")
+            .attr('id', (d) => {
+                return d.source.id + '-' + d.target.id;
+            })
             .attr("d", (d) => {
                 var o = { x: source.x0, y: source.y0 };
                 return this.diagonal({ source: o, target: o });
@@ -155,6 +161,24 @@ export class MindMapEditorLogic {
         link.transition()
             .duration(this.settings.duration)
             .attr("d", this.diagonal);
+
+        link.enter()
+            .insert("svg:text", "g")
+            .attr("text-anchor", "middle")
+            .style('font-size', '10px')
+
+            .append("textPath")
+            .attr('startOffset', '50%')
+            .text((d) => {
+                console.log(d.target)
+                return d.target.connection.name;
+            })
+            .attr("href", (d) => {
+                return "#" + d.source.id + '-' + d.target.id
+            })
+            .text((d) => {
+                return d.target.connection.name;
+            });
 
         // Transition exiting nodes to the parent's new position.
         link.exit().transition()
@@ -171,7 +195,9 @@ export class MindMapEditorLogic {
             d.y0 = d.y;
         });
 
-        this.onChangeCallback(this.treeData);
+        if (!flag) {
+            this.onChangeCallback(this.treeData);
+        }
     }
 
 
@@ -196,7 +222,7 @@ export class MindMapEditorLogic {
                 return d.children || d._children ? "end" : "start";
             })
             .text((d) => {
-                return d.name;
+                return d.value.name;
             })
             .style("fill-opacity", 1e-6);
 
@@ -289,6 +315,7 @@ export class MindMapEditorLogic {
             return;
         }
         if (this.dataApi && this.dataApi.remove) {
+            console.log(d)
             this.dataApi.remove(d).then((response) => {
                 if (!response) {
                     return;

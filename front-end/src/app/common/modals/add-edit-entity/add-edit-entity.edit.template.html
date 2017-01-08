@@ -9,14 +9,25 @@
                 <div class="form-group" form-group-validation>
                     <label for="name" class="col-lg-2 control-label">Name</label>
                     <div class="col-lg-10">
-                        <input type="text" name="name" placeholder="Name" class="form-control" id="name" ng-model="$ctrl.input.name" ng-required="true">
+                        <input type="text" name="name" placeholder="Name" class="form-control" id="name" ng-model="$ctrl.input.value.name" ng-required="true">
                     </div>
                 </div>
                 <div class="form-group" form-group-validation>
                     <label for="description" class="col-lg-2 control-label">Description</label>
                     <div class="col-lg-10">
-                        <input type="text" name="description" placeholder="Description" class="form-control" id="description" ng-model="$ctrl.input.description" ng-required="true">
+                        <input type="text" name="description" placeholder="Description" class="form-control" id="description" ng-model="$ctrl.input.value.description" ng-required="true">
                     </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend >Attachments
+                    <i class="glyphicon pull-right" 
+                        ng-class="{'glyphicon-chevron-down': $ctrl.inputType.attachments, 'glyphicon-chevron-up': !$ctrl.inputType.attachments}"
+                        ng-click="$ctrl.inputType.attachments = !$ctrl.inputType.attachments"></i>
+                </legend>
+                <div class="animate-show" ng-show="$ctrl.inputType.attachments">
+                    <div id="mediaHere" class="custom-preview media-container"></div>
+                    <media-file-view on-change="$ctrl.filesChanged(files)" files="$ctrl.input.value.files" ng-model="model" preview-class="img-thumbnail" preview-container="mediaHere" multiple=""></media-file-view>
                 </div>
             </fieldset>
         </form>

@@ -7,6 +7,8 @@ import uiSelect from 'ui-select';
 import ngResource from 'angular-resource';
 import loadingBar from 'angular-animate';
 import ngAnimate from 'angular-loading-bar';
+
+require('angular-media-preview/dist/angular-media-preview.js');
 //import uiRouterComponents from 'ui-router-route-to-components';
 //import angularSanitize from 'angular-sanitize';
 

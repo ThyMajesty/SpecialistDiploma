@@ -17,8 +17,22 @@ export class DashboardController {
     }
 
     addBase() {
-        this.addEditBaseModal().open().then((response) => {
+        this.addEditBaseModal({type: 'add'}).open().then((response) => {
             this.$state.transitionTo('app.index.create', {base: response, baseId:null});  
+        });
+    }
+
+    deleteBase(base) {
+        this.addEditBaseModal({type: 'delete'}).open(base).then((response) => {
+            if(response === 'confirm'){
+                this.BaseApi.deleteBase(base.pk).then(() => {
+                    this.BaseApi.getBasesList().then((response) => {
+                        this.data = {
+                            bases: response.data
+                        };
+                    });
+                }, () => {});
+            }
         });
     }
 }

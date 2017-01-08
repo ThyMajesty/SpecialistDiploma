@@ -23,7 +23,7 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
             component: 'dashboard',
         })
         .state('app.index.edit', {
-            params: { base: null, baseId:null },
+            params: { base: null },
             url: '/edit/:baseId',
             component: 'editBase',
         })

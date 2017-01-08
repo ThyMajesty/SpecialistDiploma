@@ -2,6 +2,7 @@
 node_modules/
 build/
 static/
+media/
 *.pyc
 npm-debug.log
 test.py

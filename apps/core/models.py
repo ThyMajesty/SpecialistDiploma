@@ -1,6 +1,8 @@
 #http://neomodel.readthedocs.io/en/latest/getting_started.html
-from uuid import uuid4
 import json
+import datetime
+from uuid import uuid4
+from hashlib import sha224
 from django.db import models
 from neomodel import StructuredNode, StructuredRel, One, ZeroOrMore
 from neomodel import StringProperty, IntegerProperty, JSONProperty
@@ -53,17 +55,38 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
     pk = StringProperty(unique_index=True, default=uuid4)
 
     value = JSONProperty(unique_index=False, required=False)
+    history = JSONProperty(required=False)
 
     instances = RelationshipTo('Instance', REL_FROM, model=RelationModel)
 
+
+
     def to_mindmap(self):
-        return {
+        mindmap = {
             "id": self.pk,
             "name": self.value.get('name', None),
             "description": self.value.get('description', None),
             "value": self.value,
             "tree": self.instances.all()[0].to_mindmap()
         }
+        mindmap_json = json.dumps(mindmap)
+        mindmap_uid = sha224(mindmap_json).hexdigest()
+        if not mindmap_uid in self.history:
+            previous_mindmap = self.history['last']
+            diffkeys = [k for k in previous_mindmap if previous_mindmap[k] != mindmap[k]]
+            msg = ''
+            for k in diffkeys:
+                msg += ' '.join([k, ':', previous_mindmap[k], '->', mindmap[k]]) + '\n'
+            self.history[mindmap_uid] = {
+                'id': mindmap_uid,
+                'timestamp': datetime.datetime.now(),
+                'changelog': msg,
+                'data': mindmap
+            }
+            self.history['last'] = mindmap
+            self.save()
+        mindmap['history'] = self.history.values()
+        return mindmap
 
     @staticmethod
     def my_create(data):

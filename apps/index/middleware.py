@@ -15,15 +15,16 @@ class AuthenticationMiddlewareJWT(object):
 
 
     def __call__(self, request):
-        request.user = SimpleLazyObject(lambda: self.__class__.get_jwt_user(request))
+        request.jwt_user = SimpleLazyObject(lambda: self.__class__.get_jwt_user(request))
         request.person = SimpleLazyObject(lambda: self.__class__.get_jwt_person(request))
 
         response = self.get_response(request)
 
         refresh_jwt = request.GET.get("?jwt", None)
         if not refresh_jwt is None:
-            user = request.user
-            payload = self.jwt_payload_handler(user)
+            print 'refresh_jwt', refresh_jwt
+            jwt_user = request.jwt_user
+            payload = self.jwt_payload_handler(jwt_user)
             token = self.jwt_encode_handler(payload)
             response['X-NEW-JWT'] = token
 
@@ -32,20 +33,17 @@ class AuthenticationMiddlewareJWT(object):
 
     @staticmethod
     def get_jwt_user(request):
-        user = get_user(request)
-        if user.is_authenticated:
-            return user
         jwt_authentication = JSONWebTokenAuthentication()
         if jwt_authentication.get_jwt_value(request):
             user, jwt = jwt_authentication.authenticate(request)
-        return user
+            return user
 
 
     @staticmethod
     def get_jwt_person(request):
         from apps.core.models import Person
-        user = request.user
-        if not user.is_authenticated:
+        user = request.jwt_user
+        if not user or not user.is_authenticated():
             return None
         try:
             person = Person.nodes.get(user_id=user.pk)

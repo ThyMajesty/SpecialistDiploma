@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.views import APIView
-from rest_framework.parsers import FileUploadParser
+from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.response import Response
 
 def index(request):
@@ -44,3 +44,26 @@ class FileUploadView(APIView):
                 up_file.close()
 
         return Response({ 'result':file_hash }, status=202)
+        
+
+class MultiFileUploadView(APIView):
+    parser_classes = (MultiPartParser,)
+
+    @csrf_exempt
+    def put(self, request, format=None):
+        result = {}
+        for name, up_file in request.data.items():
+            binary_content = up_file.read()
+            extension = mimetypes.guess_extension(up_file.content_type)
+            file_hash = sha224(binary_content).hexdigest() + extension
+            fullpath = os.path.join(settings.MEDIA_ROOT, file_hash)
+            if not os.path.exists(fullpath):
+                try:
+                    os.makedirs(settings.MEDIA_ROOT)
+                except OSError as exc: # Guard against race condition
+                    pass
+                with open(fullpath, 'wb+') as up_file:
+                    up_file.write(binary_content)
+                    up_file.close()
+            result[name] = file_hash
+        return Response({ 'result':result }, status=202)

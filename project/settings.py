@@ -2,7 +2,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-from .secret import SECRET_KEY
+from .secret import SECRET_KEY, X_MASHAPE_KEY
 
 DEBUG = not False
 

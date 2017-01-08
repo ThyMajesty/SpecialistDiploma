@@ -20,7 +20,7 @@
             "email": "",
             "is_staff": true,
             "is_active": true,
-            "date_joined": "2016-11-27T00:11:23.908Z",
+            "date_joined": "2016-11-27T00:11:23",
             "groups": [],
             "user_permissions": []
         }

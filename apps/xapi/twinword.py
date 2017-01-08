@@ -1,11 +1,11 @@
 import unirest
 import json
 import os.path
-
+from django.conf import settings
 from .models import ApiCallCache
 
 headers = {
-    "X-Mashape-Key": "q4Dj0TUkc8mshmLuGaWM2TRjFHqDp16nFQKjsnTiKRvOpTxWJW",
+    "X-Mashape-Key": settings.X_MASHAPE_KEY,
     "Accept": "application/json"
 }
 

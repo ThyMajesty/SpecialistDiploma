@@ -38,7 +38,8 @@ class Value2ObjMixin(object):
         data = {}
         for key in self.defined_properties().keys():
             value = getattr(self, key)
-            key = 'id' if key == 'pk' else key
+            if self.__class__.__name__ == 'Instance':
+                key = 'id' if key == 'pk' else key
             if isinstance(value, RelationshipManager):
                 data[key] = map(lambda obj: {obj.pk:obj.value}, value.all())
             else:

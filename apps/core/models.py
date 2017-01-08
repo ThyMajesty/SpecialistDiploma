@@ -3,6 +3,7 @@ import json
 import time
 from uuid import uuid4
 from hashlib import sha224
+from deepdiff import DeepDiff
 from django.db import models
 from neomodel import StructuredNode, StructuredRel, One, ZeroOrMore
 from neomodel import StringProperty, IntegerProperty, JSONProperty
@@ -72,11 +73,9 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
         mindmap_uid = sha224(mindmap_json).hexdigest()
         if not mindmap_uid in self.history:
             if 'last' in self.history:
-                previous_mindmap = self.history[self.history['last']]
-                diffkeys = [k for k in previous_mindmap if previous_mindmap[k] != mindmap[k]]
-                msg = ''
-                for k in diffkeys:
-                    msg += ' '.join([k, ':', previous_mindmap[k], '->', mindmap[k]]) + '\n'
+                previous_mindmap = self.history[self.history['last']]['data']
+                diff = DeepDiff(previous_mindmap, mindmap)
+                msg = json.dumps(diff)
             else:
                 msg = 'initial'
             self.history[mindmap_uid] = {

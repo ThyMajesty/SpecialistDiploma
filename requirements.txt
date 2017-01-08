@@ -12,6 +12,7 @@ djangorestframework
 # Python
 python-social-auth
 python-jose
+deepdiff
 
 # 3-rd party
 Jinja2

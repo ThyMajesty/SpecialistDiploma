@@ -111,7 +111,9 @@ def create_viewset_for_model(model):
                     obj = self.neo_model.my_update(obj, request.data)
                 else:
                     for key, value in request.data.items():
-                        rel = getattr(obj, key)
+                        rel = getattr(obj, key, None)
+                        if rel is None:
+                            continue
                         if isinstance(rel, RelationshipManager):
                             for v in value:
                                 rel.connect(rel.target_class.get_object(v))

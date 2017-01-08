@@ -3,17 +3,31 @@
 from django.contrib.auth.middleware import get_user
 from django.utils.functional import SimpleLazyObject
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework_jwt.serializers import RefreshJSONWebTokenSerializer
+from rest_framework_jwt.settings import api_settings
 
 
 class AuthenticationMiddlewareJWT(object):
     def __init__(self, get_response):
         self.get_response = get_response
+        self.jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        self.jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
     def __call__(self, request):
         request.user = SimpleLazyObject(lambda: self.__class__.get_jwt_user(request))
         request.person = SimpleLazyObject(lambda: self.__class__.get_jwt_person(request))
-        return self.get_response(request)
+
+        response = self.get_response(request)
+
+        refresh_jwt = request.GET.get("?jwt", None)
+        if not refresh_jwt is None:
+            user = request.user
+            payload = self.jwt_payload_handler(user)
+            token = self.jwt_encode_handler(payload)
+            response['X-NEW-JWT'] = token
+
+        return response
 
 
     @staticmethod

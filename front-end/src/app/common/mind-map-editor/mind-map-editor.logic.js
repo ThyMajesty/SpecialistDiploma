@@ -171,7 +171,7 @@ export class MindMapEditorLogic {
             .attr('startOffset', '50%')
             .text((d) => {
                 console.log(d.target)
-                return d.target.connection.name;
+                return d.target.connection.name + (d.target.subConnection && d.target.subConnection.name || '');
             })
             .attr("href", (d) => {
                 return "#" + d.source.id + '-' + d.target.id

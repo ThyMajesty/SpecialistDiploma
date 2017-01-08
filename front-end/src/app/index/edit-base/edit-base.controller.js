@@ -13,8 +13,8 @@ export class EditBaseController {
                 this.base = angular.copy(base);
                 if (!this.base.tree) {
                     this.base.tree = {
-                        name: this.base.name,
-                        description: this.base.description
+                        name: this.base.value.name,
+                        description: this.base.value.description
                     }
                 }
                 return;
@@ -36,6 +36,7 @@ export class EditBaseController {
             return;
         }
         if (this.base.id) {
+            console.log(this.base.id)
             this.BaseApi.editBase(this.base.id, this.base);
             return;
         }

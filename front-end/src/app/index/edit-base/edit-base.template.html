@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" ng-if="$ctrl.base">
         <div class="page-header">
-            <h3 ng-if id="navbar">Edit {{$ctrl.base.name}}</h3>
+            <h3 ng-if id="navbar">Edit {{$ctrl.base.value.name}}</h3>
             <ul class="nav nav-tabs" ng-init="activeTab['mindMap']='active'">
                 <li class="{{activeTab['mindMap']}}"><a href="" ng-click="activeTab['mindMap'] = 'active'; activeTab['generalInfo'] = '';">Mind Map</a></li>
                 <li class="{{activeTab['generalInfo']}}"><a href="" ng-click="activeTab['mindMap'] = ''; activeTab['generalInfo'] = 'active';">General Info</a></li>
@@ -22,7 +22,7 @@
                                 placeholder="Name"
                                 class="form-control"
                                 id="name"
-                                ng-model="$ctrl.base.name"
+                                ng-model="$ctrl.base.value.name"
                                 ng-required="true"
                                 >
                         </div>
@@ -35,11 +35,22 @@
                                 placeholder="Description"
                                 class="form-control" 
                                 id="description" 
-                                ng-model="$ctrl.base.description" 
+                                ng-model="$ctrl.base.value.description" 
                                 ng-required="true"
                                 ></textarea> 
                         </div>
                     </div>
+                    <fieldset>
+                <legend >Attachments
+                    <i class="glyphicon pull-right" 
+                        ng-class="{'glyphicon-chevron-down': $ctrl.inputType.attachments, 'glyphicon-chevron-up': !$ctrl.inputType.attachments}"
+                        ng-click="$ctrl.inputType.attachments = !$ctrl.inputType.attachments"></i>
+                </legend>
+                <div class="animate-show" ng-show="$ctrl.inputType.attachments">
+                    <div id="mediaHere" class="custom-preview media-container"></div>
+                    <media-file-view on-change="$ctrl.filesChanged(files)" files="$ctrl.base.value.files" ng-model="model" preview-class="img-thumbnail" preview-container="mediaHere" multiple=""></media-file-view>
+                </div>
+            </fieldset>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
                             <button type="submit" class="btn btn-primary" ng-click="$ctrl.saveChanges()">Save Changes</button>

@@ -85,6 +85,7 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
             }
             self.history['last'] = mindmap
             self.save()
+        self.history.pop('last')
         mindmap['history'] = self.history.values()
         return mindmap
 

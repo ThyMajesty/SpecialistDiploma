@@ -44,10 +44,23 @@ media-file-view {
         }
     }
     .media-actions {
+        position: relative;
         width: 50px;
+        height: 130px;
         float: right;
-        .btn {
-            margin: 3px;
+        .actions{
+            transition: width 1s;
+            width: 0px;
+            right: 0px;
+            position: absolute;
+            .btn {
+                margin: 3px;
+            }
+        }
+        &:hover {
+            .actions{
+                width: 50px;
+            }
         }
     }
     .img-thumbnail {

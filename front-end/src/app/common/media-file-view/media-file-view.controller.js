@@ -115,7 +115,16 @@ export class MediaFileViewController {
     }
 
     clearPreview() {
-        console.log(this)
+        this.filesRaw = [];
+        this.filesToPreview = [];
+        this.onChange({
+            files: this.filesRaw,
+            b64: this.filesToPreview.map((el) => { return {
+                src: el.src,
+                type: el.type,
+                name: el.file.name
+            };})
+        });
     }
 
     deleteFile(file, index) {

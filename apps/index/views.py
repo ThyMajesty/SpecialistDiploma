@@ -44,7 +44,7 @@ class FileUploadView(APIView):
                 up_file.write(binary_content)
                 up_file.close()
 
-        return Response({ 'result':file_hash }, status=202)
+        return Response({ 'result':{ 'hash': file_hash, 'mimetype': up_file.content_type } }, status=202)
         
 
 class MultiFileUploadView(APIView):
@@ -67,5 +67,5 @@ class MultiFileUploadView(APIView):
                 with open(fullpath, 'wb+') as up_file:
                     up_file.write(binary_content)
                     up_file.close()
-            result[name] = file_hash
+            result[name] = { 'hash': file_hash, 'mimetype': up_file.content_type }
         return Response({ 'result':result }, status=202)

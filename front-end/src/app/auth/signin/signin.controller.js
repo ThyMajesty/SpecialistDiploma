@@ -1,15 +1,17 @@
 export class SignInController {
     constructor(AuthApi) {
         this.AuthApi = AuthApi;
-        this.input = {};
+        this.userData = {};
     }
 
     submit() {
+        console.log(this.userData)
         this.singInForm.$setSubmitted();
-        if (!this.input.username || !this.input.password) {
+        if (!this.userData.username || !this.userData.password) {
             return;
         }
-        this.AuthApi.signin(this.input).then((response) => {
+        this.AuthApi.signin(this.userData).then((response) => {
+            console.log(this.userData)
             //console.log(response);
         });
     }

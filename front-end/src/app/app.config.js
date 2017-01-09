@@ -34,7 +34,7 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
             component: 'editBase',
         })
         .state('app.index.user', {
-            url: '/user/:userId',
+            url: '/user/',
             component: 'userPage',
         });
 

@@ -6,9 +6,9 @@
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav navbar-right">
                 <li class="user-menu">
-                    <a ui-sref="app.index.user($ctrl.$storage.userId)">
+                    <a ui-sref="app.index.user($ctrl.$storage.user)">
                         <span class="user-name">
-                            <span class="first" ng-bind="::$ctrl.$storage.username"></span>
+                            <span class="first" ng-bind="::$ctrl.$storage.user.username"></span>
                         </span>
                     </a>
                 </li>

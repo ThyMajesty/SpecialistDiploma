@@ -1,15 +1,18 @@
+const domain = 'http://localhost:80/'
+
 const API = {
-    API: 'http://api.localhost:80/v1/',
-    AUTH: 'http://localhost:80/api/token-auth/',
-    GOOGLE_OAUTH: 'http://localhost:80/login/google-oauth2/',
-    USER: 'http://localhost:80/api/me/',
-    knowlagedb: 'http://localhost:80/api/knowlagedb/',
-    testdb: 'http://localhost:80/api/knowlagedb/',
-    instance: 'http://localhost:80/api/instance/',
-    pack: 'http://localhost:80/api/pack/',
-    person: 'http://localhost:80/api/person/',
-    connection: 'http://localhost:80/api/connection/',
-    generateEntity: 'http://localhost:80/api/askfor/'
+    //API: 'http://api.localhost:80/v1/',
+    AUTH: `${domain}api/token-auth/`,
+    GOOGLE_OAUTH: `${domain}login/google-oauth2/`,
+    USER: `${domain}api/me/`,
+    knowlagedb: `${domain}api/knowlagedb/`,
+    testdb: `${domain}api/knowlagedb/`,
+    instance: `${domain}api/instance/`,
+    pack: `${domain}api/pack/`,
+    person: `${domain}api/person/`,
+    connection: `${domain}api/connection/`,
+    generateEntity: `${domain}api/askfor/`,
+    fileUpload: `${domain}upload/`,
 };
 
 export { API }

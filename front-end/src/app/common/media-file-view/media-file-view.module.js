@@ -1,5 +1,5 @@
-import { MediaFileViewComponent } from './media-file-view.component';
+import { MediaFileViewComponent, initAs } from './media-file-view.component';
 
 export const MediaFileViewModule = angular.module('erd.media-file-view', [])
-    .directive('mediaFileView', MediaFileViewComponent)
+    .component('mediaFileView', MediaFileViewComponent)
     .name;

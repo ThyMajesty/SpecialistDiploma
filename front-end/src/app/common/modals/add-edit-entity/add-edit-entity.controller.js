@@ -57,7 +57,7 @@ export class AddEditEntityController {
             if (this.config.type === 'add') {
                 this.input.parent_id = this.entity.id;
                 this.InstanceApi.addInstance(this.config.basePk, this.input).then((response) => {
-                    this.input.id = response.pk;
+                    this.input.id = response.id;
                     this.$uibModalInstance.close(this.input);
                 })
             }
@@ -112,9 +112,9 @@ export class AddEditEntityController {
         $select.activate();
     }
 
-    filesChanged(files) {
-        this.input.value.files = files;
-        console.log('filesChanged', this.input.values, files);
+    filesChanged(files, b64) {
+        this.input.value.files = b64;
+        //console.log('filesChanged', this.input.value, files, b64);
     }
 
 }

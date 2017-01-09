@@ -5,7 +5,7 @@ export class MindMapEditorLogic {
     constructor(mindMapElement, treeData, settings) {
         this.mindMapElement = mindMapElement;
         this.width = mindMapElement.clientWidth - 120,
-            this.height = mindMapElement.clientHeight - 60;
+        this.height = mindMapElement.clientHeight - 60;
 
         this.treeData = treeData || {};
         this.tree = d3.layout.tree().size([this.height, this.width]);
@@ -14,15 +14,42 @@ export class MindMapEditorLogic {
             return [d.y, d.x];
         });
 
-        this.nodesData = d3.select(this.mindMapElement).append("svg:svg")
-            .attr("width", this.width + 120)
-            .attr("height", this.height + 60)
+        this.editorContainer = d3.select(this.mindMapElement);
+        this.editorSvg = this.editorContainer
+            .append("div")
+            .classed("svg-container", true)
+            .append("svg:svg")
+            .attr("width", "100% ")
+            .attr("height", "100% ")
+            //.attr("viewBox", "0 0 " + this.width + ' ' + this.height)
+            .classed("svg-content-responsive", true)
+            .call(d3.behavior.zoom().scaleExtent([1, 10]).on("zoom", () => {
+                this.main.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+            }))
+            /*.attr("width", this.width + 120)
+            .attr("height", this.height + 60);*/
+
+        this.main = this.editorSvg
+            .append("svg:g")
+            .classed('main', true)
+            //.attr("transform", "translate(" + 80 + "," + 20 + ")");
+
+
+        this.nodesData = this.main
             .append("svg:g")
             .attr("transform", "translate(" + 80 + "," + 20 + ")");
+
 
         this.settings = settings || {
             duration: 500
         };
+
+        window.addEventListener("resize", () => {
+            this.width = this.editorSvg.style("width").split('px')[0] - 120,
+            this.height = this.editorSvg.style("height").split('px')[0] - 60;
+            this.tree = d3.layout.tree().size([this.height, this.width]);
+            this.update(this.tree)
+        });
 
         this.onChangeCallback = () => {};
     }
@@ -71,7 +98,7 @@ export class MindMapEditorLogic {
 
         // Compute the new tree layout.
         const nodes = this.tree.nodes(this.treeData).reverse();
-        console.log(nodes)
+
 
         // Normalize for fixed-depth.             
         let deepest = 0,
@@ -170,7 +197,6 @@ export class MindMapEditorLogic {
             .append("textPath")
             .attr('startOffset', '50%')
             .text((d) => {
-                console.log(d.target)
                 return d.target.connection.name + (d.target.subConnection && d.target.subConnection.name || '');
             })
             .attr("href", (d) => {

@@ -26,8 +26,7 @@
                         ng-click="$ctrl.inputType.attachments = !$ctrl.inputType.attachments"></i>
                 </legend>
                 <div class="animate-show" ng-show="$ctrl.inputType.attachments">
-                    <div id="mediaHere" class="custom-preview media-container"></div>
-                    <media-file-view on-change="$ctrl.filesChanged(files)" files="$ctrl.input.value.files" ng-model="model" preview-class="img-thumbnail" preview-container="mediaHere" multiple=""></media-file-view>
+                    <media-file-view on-change="$ctrl.filesChanged(files, b64)" files="$ctrl.input.value.files"></media-file-view>
                 </div>
             </fieldset>
         </form>

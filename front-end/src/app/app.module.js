@@ -16,6 +16,7 @@ export const AppModule = angular.module('erd', [
         'angular-loading-bar',
         'ngAnimate',
         'angular-media-preview',
+        'ngFileUpload',
         //'ui.router.components',
         //'angular-sanitize',
         

@@ -1,5 +1,6 @@
 const srcDir = './src/';
 
+const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
@@ -59,14 +60,12 @@ module.exports = {
 
     plugins: [
         new webpack.ProvidePlugin({
-            jQuery: 'jquery',
             $: 'jquery',
-            jquery: 'jquery'
-        }),
-        new webpack.ProvidePlugin({
-            d3: 'd3'
-        }),
-        new webpack.ProvidePlugin({
+            jquery: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            'window.$': 'jquery',
+            d3: 'd3',
             rx: 'rx'
         }),
         new HtmlWebpackPlugin({

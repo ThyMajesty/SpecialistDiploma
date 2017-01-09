@@ -28,7 +28,8 @@ class FileUploadView(APIView):
     parser_classes = (FileUploadParser,)
 
     @csrf_exempt
-    def put(self, request, format=None):
+    def post(self, request, format=None):
+        print 'FileUploadView'
         up_file = request.data['file']
         binary_content = up_file.read()
         extension = mimetypes.guess_extension(request.content_type)
@@ -50,7 +51,8 @@ class MultiFileUploadView(APIView):
     parser_classes = (MultiPartParser,)
 
     @csrf_exempt
-    def put(self, request, format=None):
+    def post(self, request, format=None):
+        print 'MultiFileUploadView'
         result = {}
         for name, up_file in request.data.items():
             binary_content = up_file.read()

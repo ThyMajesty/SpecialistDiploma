@@ -1,4 +1,16 @@
 <div id="mediaHere" class="media-container">
+    <div class="media-actions">
+        <i class="glyphicon glyphicon-th-list btn btn-default" 
+            ngf-select="$ctrl.selectFiles($files)"  
+            accept="image/*,video/*,audio/*"
+            multiple></i>
+            
+        <i class="glyphicon glyphicon-upload btn btn-default" 
+            ng-click="$ctrl.uploadFiles()"></i>
+
+        <i class="glyphicon glyphicon-trash btn btn-default" 
+            ng-click="$ctrl.clearPreview()"></i>
+    </div>
     <div class="media-control col-md-6" ng-repeat="pFile in $ctrl.filesToPreview">
         <div class="inner-container img-thumbnail">
             <audio class="media-preview" ng-if="pFile.type === 'audio'" ng-src="{{pFile.src}}" controls="true"></audio>
@@ -8,6 +20,6 @@
         </div>
     </div>
 </div>
-<button ngf-select="$ctrl.selectFiles($files)" multiple accept="image/*,video/*,audio/*">Select Files</button>
+<!-- <button class="btn btn-default" ngf-select="$ctrl.selectFiles($files)" multiple accept="image/*,video/*,audio/*">Select Files</button>
 <button class="btn btn-default" ng-click="$ctrl.clearPreview()">X</button>
-<button class="btn btn-default" ng-click="$ctrl.uploadFiles()">Upload Files</button>
+<button class="btn btn-default" ng-click="$ctrl.uploadFiles()">Upload Files</button> -->

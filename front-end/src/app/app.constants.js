@@ -13,6 +13,8 @@ const API = {
     connection: `${domain}api/connection/`,
     generateEntity: `${domain}api/askfor/`,
     fileUpload: `${domain}upload/`,
+    filesUpload: `${domain}uploads/`,
+    fileGet: `${domain}media/`,
 };
 
 export { API }

@@ -1,7 +1,8 @@
 export class MediaFileViewController {
-    constructor(API, Upload) {
+    constructor(API, Upload, $timeout) {
         this.API = API;
         this.Upload = Upload;
+        this.$timeout = $timeout;
         this.fallbackImage = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAAA00lEQVR4Ae2XwQqDQAxEveinFD9e2MUfq6Cep7GnrPAg1JVCu5OTvEwe9FLtWlpqR6OyVn2aXbNGdX6KB4OLrmbRyIKsGsksWKsINhbUShM0wVcEk43CnAVY722mMEfBhPWD9mGOAlvBepSDwK1gPc5LASp8fbCJ81KACl9PNkOYo8CfKOtHUpijwJ841y1xToJy5VxXnLPgvUL1OAeBW4F6kKPAnYB6jKPAnYA68PZ/8EOCJtjvfvmdqwjSvR8gTz1YcCiytgs/TvLnvaDi/J2gCV63ZgZdEb12DwAAAABJRU5ErkJggg==`;
         
         this.filesToPreview = [];
@@ -77,8 +78,40 @@ export class MediaFileViewController {
     }
 
     uploadFiles() {
-        //this.Upload.upload()
-        console.log(this)
+        if (!(this.filesRaw && this.filesRaw.length > 0)) {
+            return;
+        }
+        this.Upload.upload({
+            url: this.API.filesUpload,
+            data: {
+                files: this.filesRaw
+            },
+            //method: 'PUT'
+        }).then((response) => {
+            this.$timeout(() => {
+                this.uploadedFiles = [];
+                angular.forEach(response.result, (el) => {
+                    this.uploadedFiles.push(el);
+                });
+                console.log(this.filesRaw, response)
+                this.onChange({
+                    files: this.uploadedFiles,
+                    b64: this.filesToPreview.map((el) => { return {
+                        src: el.src,
+                        type: el.type,
+                        name: el.file.name
+                    };})
+                });
+            });
+        }, (response) => {
+            if (response.status > 0) {
+                this.errorMsg = response.status + ': ' + response.data;
+            }
+        }, (evt) => {
+            this.uploadProgress = 
+                Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                console.log(this.uploadProgress);
+        });
     }
 
     clearPreview() {

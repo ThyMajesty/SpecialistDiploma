@@ -1,6 +1,6 @@
-import d3 from './mind-map-editor.d3-layout';
+//import d3 from './mind-map-editor.d3-layout';
 
-export class MindMapEditorLogic {
+export class MindMapEditorTreeLogic {
 
     constructor(mindMapElement, treeData, settings) {
         this.mindMapElement = mindMapElement;

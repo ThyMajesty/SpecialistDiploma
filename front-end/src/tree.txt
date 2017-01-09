@@ -1,0 +1,169 @@
+
+auth
+    login
+    signin
+common
+    api
+    form-group-validation
+    media-file-view
+    mind-map-editor
+    modals
+        add-edit-base
+        add-edit-entity
+index
+    dashboard
+    edit-base
+    header
+    user-page
+
+
+     
+app
+        app.component.js
+        app.config.js
+        app.constants.js
+        app.controller.js
+        app.module.js
+        app.styles.less
+        app.template.html
+        
+    auth
+            auth.component.js
+            auth.config.js
+            auth.controller.js
+            auth.module.js
+            auth.styles.less
+            auth.template.html
+            
+        login
+                login.component.js
+                login.controller.js
+                login.module.js
+                login.styles.less
+                login.template.html
+                
+        signin
+                signin.component.js
+                signin.controller.js
+                signin.module.js
+                signin.styles.less
+                signin.template.html
+                
+    common
+            common.module.js
+            
+        api
+                api.module.js
+                auth-api.service.js
+                base-api.service.js
+                connection-api.service.js
+                instance-api.service.js
+                user-api.service.js
+                
+        form-group-validation
+                form-group-validation.directive.js
+                form-group-validation.module.js
+                
+        media-file-view
+                media-file-view.component.js
+                media-file-view.controller.js
+                media-file-view.module.js
+                media-file-view.styles.less
+                media-file-view.template.html
+                
+        mind-map-editor
+                mind-map-editor.d3-layout.js
+                mind-map-editor.directive.js
+                mind-map-editor.logic.js
+                mind-map-editor.module.js
+                mind-map-editor.styles.less
+                mind-map-editor.template.html
+                
+        modals
+                modals.module.js
+                
+            add-edit-base
+                    add-edit-base.controller.js
+                    add-edit-base.factory.js
+                    add-edit-base.module.js
+                    add-edit-base.styles.less
+                    add-edit-base.template.html
+                    
+            add-edit-entity
+                    add-edit-entity.add.template.html
+                    add-edit-entity.controller.js
+                    add-edit-entity.edit.template.html
+                    add-edit-entity.factory.js
+                    add-edit-entity.module.js
+                    add-edit-entity.remove.template.html
+                    add-edit-entity.styles.less
+                    add-edit-entity.template.html
+                    
+    index
+            index.component.js
+            index.controller.js
+            index.module.js
+            index.styles.less
+            index.template.html
+            
+        dashboard
+                dashboard.component.js
+                dashboard.controller.js
+                dashboard.module.js
+                dashboard.styles.less
+                dashboard.template.html
+                
+        edit-base
+                edit-base.component.js
+                edit-base.controller.js
+                edit-base.module.js
+                edit-base.styles.less
+                edit-base.template.html
+                
+        header
+                header.component.js
+                header.controller.js
+                header.module.js
+                header.styles.less
+                header.template.html
+                
+        user-page
+                user-page.component.js
+                user-page.controller.js
+                user-page.module.js
+                user-page.styles.less
+                user-page.template.html
+
+
+
+app.module.js
+    auth.module.js
+        login.module.js
+        signin.module.js
+    common.module.js
+        api.module.js
+        form-group-validation.module.js
+        media-file-view.module.js
+        mind-map-editor.module.js
+        modals.module.js
+            add-edit-base.module.js
+            add-edit-entity.module.js
+    index.module.js
+        dashboard.module.js
+        edit-base.module.js
+        header.module.js
+        user-page.module.js
+                
+
+app.component.js
+    auth.component.js
+        login.component.js
+        signin.component.js
+        media-file-view.component.js
+    index.component.js
+        dashboard.component.js
+        edit-base.component.js
+        header.component.js
+        user-page.component.js
+
+

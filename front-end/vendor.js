@@ -15,4 +15,6 @@ require('angular-media-preview/dist/angular-media-preview.js');
 //import angularSanitize from 'angular-sanitize';
 
 import 'rx';
-import "d3";
+import d3 from 'd3';
+
+console.log(d3)

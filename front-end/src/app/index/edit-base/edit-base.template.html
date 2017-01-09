@@ -2,15 +2,19 @@
     <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" ng-if="$ctrl.base">
         <div class="page-header">
             <h3 ng-if id="navbar">Edit {{$ctrl.base.value.name}}</h3>
-            <ul class="nav nav-tabs" ng-init="activeTab['mindMap']='active'">
-                <li class="{{activeTab['mindMap']}}"><a href="" ng-click="activeTab['mindMap'] = 'active'; activeTab['generalInfo'] = '';">Mind Map</a></li>
-                <li class="{{activeTab['generalInfo']}}"><a href="" ng-click="activeTab['mindMap'] = ''; activeTab['generalInfo'] = 'active';">General Info</a></li>
+            <ul class="nav nav-tabs" ng-init="activeTab='MindMapTree'">
+                <li class="{{activeTab == 'MindMapTree' ? 'active' : ''}}"><a href="" ng-click="activeTab = 'MindMapTree'">Mind Map Tree</a></li>
+                <li class="{{activeTab == 'MindMapTreeMap' ? 'active' : ''}}"><a href="" ng-click="activeTab = 'MindMapTreeMap'">Mind Map Tree Map</a></li>
+                <li class="{{activeTab == 'GeneralInfo' ? 'active' : ''}}"><a href="" ng-click="activeTab = 'GeneralInfo'">General Info</a></li>
             </ul>
         </div>
-        <div ng-if="activeTab['mindMap']" class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
-            <mind-map-editor base="$ctrl.base"></mind-map-editor>
+        <div ng-if="activeTab == 'MindMapTree'" class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+            <mind-map-editor type="'tree'" base="$ctrl.base"></mind-map-editor>
         </div>
-        <div ng-if="activeTab['generalInfo']" class="container col-lg-12 col-xs-12 col-sm-12 col-md-12">
+        <div ng-if="activeTab == 'MindMapTreeMap'" class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+            <mind-map-editor type="'treemap'" base="$ctrl.base"></mind-map-editor>
+        </div>
+        <div ng-if="activeTab == 'GeneralInfo'" class="container col-lg-12 col-xs-12 col-sm-12 col-md-12">
             <form name="$ctrl.editBaseForm" class="form-horizontal" novalidate>
                 <fieldset>
                     <div class="form-group" form-group-validation>

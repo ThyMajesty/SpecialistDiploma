@@ -8,6 +8,9 @@ export class MediaFileViewController {
         this.filesToPreview = [];
         if (this.files && this.files.length){
             this.filesToPreview = angular.copy(this.files).map((el) => {
+                if (!el.src.startsWith('data')) {
+                    el.src = this.API.fileGet + el.src;
+                }
                 el.file = {
                     name: el.name
                 }
@@ -22,7 +25,7 @@ export class MediaFileViewController {
 
         if (!(files && files.length)) {
             this.errorMsg = 'No file chosen';
-            return console.log(this.errorMsg);
+            return;
         }
         //TODO: validation
 
@@ -56,25 +59,6 @@ export class MediaFileViewController {
                 });
             });
         });
-
-        /*angular.forEach(files, function(file) {
-            file.upload = Upload.upload({
-                url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-                data: {file: file}
-            });
-
-            file.upload.then(function (response) {
-                $timeout(function () {
-                    file.result = response.data;
-                });
-            }, function (response) {
-                if (response.status > 0)
-                    $scope.errorMsg = response.status + ': ' + response.data;
-            }, function (evt) {
-                file.progress = Math.min(100, parseInt(100.0 * 
-                                         evt.loaded / evt.total));
-            });
-        });*/
     }
 
     uploadFiles() {
@@ -86,14 +70,16 @@ export class MediaFileViewController {
             data: {
                 files: this.filesRaw
             },
-            //method: 'PUT'
         }).then((response) => {
             this.$timeout(() => {
                 this.uploadedFiles = [];
-                angular.forEach(response.result, (el) => {
-                    this.uploadedFiles.push(el);
+                angular.forEach(response.data.result, (el) => {
+                    this.uploadedFiles.push({
+                        src: el.hash,
+                        type: el.mimetype.split('/')[0],
+                        name: el.hash
+                    });
                 });
-                console.log(this.filesRaw, response)
                 this.onChange({
                     files: this.uploadedFiles,
                     b64: this.filesToPreview.map((el) => { return {
@@ -108,9 +94,7 @@ export class MediaFileViewController {
                 this.errorMsg = response.status + ': ' + response.data;
             }
         }, (evt) => {
-            this.uploadProgress = 
-                Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                console.log(this.uploadProgress);
+            this.uploadProgress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
     }
 

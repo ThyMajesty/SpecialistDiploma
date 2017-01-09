@@ -113,7 +113,7 @@ export class AddEditEntityController {
     }
 
     filesChanged(files, b64) {
-        this.input.value.files = b64;
+        this.input.value.files = files || b64;
         //console.log('filesChanged', this.input.value, files, b64);
     }
 

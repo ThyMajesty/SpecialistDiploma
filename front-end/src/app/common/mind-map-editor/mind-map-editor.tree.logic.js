@@ -139,7 +139,21 @@ export class MindMapEditorTreeLogic {
         }
 
         if(format == 'svg') {
-            saveAs.saveAs(saveSvgAsPng.svgAsDataUri(resize(scale).cp.node()), this.treeData.name + '.' + format);
+            try {
+                var isFileSaverSupported = !!new Blob();
+            } catch (e) {
+                alert("blob not supported");
+            }
+
+            var html = this.editorSvg
+                .attr("title", this.treeData.name)
+                .attr("version", 1.0)
+                .attr("xmlns", "http://www.w3.org/2000/svg")
+                .node().parentNode.innerHTML;
+
+            var blob = new Blob([html], {type: "image/svg+xml"});
+            console.log(blob)
+            saveAs.saveAs(blob, this.treeData.name + '.' + format);
         } else if(format == 'pdf') {
             svg_to_pdf(resize(scale).cp.node(), function (pdf) {
                 download_pdf('Loled.pdf', pdf.output('dataurlstring'));

@@ -66,7 +66,10 @@ module.exports = {
             'window.jQuery': 'jquery',
             'window.$': 'jquery',
             d3: 'd3',
-            rx: 'rx'
+            rx: 'rx',
+            saveAs: 'file-saver',
+            jsPDF: 'jspdf',
+            saveSvgAsPng: 'save-svg-as-png' 
         }),
         new HtmlWebpackPlugin({
             title: 'ERD',

@@ -8,6 +8,13 @@ import ngResource from 'angular-resource';
 import loadingBar from 'angular-animate';
 import ngAnimate from 'angular-loading-bar';
 import ngFileUpload from 'ng-file-upload';
+import lol from 'save-svg-as-png';
+
+require('file-saver');
+
+
+import blueimpCanvasToBlob from 'blueimp-canvas-to-blob';
+
 
 require('angular-media-preview/dist/angular-media-preview.js');
 
@@ -17,4 +24,4 @@ require('angular-media-preview/dist/angular-media-preview.js');
 import 'rx';
 import d3 from 'd3';
 
-console.log(d3)
+require('jspdf')

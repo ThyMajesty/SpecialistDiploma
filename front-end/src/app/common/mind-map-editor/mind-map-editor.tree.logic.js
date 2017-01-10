@@ -1,5 +1,62 @@
 //import d3 from './mind-map-editor.d3-layout';
-
+const style = `
+        .svg-container {
+            display: inline-block;
+            position: relative;
+            width: 100%;
+            padding-bottom: 70vh; /* aspect ratio */
+            vertical-align: top;
+            overflow: hidden;
+        }
+        .svg-content-responsive {
+            display: inline-block;
+            position: absolute;
+        }
+    rect {
+        fill: none;
+        pointer-events: all;
+    }
+    line {
+        stroke: #000;
+        stroke-width: 1.5px;
+    }
+    .node circle {
+        fill: #fff;
+        stroke: steelblue;
+        stroke-width: 1.5px;
+    }
+    .node {
+        position: relative;
+        display: inline-block;
+        font: 10px sans-serif;
+    }
+    .link {
+        fill: none;
+        stroke: #ccc;
+        stroke-width: 1.5px;
+    }
+    .function-btn {
+        opacity: 0;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+    }
+    .function-btn.add {
+        fill: #57D37E;
+    }
+    .function-btn.remove {
+        fill: #E97979;
+    }
+    .function-btn.edit {
+        fill: #79AFE9;
+    }
+    g:hover > .function-btn {
+        opacity: 1;
+    }
+    .function-bg {
+        cursor: pointer;
+    }
+            `;
 export class MindMapEditorTreeLogic {
 
     constructor(mindMapElement, treeData, settings) {
@@ -14,6 +71,10 @@ export class MindMapEditorTreeLogic {
             return [d.y, d.x];
         });
 
+        this.zoom = d3.behavior.zoom().scaleExtent([1, 10]).on("zoom", () => {
+                this.main.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+            })
+
         this.editorContainer = d3.select(this.mindMapElement);
         this.editorSvg = this.editorContainer
             .append("div")
@@ -23,20 +84,25 @@ export class MindMapEditorTreeLogic {
             .attr("height", "100% ")
             //.attr("viewBox", "0 0 " + this.width + ' ' + this.height)
             .classed("svg-content-responsive", true)
-            .call(d3.behavior.zoom().scaleExtent([1, 10]).on("zoom", () => {
-                this.main.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
-            }))
+            .call(this.zoom)
             /*.attr("width", this.width + 120)
             .attr("height", this.height + 60);*/
 
+        this.editorSvg.append('style').html(style)
+
+
         this.main = this.editorSvg
             .append("svg:g")
+            .attr("width", "100% ")
+            .attr("height", "100% ")
             .classed('main', true)
             //.attr("transform", "translate(" + 80 + "," + 20 + ")");
 
 
         this.nodesData = this.main
             .append("svg:g")
+            .attr("width", "100% ")
+            .attr("height", "100% ")
             .attr("transform", "translate(" + 80 + "," + 20 + ")");
 
 
@@ -52,6 +118,171 @@ export class MindMapEditorTreeLogic {
         });
 
         this.onChangeCallback = () => {};
+    }
+
+
+    export(format, scale) {
+        let resize = (n) => {
+            let cp = d3.select(this.editorSvg.node().cloneNode(true)),
+                width = this.width,
+                height = this.height,
+                m = cp.select('g.main').attr('scale', '(' + n + ')');
+            cp
+                .attr("width", width)
+                .attr("height", height)
+                .style("width", width + 'px')
+                .style("height", height + 'px')
+            return {cp, width, height};
+        }
+        let save = (dataBlob, filesize) => {
+                saveAs.saveAs(dataBlob, this.treeData.name + '.' + format); // FileSaver.js function
+        }
+
+        if(format == 'svg') {
+            saveAs.saveAs(saveSvgAsPng.svgAsDataUri(resize(scale).cp.node()), this.treeData.name + '.' + format);
+        } else if(format == 'pdf') {
+            svg_to_pdf(resize(scale).cp.node(), function (pdf) {
+                download_pdf('Loled.pdf', pdf.output('dataurlstring'));
+            });
+        } else {
+            var svgString = getSVGString(resize(scale).cp.node(), this.width, this.height, 8);
+            svgString2Image(svgString, 2*this.width, 2*this.height, format, save ); // passes Blob and filesize String to the callback
+        }
+        
+
+        function getSVGString( svgNode) {
+            svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
+            var cssStyleText = getCSSStyles( svgNode );
+
+            appendCSS( cssStyleText, svgNode )
+
+            var serializer = new XMLSerializer();
+            var svgString = serializer.serializeToString(svgNode);
+            svgString = svgString.replace(/(\w+)?:?xlink=/g, 'xmlns:xlink=') // Fix root xlink without namespace
+            svgString = svgString.replace(/NS\d+:href/g, 'xlink:href') // Safari NS namespace fix
+
+            return svgString;
+
+            function getCSSStyles( parentElement ) {
+                var selectorTextArr = [];
+
+                // Add Parent element Id and Classes to the list
+                selectorTextArr.push( '#'+parentElement.id );
+                for (var c = 0; c < parentElement.classList.length; c++)
+                        if ( !contains('.'+parentElement.classList[c], selectorTextArr) )
+                            selectorTextArr.push( '.'+parentElement.classList[c] );
+
+                // Add Children element Ids and Classes to the list
+                var nodes = parentElement.getElementsByTagName("*");
+                for (var i = 0; i < nodes.length; i++) {
+                    var id = nodes[i].id;
+                    if ( !contains('#'+id, selectorTextArr) )
+                        selectorTextArr.push( '#'+id );
+
+                    var classes = nodes[i].classList;
+                    for (var c = 0; c < classes.length; c++)
+                        if ( !contains('.'+classes[c], selectorTextArr) )
+                            selectorTextArr.push( '.'+classes[c] );
+                }
+
+                // Extract CSS Rules
+                var extractedCSSText = "";
+                for (var i = 0; i < document.styleSheets.length; i++) {
+                    var s = document.styleSheets[i];
+                    
+                    try {
+                        if(!s.cssRules) continue;
+                    } catch( e ) {
+                            if(e.name !== 'SecurityError') throw e; // for Firefox
+                            continue;
+                        }
+
+                    var cssRules = s.cssRules;
+                    for (var r = 0; r < cssRules.length; r++) {
+                        if ( contains( cssRules[r].selectorText, selectorTextArr ) )
+                            extractedCSSText += cssRules[r].cssText;
+                    }
+                }
+                return extractedCSSText
+
+                function contains(str,arr) {
+                    return arr.indexOf( str ) === -1 ? false : true;
+                }
+
+            }
+
+            function appendCSS( cssText, element ) {
+                var styleElement = document.createElement("style");
+                styleElement.setAttribute("type","text/css"); 
+                styleElement.innerHTML = cssText;
+                var refNode = element.hasChildNodes() ? element.children[0] : null;
+                element.insertBefore( styleElement, refNode );
+            }
+        }
+
+
+        function svgString2Image( svgString, width, height, format, callback ) {
+            var format = format ? format : 'png';
+            var imgsrc = 'data:image/svg+xml;base64,'+ btoa( unescape( encodeURIComponent( svgString ) ) ); // Convert SVG string to dataurl
+
+            var canvas = document.createElement("canvas");
+            var context = canvas.getContext("2d");
+
+            canvas.width = width;
+            canvas.height = height;
+            document.body.append(canvas);
+
+            var image = new Image;
+            image.onload = function() {
+                context.clearRect ( 0, 0, width, height );
+                context.drawImage(image, 0, 0, width, height);
+
+                canvas.toBlob( function(blob) {
+                    var filesize = Math.round( blob.length/1024 ) + ' KB';
+                    if ( callback ) callback( blob, filesize );
+                });
+
+                
+            };
+
+            image.src = imgsrc;
+        }
+
+        function svg_to_pdf(svg, callback) {
+             saveSvgAsPng.svgAsDataUri(svg, {}, function(svg_uri) {
+                var image = document.createElement('img');
+
+                image.src = svg_uri;
+                image.onload = function() {
+                    var canvas = document.createElement('canvas');
+                    var context = canvas.getContext('2d');
+                    var doc = new jsPDF('portrait', 'pt');
+                    var dataUrl;
+
+                    canvas.width = image.width;
+                    canvas.height = image.height;
+                    context.drawImage(image, 0, 0, image.width, image.height);
+                    dataUrl = canvas.toDataURL('image/png');
+                    doc.addImage(dataUrl, 'PNG', 0, 0, image.width, image.height);
+
+                    callback(doc);
+                }
+            });
+        }
+
+        
+        function download_pdf(name, dataUriString) {
+            var link = document.createElement('a');
+            link.addEventListener('click', function(ev) {
+                link.href = dataUriString;
+                link.download = name;
+                document.body.removeChild(link);
+            }, false);
+            document.body.appendChild(link);
+            link.click();
+        }
+
+        
     }
 
     onChange(cb) {
@@ -115,6 +346,7 @@ export class MindMapEditorTreeLogic {
         // Update the nodes…
         var node = this.nodesData.selectAll("g.node")
             .data(nodes, (d) => {
+                console.log(d, nodes, this.nodesData)
                 return d.id || (d.id = (new Date()).getTime());
             });
 

@@ -255,8 +255,6 @@ export class MindMapEditorTreeLogic {
                     var filesize = Math.round( blob.length/1024 ) + ' KB';
                     if ( callback ) callback( blob, filesize );
                 });
-
-                
             };
 
             image.src = imgsrc;
@@ -264,6 +262,7 @@ export class MindMapEditorTreeLogic {
 
         function svg_to_pdf(svg, callback) {
              saveSvgAsPng.svgAsDataUri(svg, {}, function(svg_uri) {
+                console.log(svg_uri)
                 var image = document.createElement('img');
 
                 image.src = svg_uri;
@@ -273,8 +272,17 @@ export class MindMapEditorTreeLogic {
                     var doc = new jsPDF('portrait', 'pt');
                     var dataUrl;
 
-                    canvas.width = image.width;
-                    canvas.height = image.height;
+                    canvas.width = image.height + image.width;
+                    canvas.height = image.height + image.width;
+                    if(image.height < image.width){
+                        context.rotate((90)*Math.PI/180);
+                    } 
+
+                    
+
+                    //context.translate(canvas.width/2,canvas.height/2);
+                    //context.rotate((90)*Math.PI/180);
+                    //context.drawImage(image,-image.width/2,-image.width/2);
                     context.drawImage(image, 0, 0, image.width, image.height);
                     dataUrl = canvas.toDataURL('image/png');
                     doc.addImage(dataUrl, 'PNG', 0, 0, image.width, image.height);
@@ -360,7 +368,7 @@ export class MindMapEditorTreeLogic {
         // Update the nodes…
         var node = this.nodesData.selectAll("g.node")
             .data(nodes, (d) => {
-                console.log(d, nodes, this.nodesData)
+                //console.log(d, nodes, this.nodesData)
                 return d.id || (d.id = (new Date()).getTime());
             });
 

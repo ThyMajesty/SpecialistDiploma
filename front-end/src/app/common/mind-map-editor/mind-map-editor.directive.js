@@ -23,32 +23,34 @@ export function MindMapEditorDirective(addEditEntityModal, BaseApi) {
             remove: addEditEntityModal({type: 'remove' , basePk: scope.base.id}).open
         };
         let mindMapEditor = {};
-
-        if (scope.type == 'tree') {
-            mindMapEditor = new MindMapEditorTreeLogic(mindMapElement); //mindMapElement, treeData, settings
-        }
-        if (scope.type == 'treemap') {
-            mindMapEditor = new MindMapEditorTreeMapLogic(mindMapElement); //mindMapElement, treeData, settings
-        }
-
         if (!scope.base.tree) {
             scope.base.tree = {
                 name: scope.base.name,
                 description: scope.base.description
             }
         }
-
-        console.log(scope.base.tree)
-        scope.treeData = mindMapEditor.setTreeData(scope.base.tree);
-
         function changedTreeData(treeData) {
             scope.base.tree = treeData;
         } 
 
-        mindMapEditor.onChange(changedTreeData);
-        mindMapEditor.setDataApi(dataApi);
+        if (scope.type == 'tree') {
+            mindMapEditor = new MindMapEditorTreeLogic(mindMapElement); //mindMapElement, treeData, settings
+            scope.treeData = mindMapEditor.setTreeData(scope.base.tree);
+            mindMapEditor.onChange(changedTreeData);
+            mindMapEditor.setDataApi(dataApi);
+        }
+        if (scope.type == 'treemap') {
+            mindMapEditor = new MindMapEditorTreeMapLogic(mindMapElement, angular.copy(scope.base.tree)); //mindMapElement, treeData, settings
+        }
+
+
+        //console.log(scope.base.tree)
+
+        
 
         scope.export = (format, scale) => {
+            format = format || 'png'; 
+            scale = scale || 20;
             mindMapEditor.export(format, scale);
         }
 

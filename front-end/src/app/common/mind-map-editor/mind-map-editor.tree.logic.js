@@ -156,7 +156,7 @@ export class MindMapEditorTreeLogic {
             saveAs.saveAs(blob, this.treeData.name + '.' + format);
         } else if(format == 'pdf') {
             svg_to_pdf(resize(scale).cp.node(), function (pdf) {
-                download_pdf('Loled.pdf', pdf.output('dataurlstring'));
+                download_pdf(this.treeData.name + + '.pdf', pdf.output('dataurlstring'));
             });
         } else {
             var svgString = getSVGString(resize(scale).cp.node(), this.width, this.height, 8);
@@ -390,7 +390,9 @@ export class MindMapEditorTreeLogic {
             });
 
         nodeUpdate.select("circle")
-            .attr("r", 4.5)
+            .attr("r", (d) => {
+                return 9.5 - d.depth;
+            })
             .style("fill", (d) => {
                 return d._children ? "lightsteelblue" : "#fff";
             });
@@ -426,6 +428,7 @@ export class MindMapEditorTreeLogic {
 
         link.enter()
             .insert("svg:path", "g")
+            .attr('stroke-width', 10)
             .attr("class", "link")
             .attr('id', (d) => {
                 return d.source.id + '-' + d.target.id;
@@ -446,7 +449,7 @@ export class MindMapEditorTreeLogic {
         link.enter()
             .insert("svg:text", "g")
             .attr("text-anchor", "middle")
-            .style('font-size', '10px')
+            .style('font-size', '14px')
 
             .append("textPath")
             .attr('startOffset', '50%')
@@ -497,6 +500,7 @@ export class MindMapEditorTreeLogic {
             .attr("x", (d) => {
                 return d.children || d._children ? -10 : 10;
             })
+            .style('font-size', '14px')
             .attr("dy", ".35em")
             .attr("text-anchor", (d) => {
                 return d.children || d._children ? "end" : "start";

@@ -6,10 +6,9 @@ export class MindMapEditorTreeMapLogic {
         console.log(mindMapElement, treeData, settings)
         this.mindMapElement = mindMapElement;
 
-        this.width = mindMapElement.clientWidth - 120;
-        this.height = mindMapElement.clientHeight - 60;
+        this.width = mindMapElement.clientWidth ;
+        this.height = mindMapElement.clientHeight ;
 
-        console.log(this.width, this.height)
 
         var zoom = null;
 

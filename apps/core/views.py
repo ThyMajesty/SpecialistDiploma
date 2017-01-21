@@ -5,11 +5,11 @@ from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.serializers import Serializer
 from rest_framework import serializers  
-from .models import Person
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from neomodel import RelationshipManager
+from .models import Person
 from .models import TestDB, KnowlageDB
 
 @csrf_exempt
@@ -85,13 +85,18 @@ def create_viewset_for_model(model):
         queryset = None
 
         def list(self, request):
-            objs_list = self.neo_model.nodes.all()
+            if self.neo_model == KnowlageDB:
+                person = request.person
+                objs_list = person.knowlagedb.all()
+            else:
+                objs_list = self.neo_model.nodes.all()
             objs_list_json = map(lambda obj: obj.to_json(), objs_list)
             return Response(objs_list_json)
 
         def create(self, request):
             if hasattr(self.neo_model, 'my_create'):
-                obj = self.neo_model.my_create(request.data)
+                person = request.person
+                obj = self.neo_model.my_create(request.data, owner=person)
             else:
                 obj = self.neo_model(**request.data)
             try:

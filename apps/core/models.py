@@ -62,6 +62,7 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
 
     instances = RelationshipTo('Instance', REL_FROM, model=RelationModel)
 
+    owner = RelationshipFrom('Person', REL_OWN, model=RelationModel)
 
     def to_mindmap(self):
         mindmap = {
@@ -94,10 +95,12 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
         return mindmap
 
     @staticmethod
-    def my_create(data):
+    def my_create(data, owner=None):
         db = KnowlageDB(value=data.pop("value")).save()
         inst = Instance(value=data.pop("tree").pop("value")).save()
         db.instances.connect(inst)
+        owner.knowlagedb.connect(db)
+        owner.save()
         return db.save()
 
 
@@ -142,7 +145,7 @@ class Instance(Value2ObjMixin, StructuredNode):
     connections_from = Relationship('Connection', REL_CONNECTED_TO, cardinality=ZeroOrMore)
 
     @staticmethod
-    def my_create(data):
+    def my_create(data, owner=None):
         parent = Instance.nodes.get(pk=data.pop("parent_id"))
         conn = Connection(value=data.pop("connection")).save()
         conn.value["subconnection"] = data.get("subconnection", None)

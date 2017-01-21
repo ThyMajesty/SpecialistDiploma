@@ -1,11 +1,12 @@
 import os
 import mimetypes
 from hashlib import sha224
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.response import Response
@@ -22,6 +23,22 @@ def index(request):
 def oauth_callback(request):
     referer = request.META.get('HTTP_REFERER', 'http://localhost:80/')
     return redirect(referer)
+
+
+@csrf_exempt
+def reg(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        new_user = User()
+        new_user.username = data.get('username', '')
+        new_user.email = data.get('email', '')
+        new_user.password = data.get('password', '')
+        try:
+            new_user.save()
+        except Exception as e:
+            return JsonResponse({'msg':e.message})
+        return JsonResponse({'msg':'success'})
+    raise Http404    
 
 
 class FileUploadView(APIView):

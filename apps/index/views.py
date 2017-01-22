@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.response import Response
+from rest_framework_jwt.views import obtain_jwt_token
 
 def index(request):
     messages.debug(request, '%s SQL statements were executed.' % 123)
@@ -33,12 +34,12 @@ def reg(request):
         new_user = User()
         new_user.username = data.get('username', '')
         new_user.email = data.get('email', '')
-        new_user.password = data.get('password', '')
         try:
+            new_user.set_password(data.get('password', ''))
             new_user.save()
         except Exception as e:
             return JsonResponse({'msg':e.message})
-        return JsonResponse({'msg':'success'})
+        return obtain_jwt_token(request)
     raise Http404    
 
 

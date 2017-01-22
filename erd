@@ -23,11 +23,11 @@ function setup_env(){
 
 function manage(){
     source /var/virtualenv/erd/bin/activate
-    ./manage.py clean_pyc
-    ./manage.py migrate
-    ./manage.py collectstatic
-    ./manage.py loaddata initial_data.json
-    ./manage.py shell < neo_test_data.py
+    python manage.py clean_pyc
+    python manage.py migrate
+    python manage.py collectstatic
+    python manage.py loaddata initial_data.json
+    python manage.py shell < neo_test_data.py
 }
 
 function configure_server(){

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --progress --colors --inline --hot --config config/webpack.dev.js",
     "dev": "webpack-dev-server --progress --colors --inline --hot --config config/webpack.dev.js",
-    "deploy": "webpack-dev-server --progress --colors --inline --hot --config config/webpack.dev.js --port 1522 --host 0.0.0.0",
+    "deploy": "webpack-dev-server --progress --colors --inline --hot --config config/webpack.dev.js --port 80 --host 0.0.0.0",
     "build-dev": "set NODE_ENV=dev && webpack",
     "build-static": "set NODE_ENV=static && webpack",
     "build-static-watch": "set NODE_ENV=static && webpack --watch",

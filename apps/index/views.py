@@ -18,17 +18,13 @@ from apps.index.utils import person_required
 
 
 def index(request):
-    messages.debug(request, '%s SQL statements were executed.' % 123)
-    messages.info(request, 'Three credits remain in your account.')
-    messages.success(request, 'Profile details updated.')
-    messages.warning(request, 'Your account expires in three days.')
-    messages.error(request, 'Document deleted.')
-    return render(request, 'index/index.jinja2')
-
-
-def oauth_callback(request):
-    referer = request.META.get('HTTP_REFERER', 'http://localhost:80/')
-    return redirect(referer)
+    # messages.debug(request, '%s SQL statements were executed.' % 123)
+    # messages.info(request, 'Three credits remain in your account.')
+    # messages.success(request, 'Profile details updated.')
+    # messages.warning(request, 'Your account expires in three days.')
+    # messages.error(request, 'Document deleted.')
+    # return render(request, 'index/index.jinja2')
+    return redirect('http://an-erd.mooo.com/')
 
 
 @csrf_exempt

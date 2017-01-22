@@ -2,3 +2,8 @@
 1520 -> 80
 1521 -> 443
 1522 -> 8000
+
+
+http://freedns.afraid.org/subdomain/
+django      http://djerd.mooo.com/
+angular     http://an-erd.mooo.com/

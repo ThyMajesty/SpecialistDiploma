@@ -64,7 +64,7 @@ ALLOWED_HOSTS = [
     '.localhost',
     '127.0.0.1',
     '77.47.130.174',
-    'erd.info.nu',
+    'an-erd.mooo.com',
 ]
 
 CORS_ORIGIN_WHITELIST = (
@@ -73,7 +73,7 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:8000',
     '127.0.0.1:8000',
     '77.47.130.174',
-    'erd.info.nu',
+    'an-erd.mooo.com',
 )
 
 CORS_ALLOW_HEADERS = (
@@ -182,6 +182,8 @@ FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.TemporaryFileUploadHand
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.google.GoogleOAuth2',
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 

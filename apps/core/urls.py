@@ -6,7 +6,8 @@ from .views import create_viewset_for_model, me
 
 router = routers.DefaultRouter()
 for model in [KnowlageDB, Instance, Person, Connection]:
-    router.register(model.__name__.lower(), create_viewset_for_model(model), base_name=model.__name__.lower())
+    name = model.__name__.lower()
+    router.register(name, create_viewset_for_model(model), base_name=name)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.

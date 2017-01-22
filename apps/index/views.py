@@ -1,34 +1,25 @@
 import json
-import os
-import mimetypes
-from hashlib import sha224
-from django.http import HttpResponse, Http404, JsonResponse
-from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.shortcuts import redirect
 from rest_framework.views import APIView
+from django.template.loader import render_to_string
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework_jwt.views import obtain_jwt_token
-from rest_framework_jwt.settings import api_settings
-from django.template.loader import render_to_string
-from apps.index.utils import person_required
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+
+from .utils import person_required, save_file, generate_jwt_for_user
 
 
 def index(request):
-    # messages.debug(request, '%s SQL statements were executed.' % 123)
-    # messages.info(request, 'Three credits remain in your account.')
-    # messages.success(request, 'Profile details updated.')
-    # messages.warning(request, 'Your account expires in three days.')
-    # messages.error(request, 'Document deleted.')
-    # return render(request, 'index/index.jinja2')
-    return redirect('http://an-erd.mooo.com/')
+    # Just redirect to angular interface
+    return redirect(settings.INTERFACE_URL)
 
 
 @csrf_exempt
-def reg(request):
+def signup(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         new_user = User()
@@ -38,19 +29,19 @@ def reg(request):
             new_user.set_password(data.get('password', ''))
             new_user.save()
         except Exception as e:
-            return JsonResponse({'msg':e.message})
+            return JsonResponse({'msg': e.message}, status=500)
         return obtain_jwt_token(request)
     elif request.method == 'GET':
-        return HttpResponse(content=render_to_string('index/social.jinja2'), content_type="application/json")
+        urls = json.loads(render_to_string('index/social.jinja2'))
+        return JsonResponse(urls)
 
 
-def sauth(request):
-    payload = api_settings.JWT_PAYLOAD_HANDLER(request.user)
-    token = api_settings.JWT_ENCODE_HANDLER(payload)
-    return redirect('http://localhost:8080/#/social?token='+token)
+def social_post_jwt_auth(request):
+    token = generate_jwt_for_user(request.user)
+    return redirect(settings.INTERFACE_URL + '#/social?token=' + token)
 
 
-class FileUploadView(APIView):
+class SingleFileUploadView(APIView):
     parser_classes = (FileUploadParser,)
 
     @csrf_exempt
@@ -58,21 +49,9 @@ class FileUploadView(APIView):
     def post(self, request, format=None):
         print 'FileUploadView'
         up_file = request.data['file']
-        binary_content = up_file.read()
-        extension = mimetypes.guess_extension(request.content_type)
-        file_hash = sha224(binary_content).hexdigest() + extension
-        fullpath = os.path.join(settings.MEDIA_ROOT, file_hash)
-        if not os.path.exists(fullpath):
-            try:
-                os.makedirs(settings.MEDIA_ROOT)
-            except OSError as exc: # Guard against race condition
-                pass
-            with open(fullpath, 'wb+') as stored_file:
-                stored_file.write(binary_content)
-                stored_file.close()
+        result = save_file(up_file)
+        return Response({'result': result}, status=202)
 
-        return Response({ 'result':{ 'hash': file_hash, 'mimetype': up_file.content_type } }, status=202)
-        
 
 class MultiFileUploadView(APIView):
     parser_classes = (MultiPartParser,)
@@ -81,20 +60,10 @@ class MultiFileUploadView(APIView):
     @person_required
     def post(self, request, format=None):
         print 'MultiFileUploadView'
-        result = {}
-        for name, up_file in request.data.items():
-            binary_content = up_file.read()
-            extension = mimetypes.guess_extension(up_file.content_type)
-            file_hash = sha224(binary_content).hexdigest()
-            file_hash += extension or ('.' + up_file.content_type.split('/')[1])
-            fullpath = os.path.join(settings.MEDIA_ROOT, file_hash)
-            if not os.path.exists(fullpath):
-                try:
-                    os.makedirs(settings.MEDIA_ROOT)
-                except OSError as exc: # Guard against race condition
-                    pass
-                with open(fullpath, 'wb+') as stored_file:
-                    stored_file.write(binary_content)
-                    stored_file.close()
-            result[name] = { 'hash': file_hash, 'mimetype': up_file.content_type }
-        return Response({ 'result':result }, status=202)
+        items = request.data.items()
+        result = {name: save_file(up_file) for name, up_file in items}
+        return Response({'result': result}, status=202)
+
+
+singlefileuploadview = SingleFileUploadView.as_view()
+multifileuploadview = MultiFileUploadView.as_view()

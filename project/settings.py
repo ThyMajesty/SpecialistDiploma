@@ -229,3 +229,5 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
 }
+
+INTERFACE_URL = 'http://localhost:8080/'

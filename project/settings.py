@@ -37,7 +37,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = (['debug_toolbar.middleware.DebugToolbarMiddleware', ] if DEBUG else []) + [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'apps.adapters.subdomain.SubdomainURLRoutingMiddleware', # before CommonMiddleware 
+    'apps.adapters.subdomain.SubdomainURLRoutingMiddleware',  # before CommonMiddleware
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -58,7 +58,7 @@ SUBDOMAIN_URLCONFS = {
     'media': 'project.urls.media',  # e.g. ``media.example.com``
     'static': 'project.urls.static',  # e.g. ``static.example.com``
 }
-
+USE_X_FORWARDED_HOST = False
 ALLOWED_HOSTS = [
     'localhost',
     '.localhost',
@@ -103,10 +103,13 @@ TEMPLATES = [
         "BACKEND": "django_jinja.backend.Jinja2",
         "APP_DIRS": True,
         "OPTIONS": {
-            "match_extension": ".jinja2", # Match the template names ending in .jinja2 but not the ones in the admin folder.
+            # Match the template names ending in .jinja2 but not the ones in
+            # the admin folder.
+            "match_extension": ".jinja2",
             "match_regex": r"^(?!admin/).*",
             "app_dirname": "templates",
-            "undefined": None, # Can be set to "jinja2.Undefined" or any other subclass.
+            # Can be set to "jinja2.Undefined" or any other subclass.
+            "undefined": None,
             "newstyle_gettext": True,
             "extensions": [
                 "jinja2.ext.do",
@@ -157,12 +160,13 @@ FIXTURE_DIRS = ['fixtures', ]
 DATABASE_URL = 'http://neo4j:qwerty@localhost:7474/db/data/'
 os.environ['NEO4J_REST_URL'] = DATABASE_URL
 
-# Password validation https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
+# Password validation
+# https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    { 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator' },
-    { 'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator' },
-    { 'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator' },
-    { 'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator' },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # Internationalization https://docs.djangoproject.com/en/1.10/topics/i18n/
@@ -172,12 +176,14 @@ USE_I18N = False
 USE_L10N = False
 USE_TZ = False
 
-# Static files (CSS, JavaScript, Images) https://docs.djangoproject.com/en/1.10/howto/static-files/
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.10/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-FILE_UPLOAD_HANDLERS = ["django.core.files.uploadhandler.TemporaryFileUploadHandler", ]
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler", ]
 
 
 AUTHENTICATION_BACKENDS = (

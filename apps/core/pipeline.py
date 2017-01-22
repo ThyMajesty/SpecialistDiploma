@@ -14,7 +14,7 @@ def update_user_neo4j_record(backend, user, response, *args, **kwargs):
             'email': data.get('emails', [{}])[0].get('value', None),
             "socialAccounts": {
                 'url': data.get('url', ''),
-                'name': backend
+                'name': backend.name
             }
         }
         person.value = json.dumps(args)

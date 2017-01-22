@@ -64,6 +64,7 @@ ALLOWED_HOSTS = [
     '.localhost',
     '127.0.0.1',
     '77.47.130.174',
+    'djerd.mooo.com',
     'an-erd.mooo.com',
 ]
 
@@ -73,6 +74,7 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:8000',
     '127.0.0.1:8000',
     '77.47.130.174',
+    'djerd.mooo.com',
     'an-erd.mooo.com',
 )
 

@@ -99,6 +99,7 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
         db = KnowlageDB(value=data.pop("value")).save()
         inst = Instance(value=data.pop("tree").pop("value")).save()
         db.instances.connect(inst)
+        db.owner.connect(owner)
         owner.knowlagedb.connect(db)
         owner.save()
         return db.save()

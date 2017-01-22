@@ -44,7 +44,7 @@ MIDDLEWARE = (['debug_toolbar.middleware.DebugToolbarMiddleware', ] if DEBUG els
     'apps.index.middleware.AuthenticationMiddlewareJWT',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 

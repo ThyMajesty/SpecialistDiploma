@@ -2,6 +2,7 @@ import json
 from django.http import JsonResponse
 
 from apps.core.models import RelRecord, Connection
+from apps.index.utils import person_required
 from .api_map import api_map
 from .twinword import get_api_result
 
@@ -30,6 +31,7 @@ def transform(data, key):
     return result
 
 
+@person_required
 def askfor(request, relation, word):
     subrelation = request.GET.get('subrelation')
     if subrelation:
@@ -50,6 +52,7 @@ def askfor(request, relation, word):
     return JsonResponse(anwser)
 
 
+@person_required
 def askforlist(request, word):
     def conv(data):
         return [{'name': n, 'description': d} for n, d in data]

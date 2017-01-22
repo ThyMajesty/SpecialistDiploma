@@ -2,7 +2,7 @@ from rest_framework import routers
 from django.conf.urls import url, include
 
 from .models import KnowlageDB, Instance, Person, Connection
-from .views import create_viewset_for_model, me, test_db, get_test_db
+from .views import create_viewset_for_model, me
 
 router = routers.DefaultRouter()
 for model in [KnowlageDB, Instance, Person, Connection]:
@@ -13,7 +13,5 @@ for model in [KnowlageDB, Instance, Person, Connection]:
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^me/', me),
-    url(r'^testdb/$', test_db),
-    url(r'^testdb/(?P<uuid>[\w-]+)/', get_test_db),
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

@@ -16,7 +16,7 @@ class AuthenticationMiddlewareJWT(object):
 
     def __call__(self, request):
         request.jwt_user = SimpleLazyObject(lambda: self.__class__.get_jwt_user(request))
-        request.person = SimpleLazyObject(lambda: self.__class__.get_jwt_person(request))
+        request.person = self.__class__.get_jwt_person(request)
 
         response = self.get_response(request)
 

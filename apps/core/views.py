@@ -1,5 +1,6 @@
 import json
 from django.http import Http404, JsonResponse
+from django.http import HttpResponseForbidden
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
@@ -9,14 +10,14 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from neomodel import RelationshipManager
+from apps.index.utils import person_required
 from .models import Person
 from .models import TestDB, KnowlageDB
 
 @csrf_exempt
+@person_required
 def me(request):
     person = request.person
-    if not person:
-        return JsonResponse({'msg': 'not authorized'})
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -32,38 +33,6 @@ def me(request):
         except Exception as e:
             print e.message
     return JsonResponse(person.to_json())
-
-
-@csrf_exempt
-def test_db(request):
-    data = json.loads(request.body)
-    if request.method == 'POST':
-        kdb = KnowlageDB()
-        kdb.save()
-        db = TestDB()
-        db.uuid = kdb.pk
-        data['id'] = kdb.pk
-        db.json_data = json.dumps(data)
-        db.save()
-    return JsonResponse(data)
-
-
-@csrf_exempt
-def get_test_db(request, uuid):
-    db, created = TestDB.objects.get_or_create(uuid=uuid)
-    if created:
-        db.json_data = json.dumps({
-                'id':uuid,
-                'name': 'name',
-                'description': 'descr',
-            })
-        db.save()
-    if request.method == 'PUT':
-        db.json_data = request.body
-        db.save()
-
-    data = json.loads(db.json_data)
-    return JsonResponse(data)
 
 
 def view_mindmap(request, obj=None):
@@ -84,6 +53,7 @@ def create_viewset_for_model(model):
         neo_model = None
         queryset = None
 
+        @person_required
         def list(self, request):
             if self.neo_model == KnowlageDB:
                 person = request.person
@@ -93,6 +63,7 @@ def create_viewset_for_model(model):
             objs_list_json = map(lambda obj: obj.to_json(), objs_list)
             return Response(objs_list_json)
 
+        @person_required
         def create(self, request):
             if hasattr(self.neo_model, 'my_create'):
                 person = request.person
@@ -105,10 +76,12 @@ def create_viewset_for_model(model):
                 return Response(unicode(e), status=status.HTTP_400_BAD_REQUEST)
             return Response(view_mindmap(request, obj) or obj.to_json(), status=status.HTTP_201_CREATED)
 
+        @person_required
         def retrieve(self, request, pk=None):
             obj = self.get_object(pk)
             return Response(view_mindmap(request) or obj.to_json())
 
+        @person_required
         def update(self, request, pk=None):
             obj = self.get_object(pk)
             try:
@@ -132,6 +105,7 @@ def create_viewset_for_model(model):
         def partial_update(self, request, pk=None):
             pass
 
+        @person_required
         def destroy(self, request, pk=None):
             obj = self.get_object(pk)
             obj.delete()

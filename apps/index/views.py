@@ -14,6 +14,7 @@ from rest_framework.response import Response
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.settings import api_settings
 from django.template.loader import render_to_string
+from apps.index.utils import person_required
 
 
 def index(request):
@@ -57,6 +58,7 @@ class FileUploadView(APIView):
     parser_classes = (FileUploadParser,)
 
     @csrf_exempt
+    @person_required
     def post(self, request, format=None):
         print 'FileUploadView'
         up_file = request.data['file']
@@ -80,6 +82,7 @@ class MultiFileUploadView(APIView):
     parser_classes = (MultiPartParser,)
 
     @csrf_exempt
+    @person_required
     def post(self, request, format=None):
         print 'MultiFileUploadView'
         result = {}

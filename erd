@@ -33,7 +33,8 @@ function manage(){
 
 function configure_server(){
     # https://github.com/nginx/nginx/blob/master/conf/uwsgi_params
-    sudo ln -s erd_nginx.conf /etc/nginx/sites-enabled/
+    sudo ln -s ~/edr/erd_nginx.conf /etc/nginx/sites-enabled/
+    sudo rm /etc/nginx/sites-enabled/default
 
     # set neo4j password to 'qwerty'
     curl -H "Content-Type: application/json" -X POST -d '{"password":"qwerty"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password
@@ -61,8 +62,8 @@ function restart_postgresql(){
 }
 
 function restart(){
-    echo "restart $1" 
-    case "$1" in
+    echo "restarting $2..." 
+    case "$2" in
         "all")
             restart_uwsgi
             restart_nginx
@@ -88,7 +89,6 @@ function restart(){
     esac
 }
 
-
-
-
-
+echo "call $1($2)"
+$1 $2 # call function
+echo "done!"

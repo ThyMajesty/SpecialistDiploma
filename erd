@@ -43,31 +43,51 @@ function configure_server(){
     # /usr/local/bin/uwsgi --ini ~/erd/erd_uwsgi.ini
 }
 
+function restart_uwsgi(){
+    uwsgi --ini erd_uwsgi.ini
+}
+
+function restart_nginx(){
+    sudo /etc/init.d/nginx restart
+}
+
+function restart_neo4j(){
+    sudo service neo4j-service restart
+}
+
+function restart_postgresql(){
+    sudo /etc/init.d/postgresql restart
+}
+
 function restart(){
     echo "restart $1" 
     case "$1" in
         "all")
-            ./erd restart web
-            ./erd restart db
+            restart_uwsgi()
+            restart_nginx()
+            restart_neo4j()
+            restart_postgresql()
         ;;
         "web")
-            ./erd restart uwsgi
-            ./erd restart nginx
+            restart_uwsgi()
+            restart_nginx()
         ;;
         "db")
-            ./erd restart neo4j
-            ./erd restart postgresql
+            restart_neo4j()
+            restart_postgresql()
         ;;
-        "uwsgi") uwsgi --ini erd_uwsgi.ini
+        "uwsgi") restart_uwsgi()
         ;;
-        "nginx") sudo /etc/init.d/nginx restart
+        "nginx") restart_nginx()
         ;;
-        "neo4j") sudo service neo4j-service restart
+        "neo4j") restart_neo4j()
         ;;
-        "postgresql") sudo /etc/init.d/postgresql restart
+        "postgresql") restart_postgresql()
         ;;
     esac
 }
+
+
 
 
 

@@ -7,5 +7,15 @@ def update_user_neo4j_record(backend, user, response, *args, **kwargs):
         person = Person.nodes.get(user_id=user.pk)
     except Person.DoesNotExist:
         person = Person(user_id=user.pk)
-        person.value = json.dumps(dict(response))
+        data = dict(response)
+        args = {
+            'name': data.get('displayName', ''),
+            'image': data.get('image', {}).get('url', None),
+            'email': data.get('emails', [{}])[0].get('value', None),
+            "socialAccounts": {
+                'url': data.get('url', ''),
+                'name': backend
+            }
+        }
+        person.value = json.dumps(args)
         person.save()

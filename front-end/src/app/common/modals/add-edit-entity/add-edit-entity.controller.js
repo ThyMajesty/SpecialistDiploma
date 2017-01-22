@@ -20,12 +20,11 @@ export class AddEditEntityController {
         });
     }
 
-    selectedConnection($item, $model) {
+    selectedConnection($item) {
         if (!this.entity.value.name) {
             return;
         }
         this.ConnectionApi.getEntityByConnection($item.name + '/' + this.entity.value.name).then((response) => {
-            console.log(response)
             if (!response.result) {
                 this.subConnections = [];
                 this.inputType = {
@@ -38,13 +37,12 @@ export class AddEditEntityController {
         });
     }
 
-    selectedSubConnection($item, $model) {
+    selectedSubConnection($item) {
         if (!$item.name) {
             return;
         }
         this.input.value.name = $item.name;
         this.input.value.description = $item.description;
-        console.log(this.input);
     }
 
 
@@ -63,6 +61,7 @@ export class AddEditEntityController {
             }
             if (this.config.type === 'edit') {
                 this.InstanceApi.editInstance(this.config.basePk, this.input).then((response) => {
+                    console.log(response, this.input)
                     this.$uibModalInstance.close(this.input);
                 })
             }
@@ -76,7 +75,6 @@ export class AddEditEntityController {
     }
 
     confirm() {
-        console.log(this.config, this.input)
         this.InstanceApi.deleteInstance(this.config.basePk, this.input).then((response) => {
             this.$uibModalInstance.close(this.input);
         })

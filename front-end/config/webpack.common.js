@@ -17,6 +17,10 @@ module.exports = {
     },
 
     module: {
+        /*preLoaders: [
+            // Javascript
+            { test: /\.js$/, loader: 'eslint-loader', exclude: /(node_modules|bower_components)/ }
+        ],*/
         loaders: [{
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
@@ -28,10 +32,7 @@ module.exports = {
                 loader: 'raw'
             }, {
                 test: /\.js$/,
-                loaders: [
-                    'eslint-loader',
-                    'babel-loader?presets[]=es2015&plugins[]=transform-runtime',
-                ],
+                loader: 'babel-loader?presets[]=es2015&plugins[]=transform-runtime',
                 exclude: /(node_modules|bower_components)/
             }, {
                 test: /\.(png|jpg)$/,
@@ -58,6 +59,11 @@ module.exports = {
         ]
     },
 
+    /*eslint: {
+        failOnWarning: false,
+        failOnError: true
+    },*/
+
     plugins: [
         new webpack.ProvidePlugin({
             $: 'jquery',
@@ -70,7 +76,8 @@ module.exports = {
             saveAs: 'file-saver',
             jsPDF: 'jspdf',
             saveSvgAsPng: 'save-svg-as-png',
-            Masonry: 'Masonry'
+            Masonry: 'Masonry',
+            Url: 'Url'
         }),
         new HtmlWebpackPlugin({
             title: 'ERD',

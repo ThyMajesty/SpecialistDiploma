@@ -7,6 +7,7 @@ module.exports = webpackMerge(commonConfig, {
             '/v1': {
                 target: 'http://localhost',
                 secure: false,
+                ws: true,
                 pathRewrite: {"^/v1" : ""}
             },
             

@@ -1,5 +1,13 @@
 const domain = `../v1/`
 
+let u = new Url();
+
+let ud = new Url(domain);
+
+
+
+console.log(u, ud)
+
 const API = {
     AUTH: `${domain}api/token-auth/`,
     tokenRefresh: `${domain}api/token-refresh/`,

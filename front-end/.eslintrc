@@ -1,15 +1,18 @@
 {
+    "ecmaFeatures": {
+        "modules": true,
+        "spread" : true,
+        "restParams" : true
+    },
+    "env" : {
+        "browser" : true,
+        "node" : true,
+        "es6" : true
+    },
+    "rules" : {
+        "no-unused-vars" : 2
+    },
     "parserOptions": {
         "sourceType": "module"
-    },
-    "env": {
-        "browser": true,
-        "node": true,
-        "es6": true
-    },
-    "ecmaFeatures": {
-        "modules": true
-    },
-
-    "globals": {}
+    }
 }

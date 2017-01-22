@@ -82,7 +82,7 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
             },
 
             'response': function(response) {
-                console.log(statuses.auth.indexOf(response.status))
+                console.log(response)
                 if (statuses.auth.indexOf(response.status) > -1) {
                     $state.go('app.auth');
                     return $q.reject(response);

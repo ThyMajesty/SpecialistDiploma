@@ -23,6 +23,9 @@ export class UserPageController {
     }
 
     upload($file, $invalidFiles) {
+        if (!$file || $invalidFiles) {
+            return;
+        }
         this.Upload.upload({
             url: this.API.filesUpload,
             data: {

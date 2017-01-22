@@ -1,22 +1,11 @@
 media-file-view {
-    .media-preview {
+    /*.media-preview {
         width: 100%;
         height: auto;
         background-color: #eee;
         padding: 10px;
         color: black;
-        input[type="file"] {
-            padding: 0;
-            margin: 0;
-        }
-        input[type="button"] {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            cursor: pointer;
-            background-color: transparent;
-        }
-    }
+    }*/
     .media-container {
         overflow: hidden;
         margin-bottom: 20px;
@@ -32,12 +21,21 @@ media-file-view {
             background-image: none;
         }*/
     }
-    .media-control {
+    /*.media-control {
         margin: 15px 0px;
-        width: 45%;
+        max-height: 200px;
+        max-width: 200px;
+        .add-file {
+            font-size: 70px;
+            vertical-align: sub;
+            padding: 4%;
+            text-align: center;
+            width: 150px;
+            height: 150px;
+        }
+        //width: 45%;
         .inner-container {
             position: relative;
-
             .delete-file {
                 right: 0px;
                 position: absolute;
@@ -49,7 +47,7 @@ media-file-view {
         width: 50px;
         height: 130px;
         float: right;
-        .actions{
+        .actions {
             transition: width 1s;
             width: 0px;
             right: 0px;
@@ -59,12 +57,51 @@ media-file-view {
             }
         }
         &:hover {
-            .actions{
+            .actions {
                 width: 50px;
             }
         }
     }
     .img-thumbnail {
+        overflow: hidden;
         min-height: 42px;
+    }*/
+    .inner-container {
+        font-size: 16px;
+        overflow: hidden;
+        display: inline-block;
+        margin-bottom: 8px;
+        width: calc(50% - 4px);
+        margin-right: 8px;
+        &:nth-of-type(2n) {
+            margin-right: 0;
+        }
+        &:hover .media-preview {
+            transform: scale(1.15);
+        }
+    }
+
+    @media screen and (min-width: 50em) {
+        .inner-container {
+            width: calc(25% - 6px);
+            &:nth-of-type(2n) {
+                margin-right: 8px;
+            }
+            &:nth-of-type(4n) {
+                margin-right: 0;
+            }
+        }
+    }
+    
+    figure {
+        margin: 0;
+    }
+    .media-preview {
+        border: none;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        background: #ccc;
+        transition: transform .2s ease-in-out;
     }
 }

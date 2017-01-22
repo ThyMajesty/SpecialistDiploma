@@ -48,6 +48,11 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
             url: '/create',
             component: 'editBase',
         })
+        .state('app.index.memorise', {
+            params: { base: null },
+            url: '/memorize/:baseId',
+            component: 'memorise',
+        })
         .state('app.index.user', {
             url: '/user/',
             component: 'userPage',

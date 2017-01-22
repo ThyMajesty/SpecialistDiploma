@@ -1,10 +1,10 @@
 <div id="mediaHere" class="media-container">
-    <div class="media-actions">
+    <!-- <div class="media-actions">
         <div class="actions">
-            <i class="glyphicon glyphicon-th-list btn btn-default" 
+             <i class="glyphicon glyphicon-th-list btn btn-default" 
                 ngf-select="$ctrl.selectFiles($files)"  
                 accept="image/*,video/*,audio/*"
-                multiple></i>
+                multiple></i> 
 
             <i class="glyphicon glyphicon-upload btn btn-default" 
                 ng-click="$ctrl.uploadFiles()"></i>
@@ -12,12 +12,20 @@
             <i class="glyphicon glyphicon-trash btn btn-default" 
                 ng-click="$ctrl.clearPreview()"></i>
         </div>
+    </div> -->
+    <div class="media-control">
+        <div class="btn btn-default add-file"
+            ngf-select="$ctrl.selectFiles($files)"  
+            accept="image/*,video/*,audio/*"
+            multiple> 
+            <span class="glyphicon glyphicon-paperclip"> </span> 
+        </div>
     </div>
-    <div class="media-control col-md-6 col-xs-6 col-lg-6 col-sm-6" ng-repeat="pFile in $ctrl.filesToPreview">
+    <div class="media-control" ng-repeat="pFile in $ctrl.filesToPreview">
         <div class="inner-container img-thumbnail">
-            <audio class="media-preview" ng-if="pFile.type === 'audio'" ng-src="{{pFile.src}}" controls="true"></audio>
-            <video class="media-preview" ng-if="pFile.type === 'video'" ng-src="{{pFile.src}}" controls="true"></video>
-            <img class="media-preview" ng-if="pFile.type === 'image'" ng-src="{{pFile.src}}"></img>
+            <audio class="media-preview img-responsive" ng-if="pFile.type === 'audio'" ng-src="{{pFile.src}}" controls="true"></audio>
+            <video class="media-preview img-responsive" ng-if="pFile.type === 'video'" ng-src="{{pFile.src}}" controls="true"></video>
+            <img class="media-preview img-responsive" ng-if="pFile.type === 'image'" ng-src="{{pFile.src}}"></img>
             <i class="delete-file glyphicon glyphicon-remove btn btn-default" ng-click="$ctrl.deleteFile(pFile, $index)"></i>
         </div>
     </div>

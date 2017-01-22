@@ -63,26 +63,26 @@ function restart(){
     echo "restart $1" 
     case "$1" in
         "all")
-            restart_uwsgi();
-            restart_nginx();
-            restart_neo4j();
-            restart_postgresql();
+            restart_uwsgi
+            restart_nginx
+            restart_neo4j
+            restart_postgresql
         ;;
         "web")
-            restart_uwsgi();
-            restart_nginx();
+            restart_uwsgi
+            restart_nginx
         ;;
         "db")
-            restart_neo4j();
-            restart_postgresql();
+            restart_neo4j
+            restart_postgresql
         ;;
-        "uwsgi") restart_uwsgi();
+        "uwsgi") restart_uwsgi
         ;;
-        "nginx") restart_nginx();
+        "nginx") restart_nginx
         ;;
-        "neo4j") restart_neo4j();
+        "neo4j") restart_neo4j
         ;;
-        "postgresql") restart_postgresql();
+        "postgresql") restart_postgresql
         ;;
     esac
 }

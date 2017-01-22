@@ -1,4 +1,4 @@
-const domain = `../api/`
+const domain = `../v1/`
 
 const API = {
     AUTH: `${domain}api/token-auth/`,

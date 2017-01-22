@@ -39,7 +39,10 @@
                 <audio class="media-preview img-responsive" ng-if="pFile.type === 'audio'" ng-src="{{pFile.src}}" controls="true"></audio>
                 <video class="media-preview img-responsive" ng-if="pFile.type === 'video'" ng-src="{{pFile.src}}" controls="true"></video>
                 <img class="media-preview img-responsive" ng-if="pFile.type === 'image'" ng-src="{{pFile.src}}"></img>
-                <i class="delete-file glyphicon glyphicon-remove btn btn-default" ng-click="$ctrl.deleteFile(pFile, $index)"></i>
+                <p>{{pFile.name | shortenFilename}}</p>
+                <i class="delete-file glyphicon glyphicon-remove btn btn-link" ng-click="$ctrl.deleteFile(pFile, $index)"></i>
+                <i class="download-file glyphicon glyphicon-download-alt btn btn-default" ng-click="$ctrl.downloadFile(pFile, $index)"></i>
+                <i class="zoom-file zoom-in glyphicon glyphicon-zoom-in btn btn-default" ng-click="$ctrl.zoomFile(pFile, $index)"></i>
             </div>
         </div>
     </div>

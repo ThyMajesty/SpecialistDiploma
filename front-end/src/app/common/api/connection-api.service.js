@@ -6,14 +6,15 @@ export class ConnectionApi {
     }
 
     getConnections(query = '') {
-        return this.$http.get(this.API.generateEntity + query)
+        console.log(this.API);
+        return this.$http.get(this.API.generateEntity + query + '/')
             .then((response) => {
                 return response.data.result;
             });
     }
 
     getEntityByConnection(query = '') {
-        return this.$http.get(this.API.generateEntity + query)
+        return this.$http.get(this.API.generateEntity + query + '/')
             .then((response) => {
                 return response.data ;
                 //return response;

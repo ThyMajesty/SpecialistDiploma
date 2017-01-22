@@ -162,4 +162,8 @@ export class MediaFileViewController {
             })
         });
     }
+
+    downloadFile(file, index) {
+        console.log(file, index, this)
+    }
 }

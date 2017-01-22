@@ -5,6 +5,7 @@ import { FormGroupValidationModule } from './form-group-validation/form-group-va
 import { MindMapEditorModule } from './mind-map-editor/mind-map-editor.module';
 import { MediaFileViewModule } from './media-file-view/media-file-view.module';
 import { QuestionnaireModule } from './questionnaire/questionnaire.module';
+import { FiltersModule } from './filters/filters.module';
 
 export const CommonModule = angular.module('erd.common', [
         ApiModule,
@@ -12,7 +13,8 @@ export const CommonModule = angular.module('erd.common', [
         MindMapEditorModule,
         ModalsModule,
         MediaFileViewModule,
-        QuestionnaireModule
+        QuestionnaireModule,
+        FiltersModule
     ])
     .name;
 

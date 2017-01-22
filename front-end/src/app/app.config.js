@@ -61,13 +61,18 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
     cfpLoadingBarProvider.includeSpinner = true;
     cfpLoadingBarProvider.includeBar = true;
 
-    $httpProvider.interceptors.push(function($q, $location, $localStorage) {
+    $httpProvider.interceptors.push(function($q, $location, $localStorage, $state) {
+        const statuses = {
+            auth: [401, 403]
+        }
         return {
             'request': function(config) {
                 config.headers = config.headers || {};
                 let token = $localStorage.token;
                 if (token) {
                     config.headers.Authorization = 'jwt ' + token;
+                } else {
+                    $state.go('app.auth');
                 }
                 return config;
             },
@@ -77,12 +82,18 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
             },
 
             'response': function(response) {
+                console.log(statuses.auth.indexOf(response.status))
+                if (statuses.auth.indexOf(response.status) > -1) {
+                    $state.go('app.auth');
+                    return $q.reject(response);
+                }
                 return response;
             },
 
             'responseError': function(response) {
-                if (response.status === 401 || response.status === 403) {
-                    $location.path('/auth');
+                if (statuses.auth.indexOf(response.status) > -1) {
+                    $state.go('app.auth');
+                    return $q.reject(response);
                 }
                 return response || $q.when(response);
             },

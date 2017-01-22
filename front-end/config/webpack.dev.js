@@ -4,10 +4,10 @@ const commonConfig = require('./webpack.common.js');
 module.exports = webpackMerge(commonConfig, {
     devServer: {
         proxy: {
-            '/api': {
+            '/v1': {
                 target: 'http://localhost',
                 secure: false,
-                pathRewrite: {"^/api" : ""}
+                pathRewrite: {"^/v1" : ""}
             },
             
         }

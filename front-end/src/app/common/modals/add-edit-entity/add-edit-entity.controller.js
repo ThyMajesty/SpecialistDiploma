@@ -15,7 +15,7 @@ export class AddEditEntityController {
     }
 
     fetchData() {
-        this.ConnectionApi.getConnections().then((response) => {
+        this.ConnectionApi.getConnections(this.entity.value.name).then((response) => {
             this.connections = response;
         });
     }
@@ -24,7 +24,7 @@ export class AddEditEntityController {
         if (!this.entity.value.name) {
             return;
         }
-        this.ConnectionApi.getEntityByConnection($item.name + '/' + this.entity.value.name + '/').then((response) => {
+        this.ConnectionApi.getEntityByConnection($item.name + '/' + this.entity.value.name).then((response) => {
             console.log(response)
             if (!response.result) {
                 this.subConnections = [];

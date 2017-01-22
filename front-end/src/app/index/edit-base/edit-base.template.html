@@ -51,7 +51,7 @@
                         ng-class="{'glyphicon-chevron-down': $ctrl.inputType.attachments, 'glyphicon-chevron-up': !$ctrl.inputType.attachments}"
                         ng-click="$ctrl.inputType.attachments = !$ctrl.inputType.attachments"></i>
                 </legend>
-                <div class="animate-show" ng-show="$ctrl.inputType.attachments">
+                <div class="animate-show col-lg-10 col-xs-10 col-sm-10 col-md-10 col-lg-offset-2 col-sm-offset-2 col-md-offset-2 col-xs-offset-2" ng-show="$ctrl.inputType.attachments">
                     <div id="mediaHere" class="custom-preview media-container"></div>
                     <media-file-view on-change="$ctrl.filesChanged(files)" files="$ctrl.base.value.files" ng-model="model" preview-class="img-thumbnail" preview-container="mediaHere" multiple=""></media-file-view>
                 </div>

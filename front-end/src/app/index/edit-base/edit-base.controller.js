@@ -28,7 +28,11 @@ export class EditBaseController {
         }
     }
 
-
+    filesChanged(files) {
+        if(files && files.length > 0){
+            this.base.value.files = files;
+        }
+    }
 
     saveChanges() {
         this.editBaseForm.$setSubmitted();

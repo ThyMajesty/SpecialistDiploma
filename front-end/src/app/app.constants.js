@@ -1,8 +1,9 @@
 const domain = `../v1/`
 
-
-
-console.log(u, ud)
+let baseUri = document.body.baseURI;
+console.log(baseUri, domain)
+console.log(location.host);
+console.log(location.hostname);
 
 const API = {
     AUTH: `${domain}api/token-auth/`,

@@ -1,0 +1,62 @@
+#!/bin/sh
+
+cd ~/erd
+export DJANGO_SETTINGS_MODULE=project.prod
+
+function pull(){
+    git stash
+    git pull
+    chmod 777 *
+}
+
+function setup_env(){
+    sudo rm -r /var/virtualenv/erd/
+    virtualenv /var/virtualenv/erd/
+    
+    source /var/virtualenv/erd/bin/activate
+    pip freeze | xargs pip uninstall -y
+    pip install -r requirements.txt
+
+    mkdir /var/virtualenv/erd/static/
+    mkdir /var/virtualenv/erd/media/
+}
+
+function manage(){
+    source /var/virtualenv/erd/bin/activate
+    ./manage.py clean_pyc
+    ./manage.py migrate
+    ./manage.py collectstatic
+    ./manage.py loaddata initial_data.json
+    ./manage.py shell < neo_test_data.py
+}
+
+function configure_server(){
+    # https://github.com/nginx/nginx/blob/master/conf/uwsgi_params
+    sudo ln -s erd_nginx.conf /etc/nginx/sites-enabled/
+
+    # set neo4j password to 'qwerty'
+    curl -H "Content-Type: application/json" -X POST -d '{"password":"qwerty"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password
+
+    ################# start uwsgi on boot #####################
+    # sudo nano /etc/rc.local
+    # ### erd project: run uwsgi
+    # /usr/local/bin/uwsgi --ini ~/erd/erd_uwsgi.ini
+}
+
+function restart(){
+    echo "restart $1" 
+    case "$1" in
+       "all")
+       "uwsgi") uwsgi --ini erd_uwsgi.ini
+       ;;
+       "nginx") sudo /etc/init.d/nginx restart
+       ;;
+       "neo4j") sudo service neo4j-service restart
+       ;;
+       "postgresql") sudo /etc/init.d/postgresql restart
+       ;;
+    esac
+}
+
+
+

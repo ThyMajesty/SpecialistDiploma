@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cd ~/erd
 export DJANGO_SETTINGS_MODULE=project.prod

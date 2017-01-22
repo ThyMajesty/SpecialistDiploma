@@ -11,10 +11,7 @@ class AuthenticationMiddlewareJWT(object):
 
     def __call__(self, request):
         domain = get_current_site(request).domain
-        print '!!!>>>', domain
-        print '!!!>>>', request.META['HTTP_HOST']
-        request.META['HTTP_HOST'] = get_current_site(request).domain
-        print '!!!>>>', request.META['HTTP_HOST']
+        request.META['HTTP_HOST'] = domain
 
         user, person = self.get_jwt_user_person(request)
         request.jwt_user = user

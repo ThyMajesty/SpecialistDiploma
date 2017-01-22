@@ -13,7 +13,7 @@
                 ng-click="$ctrl.clearPreview()"></i>
         </div>
     </div>
-    <div class="media-control col-md-6" ng-repeat="pFile in $ctrl.filesToPreview">
+    <div class="media-control col-md-6 col-xs-6 col-lg-6 col-sm-6" ng-repeat="pFile in $ctrl.filesToPreview">
         <div class="inner-container img-thumbnail">
             <audio class="media-preview" ng-if="pFile.type === 'audio'" ng-src="{{pFile.src}}" controls="true"></audio>
             <video class="media-preview" ng-if="pFile.type === 'video'" ng-src="{{pFile.src}}" controls="true"></video>

@@ -25,10 +25,11 @@ export class AuthApi {
             });
     }
 
-    signin(input) {
+    signup(input) {
         const { username, email, password, confirmPassword } = input;
-        return this.$http.post(this.API.AUTH, { username, email, password, confirmPassword })
+        return this.$http.post(this.API.SIGNUP, { username, email, password, confirmPassword })
             .then((response) => {
+                console.log(response);
                 this.$storage.token = response.data.token;
                 return response;
             });

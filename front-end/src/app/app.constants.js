@@ -3,6 +3,7 @@ const domain = 'http://localhost:80/'
 const API = {
     //API: 'http://api.localhost:80/v1/',
     AUTH: `${domain}api/token-auth/`,
+    SIGNUP: `${domain}reg/`,
     GOOGLE_OAUTH: `${domain}login/google-oauth2/`,
     USER: `${domain}api/me/`,
     knowlagedb: `${domain}api/knowlagedb/`,

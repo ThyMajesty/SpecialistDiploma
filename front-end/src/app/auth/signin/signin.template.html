@@ -51,6 +51,7 @@
             ng-required="true"
             value="">
     </div>
+    <p class="text-danger" ng-if="$ctrl.errorMessage" ng-bind="$ctrl.errorMessage"></p>
     <button 
         ng-click="$ctrl.submit()"
         type="submit" 

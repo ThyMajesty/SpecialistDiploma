@@ -1,16 +1,19 @@
 export class SignInController {
-    constructor(AuthApi) {
+    constructor(AuthApi, MESSAGES) {
         this.AuthApi = AuthApi;
         this.userData = {};
+        this.errorMap = MESSAGES.error;
+        this.errorMessage = '';
     }
 
     submit() {
-        console.log(this.userData)
+        let fields = ['username', 'password', 'email', 'confirm-password'];
         this.singInForm.$setSubmitted();
-        if (!this.userData.username || !this.userData.password) {
+        //this.singInForm[username].$invalid
+        if (this.singInForm.$invalid) {
             return;
         }
-        this.AuthApi.signin(this.userData).then((response) => {
+        this.AuthApi.signup(this.userData).then((response) => {
             console.log(this.userData)
             //console.log(response);
         });

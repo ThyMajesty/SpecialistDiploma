@@ -4,8 +4,6 @@ let u = new Url();
 
 let ud = new Url(domain);
 
-
-
 console.log(u, ud)
 
 const API = {

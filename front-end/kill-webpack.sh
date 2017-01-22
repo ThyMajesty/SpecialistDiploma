@@ -1,7 +1,7 @@
-kill $(pgrep irssi)
+kill $(pgrep webpack)
 
-killall -v irssi
+killall -v webpack
 
-pkill irssi
+pkill webpack
 
-kill `ps -ef | grep irssi | grep -v grep | awk ‘{print $2}’`
+kill `ps -ef | grep webpack | grep -v grep | awk ‘{print $2}’`

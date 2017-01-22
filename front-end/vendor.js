@@ -24,8 +24,7 @@ require('angular-media-preview/dist/angular-media-preview.js');
 import 'rx';
 import d3 from 'd3';
 
-import Url from 'domurl';
-
+require('domurl')
 require('jspdf')
 
 var jQueryBridget = require('jquery-bridget');

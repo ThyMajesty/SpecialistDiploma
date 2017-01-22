@@ -27,8 +27,16 @@ SOCIAL_AUTH_INACTIVE_USER_URL = '/inactive-user/'
 # If you want to use the full email address as the username, define this setting.
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 
-from ..secret import SOCIAL_AUTH_GOOGLE_OAUTH2_KEY, SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET
+from ..secret import (
+    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY, SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
+    SOCIAL_AUTH_FACEBOOK_KEY, SOCIAL_AUTH_FACEBOOK_SECRET,
+    SOCIAL_AUTH_TWITTER_KEY, SOCIAL_AUTH_TWITTER_SECRET
+)
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = []
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.9'
 
 SOCIAL_AUTH_PIPELINE = (
     # Get the information we can about the user and return it in a simple format to create the user instance later. On some cases the details are

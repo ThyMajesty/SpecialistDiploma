@@ -8,6 +8,14 @@
         }
     },
     {
+        "model": "sites.site",
+        "pk": 2,
+        "fields": {
+            "domain": "djerd.mooo.com",
+            "name": "djerd.mooo.com"
+        }
+    },
+    {
         "model": "auth.user",
         "pk": 2,
         "fields": {

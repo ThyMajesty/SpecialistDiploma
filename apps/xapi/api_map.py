@@ -9,11 +9,11 @@ api_map = {
         'subapi': 0,
         'extract': lambda data: data['relation']
     },
-    'relation-*': {
-        'api': 0,
-        'subapi': 0,
-        'extract': lambda data, key: data['relation'][key]
-    },
+    # 'relation-*': {
+    #     'api': 0,
+    #     'subapi': 0,
+    #     'extract': lambda data, key: data['relation'][key]
+    # },
     'associations': {
         'api': 1,
         'subapi': 0,
@@ -24,11 +24,11 @@ api_map = {
         'subapi': 1,
         'extract': lambda data: data['meaning']
     },
-    'meaning-*': {
-        'api': 2,
-        'subapi': 1,
-        'extract': lambda data, key: data['meaning'][key]
-    },
+    # 'meaning-*': {
+    #     'api': 2,
+    #     'subapi': 1,
+    #     'extract': lambda data, key: data['meaning'][key]
+    # },
     'example': {
         'api': 2,
         'subapi': 3,
@@ -39,11 +39,11 @@ api_map = {
         'subapi': 4,
         'extract': lambda data: { k:v.split(', ') for k, v in data['relation'].items() }
     },
-    'relation2-*': {
-        'api': 2,
-        'subapi': 4,
-        'extract': lambda data, key: data['relation'][key].split(', ')
-    },
+    # 'relation2-*': {
+    #     'api': 2,
+    #     'subapi': 4,
+    #     'extract': lambda data, key: data['relation'][key].split(', ')
+    # },
     'theme': {
         'api': 2,
         'subapi': 5,

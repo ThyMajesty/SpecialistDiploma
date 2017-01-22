@@ -134,6 +134,10 @@ class Connection(Value2ObjMixin, StructuredNode):
                 inst.delete()
         return super(Connection, self).delete()
 
+    def to_ask_form(self):
+        return (self.value.get('name',''), self.value.get('description',''))
+
+
 
 class Instance(Value2ObjMixin, StructuredNode):
     pk = StringProperty(unique_index=True, default=uuid4)
@@ -154,11 +158,12 @@ class Instance(Value2ObjMixin, StructuredNode):
         inst = Instance(value=data.pop("value")).save()
         conn.rel_to.connect(inst)
         conn.save()
+        RelRecord.my_create(inst)
         return inst
 
-    @staticmethod
     def my_update(self, data):
         self.value = data["value"]
+        RelRecord.my_create(self)
         return self
 
     def instances(self, *args, **kwargs):
@@ -194,13 +199,33 @@ class Instance(Value2ObjMixin, StructuredNode):
         return super(Instance, self).delete()
 
 
-class Pack(Value2ObjMixin, StructuredNode):
-    pk = StringProperty(unique_index=True, default=uuid4)
-
-    value = JSONProperty(unique_index=False, required=False)
+class RelRecord(Value2ObjMixin, StructuredNode):
+    pk = StringProperty(unique_index=True, required=True)
     
-    owner = RelationshipFrom('Person', REL_OWN, model=RelationModel)
+    inst_from = StringProperty(required=True)
+    inst_to = StringProperty(required=True)
+    connection = StringProperty(required=True)
+    subconnection = StringProperty()
 
+    @staticmethod
+    def my_create(inst):
+        connection = inst.connections_from.all()[0]
+        inst_from = connection.rel_from.all()[0]
+        args = {
+            'inst_from': inst_from.value.get('name', ''),
+            'inst_to': inst.value.get('name', ''),
+            'connection': connection.value.get('name', ''),
+            'subconnection': connection.value.get('subconnection', None),
+        }
+        args['pk'] = sha224(json.dumps(args)).hexdigest()
+        record = RelRecord(**args).save()
+
+    def to_dict(self):
+        return {
+            "connection": {"name": self.connection},
+            "name": self.inst_to,
+            "subconnection": None or self.subconnection
+        }
 
 
 class Person(Value2ObjMixin, StructuredNode):

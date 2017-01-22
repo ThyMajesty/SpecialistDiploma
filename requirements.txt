@@ -1,3 +1,5 @@
+# pip freeze | xargs pip uninstall -y
+
 # Django
 Django
 django-jinja
@@ -8,11 +10,13 @@ django-extensions
 djangorestframework-jwt
 django-cors-headers
 djangorestframework
+django-jwt-auth
 
 # Python
 python-social-auth
 python-jose
 deepdiff
+uwsgi
 
 # 3-rd party
 Jinja2

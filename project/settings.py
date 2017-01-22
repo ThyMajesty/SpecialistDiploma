@@ -18,13 +18,10 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'social.apps.django_app.default',
-    # 'django_jinja.contrib._easy_thumbnails',
     'django_jinja.contrib._subdomains',
     'django_jinja.contrib._humanize',
 
     'subdomains',
-    # 'easy_thumbnails',
-    # 'tastypie',
     'rest_framework',
     'jwt_auth',
     'corsheaders',

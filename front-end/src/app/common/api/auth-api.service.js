@@ -30,7 +30,7 @@ export class AuthApi {
         const { username, email, password, confirmPassword } = input;
         return this.$http.post(this.API.SIGNUP, { username, email, password, confirmPassword })
             .then((response) => {
-                if (response.data.msg.match(/.*UNIQUE constraint failed.*/g)) {
+                if (response.data.msg && response.data.msg.match(/.*UNIQUE constraint failed.*/g)) {
                     return this.$q.reject(response);
                 }
                 this.$storage.token = response.data.token;

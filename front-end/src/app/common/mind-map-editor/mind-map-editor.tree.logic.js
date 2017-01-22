@@ -152,10 +152,9 @@ export class MindMapEditorTreeLogic {
                 .node().parentNode.innerHTML;
 
             var blob = new Blob([html], {type: "image/svg+xml"});
-            console.log(blob)
             saveAs.saveAs(blob, this.treeData.name + '.' + format);
         } else if(format == 'pdf') {
-            svg_to_pdf(resize(scale).cp.node(), function (pdf) {
+            svg_to_pdf(resize(scale).cp.node(), (pdf) => {
                 download_pdf(this.treeData.name + + '.pdf', pdf.output('dataurlstring'));
             });
         } else {
@@ -244,7 +243,7 @@ export class MindMapEditorTreeLogic {
 
             canvas.width = width;
             canvas.height = height;
-            document.body.append(canvas);
+            //document.body.append(canvas);
 
             var image = new Image;
             image.onload = function() {
@@ -262,7 +261,6 @@ export class MindMapEditorTreeLogic {
 
         function svg_to_pdf(svg, callback) {
              saveSvgAsPng.svgAsDataUri(svg, {}, function(svg_uri) {
-                console.log(svg_uri)
                 var image = document.createElement('img');
 
                 image.src = svg_uri;
@@ -368,7 +366,6 @@ export class MindMapEditorTreeLogic {
         // Update the nodes…
         var node = this.nodesData.selectAll("g.node")
             .data(nodes, (d) => {
-                //console.log(d, nodes, this.nodesData)
                 return d.id || (d.id = (new Date()).getTime());
             });
 
@@ -599,7 +596,6 @@ export class MindMapEditorTreeLogic {
             return;
         }
         if (this.dataApi && this.dataApi.remove) {
-            console.log(d)
             this.dataApi.remove(d).then((response) => {
                 if (!response) {
                     return;

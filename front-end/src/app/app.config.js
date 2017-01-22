@@ -14,9 +14,24 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
             url: '/auth',
             component: 'auth'
         })
+        .state('app.social', {
+            params: { token: null },
+            url: '/social?token',
+            template:'<div></div>',
+            controller: ($stateParams, $state, TokenApi) => {
+                TokenApi.tokenVerify({ token: $stateParams.token }).then((response) => {
+                    $state.go('app.index.dashboard');
+                });
+            }
+        })
         .state('app.index', {
             abstract: true,
             component: 'index',
+            resolve: {
+                userData: (UserApi) => {
+                    return UserApi.getUser();
+                }
+            }
         })
         .state('app.index.dashboard', {
             url: '/',

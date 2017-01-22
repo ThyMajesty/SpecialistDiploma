@@ -1,5 +1,8 @@
 export class AuthController {
-    constructor(API) {
-        this.GOOGLE_OAUTH = API.GOOGLE_OAUTH;
+    constructor(AuthApi, API) {
+        this.AuthApi = AuthApi;
+        this.AuthApi.getSocialUrls().then((response) => {
+            this.backends = response.data.backends;
+        });
     }
 }

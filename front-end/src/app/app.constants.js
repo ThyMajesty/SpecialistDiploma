@@ -2,7 +2,10 @@ const domain = 'http://localhost:80/'
 
 const API = {
     //API: 'http://api.localhost:80/v1/',
+
     AUTH: `${domain}api/token-auth/`,
+    tokenRefresh: `${domain}api/token-refresh/`,
+    tokenVerify: `${domain}api/token-verify/`,
     SIGNUP: `${domain}reg/`,
     GOOGLE_OAUTH: `${domain}login/google-oauth2/`,
     USER: `${domain}api/me/`,

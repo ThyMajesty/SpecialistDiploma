@@ -7,9 +7,17 @@ export class SignInController {
     }
 
     submit() {
+        this.errorMessage = '';
         let fields = ['username', 'password', 'email', 'confirm-password'];
         this.singInForm.$setSubmitted();
-        //this.singInForm[username].$invalid
+
+        fields.forEach((el) => {
+            if (this.singInForm[el].$invalid) {
+                this.errorMessage = this.errorMap[el] || this.errorMap.general;
+                return;
+            }
+        });
+
         if (this.singInForm.$invalid) {
             return;
         }

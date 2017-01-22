@@ -18,7 +18,8 @@ export class AuthApi {
                 this.$storage.token = response.data.token;
                 
                 if (input.rememberMe) {
-                    this.$storage.user = { username, password };
+                    this.$storage.username = username;
+                    this.$storage.password = password;
                 }
                 this.$state.go('app.index.dashboard');
                 return response;
@@ -29,8 +30,18 @@ export class AuthApi {
         const { username, email, password, confirmPassword } = input;
         return this.$http.post(this.API.SIGNUP, { username, email, password, confirmPassword })
             .then((response) => {
-                console.log(response);
+                if (response.data.msg.match(/.*UNIQUE constraint failed.*/g)) {
+                    return this.$q.reject(response);
+                }
                 this.$storage.token = response.data.token;
+                this.$state.go('app.index.dashboard');
+                return response;
+            });
+    }
+
+    getSocialUrls() {
+        return this.$http.get(this.API.SIGNUP)
+            .then((response) => {
                 return response;
             });
     }

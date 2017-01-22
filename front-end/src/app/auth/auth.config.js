@@ -11,5 +11,4 @@ export function AuthConfig($stateProvider, $urlRouterProvider) {
             url: '/signin',
             template: '<signin></signin>'
         });
-
 }

@@ -7,16 +7,17 @@ export class UserApi {
         this.$state = $state;
     }
 
-    getUser(userId = '9d3f1dc8-9107-4c31-9c55-863756768740') {
-        return this.$http.get(this.API.USER /*+ userId + '/?format=json'*/)
+    getUser(userId) {
+        return this.$http.get(this.API.USER)
             .then((response) => {
                 //console.log(response);
+                this.$storage.user = response.data;
                 return response.data;
             });
     }
 
-    setUser(userId = '9d3f1dc8-9107-4c31-9c55-863756768740', data) {
-        return this.$http.post(this.API.USER /*+ userId *//*+ '/?format=json'*/, data)
+    setUser(userId, data) {
+        return this.$http.post(this.API.USER, data)
             .then((response) => {
                 //console.log(response);
                 return response.data;

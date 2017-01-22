@@ -69,7 +69,8 @@ module.exports = {
             rx: 'rx',
             saveAs: 'file-saver',
             jsPDF: 'jspdf',
-            saveSvgAsPng: 'save-svg-as-png' 
+            saveSvgAsPng: 'save-svg-as-png',
+            Masonry: 'Masonry'
         }),
         new HtmlWebpackPlugin({
             title: 'ERD',

@@ -13,22 +13,52 @@
                 ng-click="$ctrl.clearPreview()"></i>
         </div>
     </div> -->
-    <div class="media-control">
-        <div class="btn btn-default add-file"
-            ngf-select="$ctrl.selectFiles($files)"  
-            accept="image/*,video/*,audio/*"
-            multiple> 
-            <span class="glyphicon glyphicon-paperclip"> </span> 
+    <!-- <a class="media-control">
+        <div class="btn btn-default add-file " ngf-drop ngf-select="$ctrl.selectFiles($files)" accept="image/*,video/*,audio/*" multiple>
+            <span class="glyphicon glyphicon-paperclip img-responsive"> </span>
         </div>
-    </div>
-    <div class="media-control" ng-repeat="pFile in $ctrl.filesToPreview">
-        <div class="inner-container img-thumbnail">
+    </a>
+    <a class="media-control" ng-repeat="pFile in $ctrl.filesToPreview">
+        <figure>
             <audio class="media-preview img-responsive" ng-if="pFile.type === 'audio'" ng-src="{{pFile.src}}" controls="true"></audio>
             <video class="media-preview img-responsive" ng-if="pFile.type === 'video'" ng-src="{{pFile.src}}" controls="true"></video>
             <img class="media-preview img-responsive" ng-if="pFile.type === 'image'" ng-src="{{pFile.src}}"></img>
-            <i class="delete-file glyphicon glyphicon-remove btn btn-default" ng-click="$ctrl.deleteFile(pFile, $index)"></i>
+        </figure>
+        <i class="delete-file glyphicon glyphicon-remove btn btn-default" ng-click="$ctrl.deleteFile(pFile, $index)"></i>
+    </a> -->
+    <div class="row">
+        <div class="item">
+            <div class="well">
+                <div class="btn btn-default add-file " ngf-drop ngf-drag-over-class="'dragover'" ngf-select="$ctrl.selectFiles($files. $errorFiles)" ng-model="$ctrl.filesToUploadAndPreview"  accept="image/*,video/*,audio/*" multiple ngf-multiple="true">
+                    <span class="glyphicon glyphicon-paperclip img-responsive"> </span>
+                </div>
+            </div>
+        </div>
+        <div class="item" ng-repeat="pFile in $ctrl.filesToPreview">
+            <div class="well"> 
+                <audio class="media-preview img-responsive" ng-if="pFile.type === 'audio'" ng-src="{{pFile.src}}" controls="true"></audio>
+                <video class="media-preview img-responsive" ng-if="pFile.type === 'video'" ng-src="{{pFile.src}}" controls="true"></video>
+                <img class="media-preview img-responsive" ng-if="pFile.type === 'image'" ng-src="{{pFile.src}}"></img>
+                <i class="delete-file glyphicon glyphicon-remove btn btn-default" ng-click="$ctrl.deleteFile(pFile, $index)"></i>
+            </div>
         </div>
     </div>
+
+    <!-- <div class="grid">
+        <div class="grid-sizer"></div>
+        <div class="grid-item">
+            <div class="btn btn-default add-file " ngf-drop ngf-select="$ctrl.selectFiles($files)" accept="image/*,video/*,audio/*" multiple>
+                <span class="glyphicon glyphicon-paperclip img-responsive"> </span>
+            </div>
+        </div>
+        <div class="grid-item" ng-repeat="pFile in $ctrl.filesToPreview">
+            <audio class="media-preview img-responsive" ng-if="pFile.type === 'audio'" ng-src="{{pFile.src}}" controls="true"></audio>
+            <video class="media-preview img-responsive" ng-if="pFile.type === 'video'" ng-src="{{pFile.src}}" controls="true"></video>
+            <img class="media-preview img-responsive" ng-if="pFile.type === 'image'" ng-src="{{pFile.src}}"></img>
+        </div>
+        
+    </div> -->
+
 </div>
 <!-- <button class="btn btn-default" ngf-select="$ctrl.selectFiles($files)" multiple accept="image/*,video/*,audio/*">Select Files</button>
 <button class="btn btn-default" ng-click="$ctrl.clearPreview()">X</button>

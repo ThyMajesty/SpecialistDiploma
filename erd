@@ -44,10 +44,7 @@ function configure_server(){
     # https://github.com/nginx/nginx/blob/master/conf/uwsgi_params
     sudo ln -s ~/edr/erd_nginx.conf /etc/nginx/sites-enabled/
     sudo rm /etc/nginx/sites-enabled/default
-
-
     
-    restart_neo4j
     # set neo4j password to 'qwerty'
     curl -H "Content-Type: application/json" -X POST -d '{"password":"qwerty"}' -u neo4j:neo4j http://localhost:7474/user/neo4j/password
 

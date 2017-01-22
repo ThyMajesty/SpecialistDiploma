@@ -1,4 +1,11 @@
-export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $sceProvider) {
+export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfpLoadingBarProvider, $sceProvider, $locationProvider) {
+
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+
+    console.log($locationProvider)
 
     $sceProvider.enabled(false);
 
@@ -17,7 +24,7 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
         .state('app.social', {
             params: { token: null },
             url: '/social?token',
-            template:'<div></div>',
+            template: '<div></div>',
             controller: ($stateParams, $state, TokenApi) => {
                 TokenApi.tokenVerify({ token: $stateParams.token }).then((response) => {
                     $state.go('app.index.dashboard');
@@ -43,8 +50,8 @@ export function AppConfig($stateProvider, $urlRouterProvider, $httpProvider, cfp
             component: 'editBase',
         })
         .state('app.index.create', {
-            reload:false,
-            params: { base: null, baseId:null },
+            reload: false,
+            params: { base: null, baseId: null },
             url: '/create',
             component: 'editBase',
         })

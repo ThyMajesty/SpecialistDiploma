@@ -8,6 +8,8 @@ function pull(){
     git stash
     git pull
     chmod 777 *
+    restart_uwsgi
+    restart_nginx
 }
 
 function setup_env(){

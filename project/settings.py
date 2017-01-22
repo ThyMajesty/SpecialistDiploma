@@ -64,6 +64,7 @@ ALLOWED_HOSTS = [
     '.localhost',
     '127.0.0.1',
     '77.47.130.174',
+    'erd.info.nu',
 ]
 
 CORS_ORIGIN_WHITELIST = (
@@ -71,6 +72,7 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8080',
     'localhost:8000',
     '127.0.0.1:8000',
+    'erd.info.nu',
 )
 
 CORS_ALLOW_HEADERS = (

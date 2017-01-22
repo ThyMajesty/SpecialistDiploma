@@ -72,6 +72,7 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8080',
     'localhost:8000',
     '127.0.0.1:8000',
+    '77.47.130.174',
     'erd.info.nu',
 )
 

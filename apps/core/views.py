@@ -1,18 +1,16 @@
 import json
+from neomodel import RelationshipManager
 from django.http import Http404, JsonResponse
-from django.http import HttpResponseForbidden
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import serializers
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.serializers import Serializer
-from rest_framework import serializers  
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User
-from neomodel import RelationshipManager
+
 from apps.index.utils import person_required
-from .models import Person
-from .models import TestDB, KnowlageDB
+from .models import KnowlageDB
+
 
 @csrf_exempt
 @person_required
@@ -74,7 +72,8 @@ def create_viewset_for_model(model):
                 obj.save()
             except Exception as e:
                 return Response(unicode(e), status=status.HTTP_400_BAD_REQUEST)
-            return Response(view_mindmap(request, obj) or obj.to_json(), status=status.HTTP_201_CREATED)
+            response = view_mindmap(request, obj) or obj.to_json()
+            return Response(response, status=status.HTTP_201_CREATED)
 
         @person_required
         def retrieve(self, request, pk=None):
@@ -118,7 +117,9 @@ def create_viewset_for_model(model):
                 raise Http404
 
         def get_serializer_class(self):
-            return type('Serializer', (Serializer,), {'pk':serializers.CharField()})
+            args = {'pk': serializers.CharField()}
+            return type('Serializer', (Serializer,), args)
 
-    view_set = type(name + 'ViewSet', (BaseViewSet,), { 'neo_model':model, 'queryset':model.nodes.all() })
+    args = {'neo_model': model, 'queryset': model.nodes.all()}
+    view_set = type(name + 'ViewSet', (BaseViewSet,), args)
     return view_set

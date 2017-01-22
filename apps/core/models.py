@@ -1,15 +1,12 @@
-#http://neomodel.readthedocs.io/en/latest/getting_started.html
 import json
-import time
 from uuid import uuid4
 from hashlib import sha224
-from deepdiff import DeepDiff
 from django.db import models
-from neomodel import StructuredNode, StructuredRel, One, ZeroOrMore
-from neomodel import StringProperty, IntegerProperty, JSONProperty
-from neomodel import RelationshipTo, RelationshipFrom, Relationship
-from neomodel import RelationshipManager
 from apps.adapters.neomodel_properties_fix import *
+from neomodel import (
+    StructuredNode, StructuredRel, ZeroOrMore, StringProperty, JSONProperty,
+    RelationshipTo, RelationshipFrom, Relationship, RelationshipManager
+)
 from .utils import json2obj, obj2json
 
 
@@ -41,11 +38,11 @@ class Value2ObjMixin(object):
             if self.__class__.__name__ == 'Instance':
                 key = 'id' if key == 'pk' else key
             if isinstance(value, RelationshipManager):
-                data[key] = map(lambda obj: {obj.pk:obj.value}, value.all())
+                data[key] = map(lambda obj: {obj.pk: obj.value}, value.all())
             else:
                 data[key] = value
         return data
-        
+
     def __repr__(self):
         return self.__class__.__name__ + unicode(self.value)
 
@@ -107,7 +104,7 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
 
 class Connection(Value2ObjMixin, StructuredNode):
     pk = StringProperty(unique_index=True, default=uuid4)
-    
+
     value = JSONProperty(unique_index=False, required=False)
 
     rel_from = Relationship('Instance', REL_CONNECTED_FROM)
@@ -119,7 +116,7 @@ class Connection(Value2ObjMixin, StructuredNode):
 
     def to_mindmap_repr(self):
         return {
-            "connection": { 
+            "connection": {
                 'id': self.pk,
                 "name": self.value.get('name', None),
                 "value": self.value,
@@ -135,8 +132,7 @@ class Connection(Value2ObjMixin, StructuredNode):
         return super(Connection, self).delete()
 
     def to_ask_form(self):
-        return (self.value.get('name',''), self.value.get('description',''))
-
+        return (self.value.get('name', ''), self.value.get('description', ''))
 
 
 class Instance(Value2ObjMixin, StructuredNode):
@@ -146,8 +142,10 @@ class Instance(Value2ObjMixin, StructuredNode):
 
     knowlage_db = RelationshipFrom('KnowlageDB', REL_FROM, model=RelationModel)
 
-    connections = Relationship('Connection', REL_CONNECTED_FROM, cardinality=ZeroOrMore)
-    connections_from = Relationship('Connection', REL_CONNECTED_TO, cardinality=ZeroOrMore)
+    connections = Relationship(
+        'Connection', REL_CONNECTED_FROM, cardinality=ZeroOrMore)
+    connections_from = Relationship(
+        'Connection', REL_CONNECTED_TO, cardinality=ZeroOrMore)
 
     @staticmethod
     def my_create(data, owner=None):
@@ -201,7 +199,7 @@ class Instance(Value2ObjMixin, StructuredNode):
 
 class RelRecord(Value2ObjMixin, StructuredNode):
     pk = StringProperty(unique_index=True, required=True)
-    
+
     inst_from = StringProperty(required=True)
     inst_to = StringProperty(required=True)
     connection = StringProperty(required=True)
@@ -226,7 +224,7 @@ class RelRecord(Value2ObjMixin, StructuredNode):
             "name": self.inst_to,
             "subconnection": None or self.subconnection
         }
-        
+
     def to_ask_form(self):
         return (self.connection, '')
 
@@ -239,5 +237,5 @@ class Person(Value2ObjMixin, StructuredNode):
     value = JSONProperty(unique_index=False, required=False)
 
     connections = RelationshipTo('Connection', REL_LIKE, model=RelationModel)
-    
+
     knowlagedb = RelationshipFrom('KnowlageDB', REL_OWN, model=RelationModel)

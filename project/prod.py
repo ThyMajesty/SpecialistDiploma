@@ -17,3 +17,5 @@ STATIC_ROOT = os.path.join(VAR_ROOT, "static")
 MEDIA_ROOT = os.path.join(VAR_ROOT, "media")
 
 SITE_ID = 2
+
+INTERFACE_URL = 'http://an-erd.mooo.com/'

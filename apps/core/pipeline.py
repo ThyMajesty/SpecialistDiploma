@@ -2,6 +2,7 @@ import json
 
 from .models import Person
 
+
 def update_user_neo4j_record(backend, user, response, *args, **kwargs):
     try:
         person = Person.nodes.get(user_id=user.pk)

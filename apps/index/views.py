@@ -44,7 +44,7 @@ def reg(request):
             return JsonResponse({'msg':e.message})
         return obtain_jwt_token(request)
     elif request.method == 'GET':
-        return HttpResponse(content=render_to_string('index/social.jinja2'))
+        return HttpResponse(content=render_to_string('index/social.jinja2'), content_type="application/json")
 
 
 

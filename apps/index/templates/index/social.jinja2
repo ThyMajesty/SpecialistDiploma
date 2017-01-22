@@ -1,1 +1,16 @@
-{{ url('social:begin', backend="google-oauth2") }}
+{
+    "backends":[
+        {
+            "backend":"google-oauth2",
+            "link":"{{ url('social:begin', backend="google-oauth2") }}"
+        },
+        {
+            "backend":"facebook",
+            "link":"{{ url('social:begin', backend="google-oauth2") }}"
+        },
+        {
+            "backend":"twitter",
+            "link":"{{ url('social:begin', backend="google-oauth2") }}"
+        }
+    ]
+}

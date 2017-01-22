@@ -1,3 +1,4 @@
+import os
 from .settings import *
 
 DATABASES = {
@@ -9,3 +10,8 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
+
+VAR_ROOT = '/var/virtualenv/erd/'
+
+STATIC_ROOT = os.path.join(VAR_ROOT, "static")
+MEDIA_ROOT = os.path.join(VAR_ROOT, "media")

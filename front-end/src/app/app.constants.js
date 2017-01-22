@@ -1,4 +1,4 @@
-const domain = 'http://localhost:80/'
+const domain = `http://${location.hostname}/`
 
 const API = {
     //API: 'http://api.localhost:80/v1/',

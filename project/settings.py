@@ -63,7 +63,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '.localhost',
     '127.0.0.1',
-    '[::1]',
+    '77.47.130.174',
 ]
 
 CORS_ORIGIN_WHITELIST = (

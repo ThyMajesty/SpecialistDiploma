@@ -4,6 +4,7 @@ cd ~/erd
 export DJANGO_SETTINGS_MODULE=project.prod
 
 function pull(){
+    echo "pull"
     git stash
     git pull
     chmod 777 *

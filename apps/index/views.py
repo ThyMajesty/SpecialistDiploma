@@ -38,7 +38,7 @@ def signup(request):
 
 def social_post_jwt_auth(request):
     token = generate_jwt_for_user(request.user)
-    return redirect(settings.INTERFACE_URL + '#/social?token=' + token)
+    return redirect(settings.INTERFACE_URL + '/social?token=' + token)
 
 
 class SingleFileUploadView(APIView):

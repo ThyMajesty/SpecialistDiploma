@@ -1,3 +1,6 @@
+from apps.utils.common import split_dict_values
+
+
 api_map = {
     'context': {
         'api': 0,
@@ -37,7 +40,7 @@ api_map = {
     'relation2': {
         'api': 2,
         'subapi': 4,
-        'extract': lambda data: { k:v.split(', ') for k, v in data['relation'].items() }
+        'extract': lambda data: split_dict_values(data['relation'])
     },
     # 'relation2-*': {
     #     'api': 2,

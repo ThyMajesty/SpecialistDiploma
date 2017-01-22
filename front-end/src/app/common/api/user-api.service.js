@@ -16,7 +16,7 @@ export class UserApi {
             });
     }
 
-    setUser(userId, data) {
+    setUser(data) {
         return this.$http.post(this.API.USER, data)
             .then((response) => {
                 //console.log(response);

@@ -6,6 +6,26 @@
         <div class="col-lg-8 col-xs-8 col-sm-8 col-md-8">
             <form name="$ctrl.userForm" class="form-horizontal">
                 <fieldset>
+                    <div class="form-group avatar" form-group-validation>
+                        <label for="avatar" class="col-lg-2 col-xs-2 col-sm-2 col-md-2 control-label">Avatar</label>
+                        <!-- <button 
+                            ngf-select="$ctrl.upload($file, $invalidFiles)"
+                            ng-model="$ctrl.picFile" 
+                            accept="image/*">
+                            Select Picture</button> -->
+                        <div 
+                            name="avatar"
+                            class="avatar col-lg-10 col-xs-10 col-sm-10 col-md-10" 
+                            ngf-drop
+                            ngf-drag-over-class="'dragover'"
+                            ngf-select="$ctrl.upload($file, $invalidFiles)"
+                            ng-model="$ctrl.picFile" 
+                            accept="image/*">
+                            <img ng-src="{{$ctrl.input.value.image}}" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
                     <div class="form-group" form-group-validation>
                         <label for="givenName" class="col-lg-2 col-xs-2 col-sm-2 col-md-2 control-label">User Name</label>
                         <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">

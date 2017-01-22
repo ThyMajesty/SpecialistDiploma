@@ -1,0 +1,37 @@
+/*form .progress {
+    line-height: 15px;
+}
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}*/
+
+user-page {
+    .avatar {
+        &.dragover {
+            img {
+                opacity: 0.5;
+                border: 3px dashed #DDD;
+            }
+            &:before {
+                position: absolute;
+                //content: 'Drop File';
+                text-align: center;
+            }
+        }
+        //background: #E4E4E4;
+        overflow: hidden;
+        img {
+            opacity: 1;
+            transition: opacity .25s ease-in-out;
+            border: 3px dashed #888;
+            max-height: 400px;
+        }
+    }
+}

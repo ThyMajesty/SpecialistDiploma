@@ -37,8 +37,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = (['debug_toolbar.middleware.DebugToolbarMiddleware', ] if DEBUG else []) + [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'apps.adapters.subdomain.SubdomainURLRoutingMiddleware',  # before CommonMiddleware
     'corsheaders.middleware.CorsMiddleware',
+    'apps.adapters.subdomain.SubdomainURLRoutingMiddleware',  # before CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'apps.index.middleware.AuthenticationMiddlewareJWT',
@@ -64,20 +64,12 @@ ALLOWED_HOSTS = [
     '.localhost',
     '127.0.0.1',
     '77.47.130.174',
+    '77.47.130.174:1522',
     'djerd.mooo.com',
     'an-erd.mooo.com',
 ]
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8080',
-    '127.0.0.1:8080',
-    'localhost:8000',
-    '127.0.0.1:8000',
-    '77.47.130.174',
-    'djerd.mooo.com',
-    'an-erd.mooo.com',
-)
-
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_HEADERS = (
     'Access-Control-Allow-Origin',
     'accept',

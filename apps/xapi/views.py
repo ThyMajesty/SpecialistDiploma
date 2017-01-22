@@ -50,8 +50,13 @@ def askfor(request, relation, word):
     return JsonResponse(anwser)
 
 
-def askforlist(request):
+def askforlist(request, word):
+    def conv(data):
+        return [{'name': n, 'description': d} for n, d in data]
+
     relations = set([(relation, '') for relation in api_map.keys()])
-    relations.update(map(lambda obj: obj.to_ask_form(), Connection.nodes.all()))
-    relations = [{'name': name, 'description': description} for name, description in relations]
-    return JsonResponse({'result': relations })
+
+    used = set(map(lambda obj: obj.to_ask_form(), RelRecord.nodes.filter(inst_from=word)))
+    used = used.difference(relations)
+
+    return JsonResponse({'result': conv(relations), 'users': conv(used)})

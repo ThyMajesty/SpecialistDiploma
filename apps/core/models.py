@@ -226,6 +226,9 @@ class RelRecord(Value2ObjMixin, StructuredNode):
             "name": self.inst_to,
             "subconnection": None or self.subconnection
         }
+        
+    def to_ask_form(self):
+        return (self.connection, '')
 
 
 class Person(Value2ObjMixin, StructuredNode):

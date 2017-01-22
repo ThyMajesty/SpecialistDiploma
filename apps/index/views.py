@@ -47,11 +47,10 @@ def reg(request):
         return HttpResponse(content=render_to_string('index/social.jinja2'), content_type="application/json")
 
 
-
 def sauth(request):
     payload = api_settings.JWT_PAYLOAD_HANDLER(request.user)
     token = api_settings.JWT_ENCODE_HANDLER(payload)
-    return redirect('https://localhost:8080/social/?token='+token)
+    return redirect('http://localhost:8080/#/social?token='+token)
 
 
 class FileUploadView(APIView):

@@ -2,7 +2,7 @@
 
 # Used to redirect the user once the auth process ended successfully.
 # The value of ?next=/foo is used if it was present
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/logged-in/'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/sauth/'
 
 # URL where the user will be redirected in case of an error
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login-error/'
@@ -12,11 +12,11 @@ SOCIAL_AUTH_LOGIN_URL = '/login-url/'
 
 # Used to redirect new registered users, will be used in place of SOCIAL_AUTH_LOGIN_REDIRECT_URL if defined. 
 # Note that ?next=/foo is appended if present, if you want new users to go to next, you'll need to do it yourself.
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new-users-redirect-url/'
+# SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new-users-redirect-url/'
 
 # Like SOCIAL_AUTH_NEW_USER_REDIRECT_URL but for new associated accounts (user is already logged in). 
 # Used in place of SOCIAL_AUTH_LOGIN_REDIRECT_URL
-SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new-association-redirect-url/'
+# SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/new-association-redirect-url/'
 
 # The user will be redirected to this URL when a social account is disconnected
 SOCIAL_AUTH_DISCONNECT_REDIRECT_URL = '/account-disconnected-redirect-url/'

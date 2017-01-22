@@ -12,6 +12,9 @@ from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.settings import api_settings
+from django.template.loader import render_to_string
+
 
 def index(request):
     messages.debug(request, '%s SQL statements were executed.' % 123)
@@ -40,7 +43,15 @@ def reg(request):
         except Exception as e:
             return JsonResponse({'msg':e.message})
         return obtain_jwt_token(request)
-    raise Http404    
+    elif request.method == 'GET':
+        return HttpResponse(content=render_to_string('index/social.jinja2'))
+
+
+
+def sauth(request):
+    payload = api_settings.JWT_PAYLOAD_HANDLER(request.user)
+    token = api_settings.JWT_ENCODE_HANDLER(payload)
+    return redirect('https://localhost:8080/social/?token='+token)
 
 
 class FileUploadView(APIView):

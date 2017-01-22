@@ -7,6 +7,7 @@
                 <li class="{{activeTab == 'MindMapTreeMap' ? 'active' : ''}}"><a href="" ng-click="activeTab = 'MindMapTreeMap'">Mind Map Tree Map</a></li>
                 <li class="{{activeTab == 'GeneralInfo' ? 'active' : ''}}"><a href="" ng-click="activeTab = 'GeneralInfo'">General Info</a></li>
             </ul>
+            
         </div>
         <div ng-if="activeTab == 'MindMapTree'" class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
             <mind-map-editor type="'tree'" base="$ctrl.base"></mind-map-editor>
@@ -41,7 +42,7 @@
                                 id="description" 
                                 ng-model="$ctrl.base.value.description" 
                                 ng-required="true"
-                                ></textarea> 
+                            ></textarea> 
                         </div>
                     </div>
                     <fieldset>

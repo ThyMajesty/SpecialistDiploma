@@ -10,8 +10,18 @@
         <div id="downloadLinkWrap"></div>
     </div>
 </div>
-<button class="btm btn-default " ng-click="export('png')">Save as PNG</button>
-<button class="btm btn-default " ng-click="export('jpg')">Save as JPG</button>
-<button class="btm btn-default " ng-click="export('pdf')">Save as PDF</button>
-<button class="btm btn-default" ng-click="export('svg')">Save as SVG</button>
+<div class="btn-group pull-right">
+    <div class="btn-group" ng-class="dropDown">
+        <a class="btn btn-default dropdown-toggle" ng-click="dropDown = dropDown ? '' : 'open'">
+                Export As
+                <span class="caret"></span>
+              </a>
+        <ul class="dropdown-menu">
+            <li><a class="btm btn-default " ng-click="export('png')">PNG</a></li>
+            <li><a class="btm btn-default " ng-click="export('jpg')">JPG</a></li>
+            <li><a class="btm btn-default " ng-click="export('pdf')">PDF</a></li>
+            <li><a class="btm btn-default" ng-click="export('svg')">SVG</a></li>
+        </ul>
+    </div>
+</div>
 <div class="mindMap"></div>

@@ -6,5 +6,6 @@ DATABASES = {
         'NAME': 'erd_db',
         'USER': 'erd',
         'PASSWORD': 'qwerty',
+        'HOST': 'localhost',
     }
 }

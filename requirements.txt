@@ -1,25 +1,38 @@
-# Django
-Django
-django-jinja
-django-debug-toolbar
-django-subdomains
-django-tastypie
-django-extensions
-djangorestframework-jwt
-django-cors-headers
-djangorestframework
+# pip freeze | xargs pip uninstall -y
 
-# Python
-python-social-auth
-python-jose
-deepdiff
-
-# 3-rd party
-Jinja2
-easy_thumbnails
-humanize
-unirest
-
-# neo4j
-py2neo==2.*
-neomodel
+deepdiff==2.5.3
+Django==1.10.3
+django-cors-headers==1.3.1
+django-debug-toolbar==1.6
+django-extensions==1.7.5
+django-jinja==2.2.1
+django-jwt-auth==0.0.2
+django-subdomains==2.1.0
+djangorestframework==3.5.3
+djangorestframework-jwt==1.9.0
+easy-thumbnails==2.3
+ecdsa==0.13
+future==0.16.0
+humanize==0.5.1
+Jinja2==2.8
+MarkupSafe==0.23
+neomodel==2.0.2
+oauthlib==2.0.1
+Pillow==3.4.2
+poster==0.8.1
+py2neo==2.0.9
+pycrypto==2.6.1
+PyJWT==1.4.2
+python-dateutil==2.6.0
+python-jose==1.3.2
+python-mimeparse==1.6.0
+python-openid==2.2.5
+python-social-auth==0.2.21
+pytz==2015.7
+requests==2.12.1
+requests-oauthlib==0.7.0
+six==1.10.0
+sqlparse==0.2.2
+Unirest==1.1.7
+psycopg2==2.6.2
+uWSGI==2.0.14

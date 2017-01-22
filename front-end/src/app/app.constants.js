@@ -1,8 +1,6 @@
-const domain = `http://${location.hostname}/`
+const domain = `../api/`
 
 const API = {
-    //API: 'http://api.localhost:80/v1/',
-
     AUTH: `${domain}api/token-auth/`,
     tokenRefresh: `${domain}api/token-refresh/`,
     tokenVerify: `${domain}api/token-verify/`,

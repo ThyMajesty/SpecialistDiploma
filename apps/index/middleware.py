@@ -44,10 +44,12 @@ class AuthenticationMiddlewareJWT(object):
         from apps.core.models import Person
         user = request.jwt_user
         if not user or not user.is_authenticated():
+            print 'not user or not user.is_authenticated()'
             return None
         try:
             person = Person.nodes.get(user_id=user.pk)
         except Person.DoesNotExist:
+            print 'Person.DoesNotExist'
             value = { 'name': user.username }
             person = Person(user_id=user.pk, value=value).save()
         return person

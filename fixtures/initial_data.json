@@ -24,8 +24,16 @@
         }
     },
     {
+        "model": "sites.site",
+        "pk": 4,
+        "fields": {
+            "domain": "pod666.space",
+            "name": "pod666.space"
+        }
+    },
+    {
         "model": "auth.user",
-        "pk": 2,
+        "pk": 1,
         "fields": {
             "password": "pbkdf2_sha256$30000$aWbwmQL4h7VU$JhzpAm90cRopX1bB7Nvd96X7EUhVnNjx3VaGsWe4iOo=",
             "last_login": null,

@@ -15,7 +15,8 @@ from .utils import person_required, save_file, generate_jwt_for_user
 
 def index(request):
     # Just redirect to angular interface
-    return redirect(settings.INTERFACE_URL)
+    # return redirect(settings.INTERFACE_URL)
+    return HttpResponse('Hi! Why are you here?')
 
 
 @csrf_exempt

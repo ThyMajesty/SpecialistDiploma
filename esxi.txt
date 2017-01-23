@@ -7,3 +7,6 @@
 http://freedns.afraid.org/subdomain/
 django      http://djerd.mooo.com/
 angular     http://an-erd.mooo.com/
+
+
+77.47.130.174:1520

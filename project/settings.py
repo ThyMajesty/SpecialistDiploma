@@ -66,7 +66,7 @@ ALLOWED_HOSTS = [
     '77.47.130.174',
     '77.47.130.174:1522',
     'djerd.mooo.com',
-    'pod666.space:1520',
+    'pod666.space',
     'an-erd.mooo.com',
 ]
 

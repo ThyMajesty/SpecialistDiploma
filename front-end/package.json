@@ -1,18 +1,24 @@
 {
-  "name": "specialistdiploma",
+  "name": "erd-fe",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
+    "postinstall": "webpack --colors --config config/webpack.dev.js",
+    "start": "npm i && node app.js",
+
+
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --progress --colors --inline --hot --config config/webpack.dev.js",
     "dev": "webpack-dev-server --progress --colors --inline --hot --config config/webpack.dev.js",
-    "deploy": "webpack-dev-server --progress --colors --inline --hot --config config/webpack.dev.js --port 8000 --host 0.0.0.0",
+    "deploy": "npm i && webpack-dev-server --progress --colors --inline --hot --config config/webpack.dev.js --port 8000 --host 0.0.0.0",
     "build-dev": "set NODE_ENV=dev && webpack",
     "build-static": "set NODE_ENV=static && webpack",
     "build-static-watch": "set NODE_ENV=static && webpack --watch",
     "bsw": "set NODE_ENV=static && webpack --watch",
     "prod": "set NODE_ENV=prod && webpack"
+  },
+  "engines": {
+    "node": "7.2.0",
+    "npm": "3.10.9"
   },
   "babel": {
     "presets": [
@@ -21,14 +27,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ThyMajesty/SpecialistDiploma.git"
+    "url": "git+https://github.com/ThyMajesty/erd-fe.git"
   },
   "author": "yesthymajesty@gmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ThyMajesty/SpecialistDiploma/issues"
+    "url": "https://github.com/ThyMajesty/erd-fe/issues"
   },
-  "homepage": "https://github.com/ThyMajesty/SpecialistDiploma#readme",
+  "homepage": "https://github.com/ThyMajesty/erd-fe",
   "dependencies": {
     "angular": "1.5.8",
     "angular-animate": "1.5.9",
@@ -45,6 +51,7 @@
     "bootswatch": "^3.3.7",
     "d3": "^3.3.10",
     "domurl": "^2.1.7",
+    "express": "^4.14.0",
     "file-saver": "^1.3.3",
     "jquery": "^3.1.1",
     "jquery-bridget": "^2.0.1",
@@ -68,6 +75,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
+    "http-proxy-middleware": "^0.17.3",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "raw-loader": "^0.5.1",
@@ -75,7 +83,9 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.3",
+    "webpack-dev-middleware": "^1.9.0",
     "webpack-dev-server": "^1.16.2",
+    "webpack-hot-middleware": "^2.15.0",
     "webpack-merge": "^0.18.0"
   }
 }

@@ -64,10 +64,10 @@ ALLOWED_HOSTS = [
     '.localhost',
     '127.0.0.1',
     '77.47.130.174',
-    '77.47.130.174:1522',
     'djerd.mooo.com',
     'pod666.space',
     'an-erd.mooo.com',
+    'erd-fe.herokuapp.com',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True

@@ -39,7 +39,7 @@ def signup(request):
 
 def social_post_jwt_auth(request):
     token = generate_jwt_for_user(request.user)
-    UI_REDIRECT = settings.INTERFACE_URL + 'social?token=' + token
+    UI_REDIRECT = settings.INTERFACE_URL + '#/social?token=' + token
     data = {
         'UI_REDIRECT': UI_REDIRECT
     }

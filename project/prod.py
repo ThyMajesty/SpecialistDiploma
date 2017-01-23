@@ -20,3 +20,22 @@ MEDIA_ROOT = os.path.join(VAR_ROOT, "media")
 SITE_ID = 3
 
 INTERFACE_URL = 'http://erd-fe.herokuapp.com/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(VAR_ROOT, "debug.log"),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

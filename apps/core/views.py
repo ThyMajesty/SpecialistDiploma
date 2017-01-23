@@ -1,6 +1,6 @@
 import json
 from neomodel import RelationshipManager
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from rest_framework import status
 from rest_framework import serializers
 from rest_framework.response import Response
@@ -44,6 +44,23 @@ def view_mindmap(request, obj=None):
         return None
 
 
+@csrf_exempt
+@person_required
+def save_shared_db(request):
+    if not request.method == 'POST':
+        raise Http404
+    data = json.loads(request.body)
+    db_uuid = data.get('db', None)
+    if not db_uuid:
+        return JsonResponse({'msg': 'db key should not be None'}, status=500)
+    try:
+        db = KnowlageDB.nodes.get(pk=db_uuid)
+    except KnowlageDB.DoesNotExist as e:
+        return JsonResponse({'msg': e.message}, status=500)
+    request.person.shared.connect(db)
+    return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
+
 def create_viewset_for_model(model):
     name = model.__name__
 
@@ -54,8 +71,13 @@ def create_viewset_for_model(model):
         @person_required
         def list(self, request):
             if self.neo_model == KnowlageDB:
+                scope = request.GET.get('scope', 'all')
                 person = request.person
-                objs_list = person.knowlagedb.all()
+                objs_list = []
+                if 'all' in scope or 'my' in scope:
+                    objs_list.update(person.knowlagedb.all())
+                if 'all' in scope or 'shared' in scope:
+                    objs_list.update(person.shared.all())
             else:
                 objs_list = self.neo_model.nodes.all()
             objs_list_json = map(lambda obj: obj.to_json(), objs_list)

@@ -36,3 +36,4 @@ sqlparse==0.2.2
 Unirest==1.1.7
 psycopg2==2.6.2
 uWSGI==2.0.14
+debug_toolbar

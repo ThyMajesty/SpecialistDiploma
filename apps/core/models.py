@@ -20,9 +20,12 @@ REL_CONNECTED_FROM = 'CONNECTED_FROM'
 REL_CONNECTED_TO = 'CONNECTED_TO'
 REL_LIKE = 'LIKE'
 REL_OWN = 'OWN'
+REL_SHARED = 'SHARED'
 
 
 class Value2ObjMixin(object):
+    exclude = []
+
     @property
     def value_obj(self):
         return json2obj(self.value)
@@ -34,6 +37,8 @@ class Value2ObjMixin(object):
     def to_json(self):
         data = {}
         for key in self.defined_properties().keys():
+            if key in self.exclude:
+                continue
             value = getattr(self, key)
             if self.__class__.__name__ == 'Instance':
                 key = 'id' if key == 'pk' else key
@@ -230,6 +235,8 @@ class RelRecord(Value2ObjMixin, StructuredNode):
 
 
 class Person(Value2ObjMixin, StructuredNode):
+    exclude = [user_id, connections, knowlagedb, shared]
+
     pk = StringProperty(unique_index=True, default=uuid4)
 
     user_id = StringProperty(unique_index=True, required=True)
@@ -239,3 +246,5 @@ class Person(Value2ObjMixin, StructuredNode):
     connections = RelationshipTo('Connection', REL_LIKE, model=RelationModel)
 
     knowlagedb = RelationshipFrom('KnowlageDB', REL_OWN, model=RelationModel)
+
+    shared = Relationship('KnowlageDB', REL_SHARED, model=RelationModel)

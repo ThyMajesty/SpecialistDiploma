@@ -1,7 +1,7 @@
-from django.http import JsonResponse
-
+import json
+from django.http import JsonResponse, Http404
+from django.views.decorators.csrf import csrf_exempt
 from apps.core.models import RelRecord
-from apps.index.utils import person_required
 from .api_map import api_map
 from .twinword import get_api_result
 
@@ -31,7 +31,6 @@ def transform(data, key):
     return result
 
 
-@person_required
 def askfor(request, relation, word):
     subrelation = request.GET.get('subrelation')
     if subrelation:
@@ -53,12 +52,23 @@ def askfor(request, relation, word):
     return JsonResponse(anwser)
 
 
-@person_required
-def askforlist(request, word):
+@csrf_exempt
+def askforlist(request):
+    if not request.method == 'POST':
+        raise Http404
+
+    data = json.loads(request.body)
+    word = data.get('word', None)
+    relation = data.get('relation', None)
+    if not word:
+        return JsonResponse({'msg': 'word should be specified'}, status=500)
+    if relation:
+        return askfor(request, relation, word)
+
     def conv(data):
         return [{'name': n, 'description': d} for n, d in data]
 
-    relations = set([(relation, '') for relation in api_map.keys()])
+    relations = set([(key, '') for key in api_map.keys()])
 
     used = set(map(lambda obj: obj.to_ask_form(),
                    RelRecord.nodes.filter(inst_from=word)))

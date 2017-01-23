@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 from .secret import SECRET_KEY, X_MASHAPE_KEY
 
-DEBUG = not False
+DEBUG = False
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'django_extensions',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'social.apps.django_app.default',
     'django_jinja.contrib._subdomains',
     'django_jinja.contrib._humanize',
@@ -34,7 +34,7 @@ INSTALLED_APPS = [
 ]
 
 
-MIDDLEWARE = (['debug_toolbar.middleware.DebugToolbarMiddleware', ] if DEBUG else []) + [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -190,8 +190,8 @@ AUTHENTICATION_BACKENDS = (
 
 
 from .app_settings.social_auth import *
-if DEBUG:
-    from .app_settings.debug_toolbar import *
+# if DEBUG:
+#     from .app_settings.debug_toolbar import *
 
 
 import datetime

@@ -235,7 +235,7 @@ class RelRecord(Value2ObjMixin, StructuredNode):
 
 
 class Person(Value2ObjMixin, StructuredNode):
-    exclude = [user_id, connections, knowlagedb, shared]
+    exclude = ['user_id', 'connections', 'knowlagedb', 'shared']
 
     pk = StringProperty(unique_index=True, default=uuid4)
 

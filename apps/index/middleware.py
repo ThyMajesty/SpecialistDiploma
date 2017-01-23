@@ -29,7 +29,10 @@ class AuthenticationMiddlewareJWT(object):
 
     def get_jwt_user_person(self, request):
         if self.jwt_authentication.get_jwt_value(request):
-            user, jwt = self.jwt_authentication.authenticate(request)
+            try:
+                user, jwt = self.jwt_authentication.authenticate(request)
+            except:
+                return None, None
             if user and user.is_authenticated():
                 try:
                     person = Person.nodes.get(user_id=user.pk)

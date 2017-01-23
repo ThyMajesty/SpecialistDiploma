@@ -19,4 +19,4 @@ MEDIA_ROOT = os.path.join(VAR_ROOT, "media")
 
 SITE_ID = 2
 
-INTERFACE_URL = 'http://an-erd.mooo.com/'
+INTERFACE_URL = 'http://erd-fe.herokuapp.com/'

@@ -17,6 +17,6 @@ VAR_ROOT = '/var/virtualenv/erd/'
 STATIC_ROOT = os.path.join(VAR_ROOT, "static")
 MEDIA_ROOT = os.path.join(VAR_ROOT, "media")
 
-SITE_ID = 2
+SITE_ID = 3
 
 INTERFACE_URL = 'http://erd-fe.herokuapp.com/'

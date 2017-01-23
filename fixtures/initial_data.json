@@ -16,6 +16,14 @@
         }
     },
     {
+        "model": "sites.site",
+        "pk": 3,
+        "fields": {
+            "domain": "pod666.space:1520",
+            "name": "pod666.space:1520"
+        }
+    },
+    {
         "model": "auth.user",
         "pk": 2,
         "fields": {

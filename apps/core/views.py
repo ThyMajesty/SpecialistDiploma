@@ -74,10 +74,10 @@ def create_viewset_for_model(model):
                 scope = request.GET.get('scope', 'all')
                 person = request.person
                 objs_list = []
-                if 'all' in scope or 'my' in scope:
-                    objs_list.update(person.knowlagedb.all())
-                if 'all' in scope or 'shared' in scope:
-                    objs_list.update(person.shared.all())
+                if 'all' == scope or 'my' == scope:
+                    objs_list += (person.knowlagedb.all())
+                if 'all' == scope or 'shared' == scope:
+                    objs_list += (person.shared.all())
             else:
                 objs_list = self.neo_model.nodes.all()
             objs_list_json = map(lambda obj: obj.to_json(), objs_list)

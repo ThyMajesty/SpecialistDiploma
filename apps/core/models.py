@@ -65,6 +65,7 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
     instances = RelationshipTo('Instance', REL_FROM, model=RelationModel)
 
     owner = RelationshipFrom('Person', REL_OWN, model=RelationModel)
+    shared_to = RelationshipFrom('Person', REL_SHARED, model=RelationModel)
 
     def to_mindmap(self):
         mindmap = {
@@ -247,4 +248,4 @@ class Person(Value2ObjMixin, StructuredNode):
 
     knowlagedb = RelationshipFrom('KnowlageDB', REL_OWN, model=RelationModel)
 
-    shared = Relationship('KnowlageDB', REL_SHARED, model=RelationModel)
+    shared = RelationshipTo('KnowlageDB', REL_SHARED, model=RelationModel)

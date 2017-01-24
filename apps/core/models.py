@@ -74,8 +74,8 @@ class KnowlageDB(Value2ObjMixin, StructuredNode):
             "description": self.value.get('description', None),
             "value": self.value,
             "tree": self.instances.all()[0].to_mindmap(),
-            "owner": [person.to_json() for perosn in self.owner.all()],
-            "shared_to": [person.to_json() for perosn in self.shared_to.all()]
+            "owner": [p.to_json() for p in self.owner.all()],
+            "shared_to": [p.to_json() for p in self.shared_to.all()]
         }
         # mindmap_json = json.dumps(mindmap)
         # mindmap_uid = sha224(mindmap_json).hexdigest()
